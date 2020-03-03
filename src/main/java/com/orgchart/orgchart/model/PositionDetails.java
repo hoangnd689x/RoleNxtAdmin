@@ -1,9 +1,13 @@
 package com.orgchart.orgchart.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * @author YOG1HC
  *
  */
+@Entity
 public class PositionDetails {
 	
 	private long id;
@@ -12,6 +16,7 @@ public class PositionDetails {
 	private String projects;
 	private String responsibilities;
 	
+	@Id
 	public long getId() {
 		return id;
 	}
