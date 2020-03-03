@@ -13,21 +13,21 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Repository;
 
-import com.orgchart.orgchart.model.Position;
-import com.orgchart.orgchart.service.PositionService;
+import com.orgchart.orgchart.model.Structure;
+import com.orgchart.orgchart.service.StructureService;
 
 /**
  * @author YOG1HC
  *
  */
 @Repository
-public class PositionServiceImpl implements PositionService {
+public class StructureServiceImpl implements StructureService {
 	
-	private static final String FILE_NAME = "Position.xlsx";
+	private static final String FILE_NAME = "Structure.xlsx";
 	
 	@Override
-	public List<Position> getAllPositions(){
-		List<Position> listPosition = new ArrayList<>();
+	public List<Structure> getAllStructures(){
+		List<Structure> listStructure = new ArrayList<>();
         try {
         	System.out.println(FILE_NAME);
             FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
@@ -42,7 +42,7 @@ public class PositionServiceImpl implements PositionService {
 
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
-                Position pos = new Position();
+                Structure str = new Structure();
                 
                 
                 if(firstRow) {
@@ -50,29 +50,24 @@ public class PositionServiceImpl implements PositionService {
                 }else {
                 	//if(currentRow.getCell(0).getCellTypeEnum()== CellType.STRING || currentRow.getCell(0).getCellTypeEnum()== CellType.NUMERIC) {
                 		if(0 != currentRow.getCell(0).getNumericCellValue() || null != currentRow.getCell(0) || null != currentRow.getCell(0)  || null != currentRow.getCell(1)) {
-                    		pos.setId((long) currentRow.getCell(0).getNumericCellValue());
-                    		pos.setDepartmentID((long) currentRow.getCell(1).getNumericCellValue());
-                    		pos.setName(currentRow.getCell(2).toString());
-                    		listPosition.add(pos);
+                			str.setId((long) currentRow.getCell(0).getNumericCellValue());
+                			str.setPath(currentRow.getCell(1).getStringCellValue());
+                    		listStructure.add(str);
                     	}
                 	//}
                 }
             }
             
-            for (int i = 0; i < listPosition.size(); i++) {
-            	System.out.println(listPosition.get(i).getId());
-            	System.out.println(listPosition.get(i).getDepartmentID());
-            	System.out.println(listPosition.get(i).getName());
+            for (int i = 0; i < listStructure.size(); i++) {
+            	System.out.println(listStructure.get(i).getId());
+            	System.out.println(listStructure.get(i).getPath());
 			}
-            
-            
             
         } catch (Exception e) {
         	//System.out.println(listPostion.toString());
             e.printStackTrace();
-            
         }
 		
-		return listPosition;
+		return listStructure;
 	}
 }

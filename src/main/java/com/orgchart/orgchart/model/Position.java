@@ -5,7 +5,10 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-
+/**
+ * @author YOG1HC
+ *
+ */
 @Entity
 public class Position implements Serializable{
 	

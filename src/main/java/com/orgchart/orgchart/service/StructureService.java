@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.orgchart.orgchart.model.Position;
+import com.orgchart.orgchart.model.Structure;
 
 /**
  * @author YOG1HC
@@ -13,7 +13,7 @@ import com.orgchart.orgchart.model.Position;
  */
 @Service
 @Transactional
-public interface PositionService {
+public interface StructureService {
 	
-	 List<Position> getAllPositions();
+	 List<Structure> getAllStructures();
 }

@@ -7,6 +7,10 @@ import org.springframework.context.annotation.Configuration;
 
 import com.orgchart.orgchart.controller.RestApiController;
 
+/**
+ * @author YOG1HC
+ *
+ */
 @SpringBootApplication
 @Configuration
 @ComponentScan(basePackageClasses = RestApiController.class)

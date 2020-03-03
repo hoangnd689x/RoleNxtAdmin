@@ -1,5 +1,9 @@
 package com.orgchart.orgchart.model;
 
+/**
+ * @author YOG1HC
+ *
+ */
 public class Department {
 	
 	private long id;
