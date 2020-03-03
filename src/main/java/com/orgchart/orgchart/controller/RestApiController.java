@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.orgchart.orgchart.model.Department;
 import com.orgchart.orgchart.model.Position;
 import com.orgchart.orgchart.model.Structure;
+import com.orgchart.orgchart.serviceImpl.DepartmentServiceImpl;
 import com.orgchart.orgchart.serviceImpl.PositionServiceImpl;
 import com.orgchart.orgchart.serviceImpl.StructureServiceImpl;
 
@@ -29,6 +31,8 @@ public class RestApiController {
 	PositionServiceImpl positionService = new PositionServiceImpl();
 	
 	StructureServiceImpl structureService = new StructureServiceImpl();
+	
+	DepartmentServiceImpl departmentService = new DepartmentServiceImpl();
 	
 	
 	/**
@@ -55,6 +59,19 @@ public class RestApiController {
 		listStructure = structureService.getAllStructures();
 		
 		return new ResponseEntity<List<Structure>>(listStructure, HttpStatus.OK);
+	}
+	
+	/**
+	 * get all structures in an organization
+	 *
+	 */
+	@RequestMapping(value = "/getAllDepartments/", method = RequestMethod.GET)
+	public ResponseEntity<List<Department>> getAllDepartments(){
+		
+		List<Department> listDepartment = new ArrayList();
+		listDepartment = departmentService.getAllDepartments();
+		
+		return new ResponseEntity<List<Department>>(listDepartment, HttpStatus.OK);
 	}
 	
 }

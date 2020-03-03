@@ -1,11 +1,17 @@
 package com.orgchart.orgchart.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * @author YOG1HC
  *
  */
+
+@Entity
 public class Department {
 	
+	@Id
 	private long id;
 	private String name;
 	public long getId() {
