@@ -1,93 +1,7 @@
-
-	
-var HttpClient = function() {
-    this.get = function(aUrl, aCallback) {
-        var anHttpRequest = new XMLHttpRequest();
-        anHttpRequest.onreadystatechange = function() { 
-            if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
-                aCallback(anHttpRequest.responseText);
-        }
-        anHttpRequest.open( "GET", aUrl, true );            
-        anHttpRequest.send( null );
-    }
-}
-
-var client = new HttpClient();
-client.get('http://localhost:8080/api/getAllPositions', function(response) {
-    console.log(response);
-});
-
-    var tbl_roles = [
-        {
-            "role 1": 2,
-            "role 2": 3,
-            "role 3": 4,
-            "role 5": 6,
-            "role 6": 5
-        },
-        {
-            "role 1": 3,
-            "role 2": 4,
-            "role 3": 6,
-            "role 5": null,
-            "role 6": null
-        },
-        {
-            "role 1": 4,
-            "role 2": 6,
-            "role 3": null,
-            "role 5": null,
-            "role 6": null
-        },
-        {
-            "role 1": 4,
-            "role 2": 6,
-            "role 3": null,
-            "role 5": null,
-            "role 6": null
-        },
-        {
-            "role 1": 5,
-            "role 2": 6,
-            "role 3": null,
-            "role 5": null,
-            "role 6": null
-        }
-    ];
-    var tbl_position = [
-        {
-            "ID": 1,
-            "DepartmentID": 1,
-            "Name": "developer",
-        },
-        {
-            "ID": 2,
-            "DepartmentID": 1,
-            "Name": "Architect",
-        },
-        {
-            "ID": 3,
-            "DepartmentID": 1,
-            "Name": "Technical Lead",
-        },
-        {
-            "ID": 4,
-            "DepartmentID": 1,
-            "Name": "SW Delivery Manager",
-        },
-        {
-            "ID": 5,
-            "DepartmentID": 1,
-            "Name": "Team Lead",
-        },
-        {
-            "ID": 6,
-            "DepartmentID": 1,
-            "Name": "Product Manager",
-        },
-    
-    ]
-
+var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
 
     var $ = go.GraphObject.make;  // for conciseness in defining templates
 
@@ -324,25 +238,25 @@ var linkDataArray = [
 
 
 
-function getNodeDataArray() {
+function getNodeDataArray(tbl_position) {
     return tbl_position.map(e => {
         let tmp = {};
-        tmp["key"] = e.ID;
-        tmp["text"] = e.Name;
+        tmp["key"] = e.id;
+        tmp["text"] = e.name;
         return tmp;
     }
     )
 }
-function getLinkDataArray() {
+function getLinkDataArray(tbl_roles) {
     let tmpPair = [];
     tbl_roles.map(e => {
         let tmp = [];
-        for (let i in e) {
-            let value = e[i];
-            if (value != null) {
-                tmp.push(value);
-            }
+        if(e.path!=null && e.path!=""){
+        	var value=e.path;
+        	  
+        	  [...value].map(e=>{if(e!=",") tmp.push(e);});
         }
+        
         for (let i = 0; i < tmp.length - 1; i++) {
             let tmpObj = {};
             tmpObj["from"] = tmp[i];
@@ -364,8 +278,23 @@ function getLinkDataArray() {
 
     return filtered;
 }
-myDiagram.model = new go.GraphLinksModel(getNodeDataArray(), getLinkDataArray());
+//myDiagram.model = new go.GraphLinksModel(getNodeDataArray(), getLinkDataArray());
 
 
-  
+fetch("http://localhost:8080/api/getAllPositions/", requestOptions)
+.then(response => response.json())
+.then(result => {
+	  var tbl_position=result;
+	  fetch("http://localhost:8080/api/getAllStructures/", requestOptions)
+	  .then(response => response.json())
+	  .then(result => {
+	  	  var tbl_roles=result;
+	  	  console.log(tbl_roles);
+	  	  myDiagram.model = new go.GraphLinksModel(getNodeDataArray(tbl_position), getLinkDataArray(tbl_roles));
+	  	  
+	  })
+	  
+	  
+})
+.catch(error => console.log('error', error));
   
