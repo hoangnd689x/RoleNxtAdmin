@@ -253,8 +253,9 @@ function getLinkDataArray(tbl_roles) {
         let tmp = [];
         if(e.path!=null && e.path!=""){
         	var value=e.path;
-        	  
-        	  [...value].map(e=>{if(e!=",") tmp.push(e);});
+        	value.split(",").forEach(e=>{
+        		tmp.push(e)
+        	});
         }
         
         for (let i = 0; i < tmp.length - 1; i++) {
