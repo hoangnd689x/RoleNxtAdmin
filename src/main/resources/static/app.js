@@ -98,22 +98,23 @@ function nodeClicked(e, obj) {  // executed by click and doubleclick handlers
   var node = obj.part;
   var type = evt.clickCount === 2 ? "Double-Clicked: " : "Clicked: ";
   var msg = type + node.data.key + ". ";
-  fetch("http://localhost:8080/api/getAllPositionDetails/", requestOptions)
-  .then(response => response.json())
-  .then(result => {
-	  console.log(result);
-	  result.forEach(e=>{
-		  if(e.positionId==node.data.key ){
-			  msg="roles: "+e.roles+"<br/>"+"project: " +e.projects+"<br/>"+"responsibilities: "+e.responsibilities;
-			  document.getElementById("myStatus").innerHTML = msg;
-		  }
-	  })
-  	  
-  })
+  location.href = "/position/details/"+node.data.key;
+//  fetch("http://localhost:8080/api/getAllPositionDetails/", requestOptions)
+//  .then(response => response.json())
+//  .then(result => {
+//	  console.log(result);
+//	  result.forEach(e=>{
+//		  if(e.positionId==node.data.key ){
+//			  msg="roles: "+e.roles+"<br/>"+"project: " +e.projects+"<br/>"+"responsibilities: "+e.responsibilities;
+//			  document.getElementById("myStatus").innerHTML = msg;
+//		  }
+//	  })
+//  	  
+//  })
   
-  document.getElementById("myStatus").textContent = msg;
-  console.log("clicked!");
-  console.log(e, obj);
+//  document.getElementById("myStatus").textContent = msg;
+//  console.log("clicked!");
+//  console.log(e, obj);
 }
 
 myDiagram.nodeTemplate =
