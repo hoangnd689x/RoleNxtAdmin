@@ -327,11 +327,11 @@ function getLinkDataArray(tbl_roles) {
 //myDiagram.model = new go.GraphLinksModel(getNodeDataArray(), getLinkDataArray());
 
 
-fetch("http://localhost:8080/api/getAllPositions/", requestOptions)
+fetch("http://10.184.224.79:8080/api/getAllPositions/", requestOptions)
 .then(response => response.json())
 .then(result => {
 	  var tbl_position=result;
-	  fetch("http://localhost:8080/api/getAllStructures/", requestOptions)
+	  fetch("http://10.184.224.79:8080/api/getAllStructures/", requestOptions)
 	  .then(response => response.json())
 	  .then(result => {
 	  	  var tbl_roles=result;

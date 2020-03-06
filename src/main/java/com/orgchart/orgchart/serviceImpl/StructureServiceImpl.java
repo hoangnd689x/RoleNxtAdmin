@@ -43,25 +43,30 @@ public class StructureServiceImpl implements StructureService {
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
                 Structure str = new Structure();
-                
+                int i = 0;
                 
                 if(firstRow) {
                 	firstRow = false;
                 }else {
-                	//if(currentRow.getCell(0).getCellTypeEnum()== CellType.STRING || currentRow.getCell(0).getCellTypeEnum()== CellType.NUMERIC) {
-                		if(0 != currentRow.getCell(0).getNumericCellValue() || null != currentRow.getCell(0) || null != currentRow.getCell(0)  || null != currentRow.getCell(1)) {
-                			str.setId((long) currentRow.getCell(0).getNumericCellValue());
-                			str.setPath(currentRow.getCell(1).getStringCellValue());
-                    		listStructure.add(str);
-                    	}
-                	//}
+                	try {
+                		str.setId((long) currentRow.getCell(0).getNumericCellValue());
+            			str.setDepartmentName(currentRow.getCell(1).getStringCellValue());
+            			str.setDomain(currentRow.getCell(2).getStringCellValue());
+            			str.setLevel0(currentRow.getCell(3).getStringCellValue());
+            			str.setLevel1(currentRow.getCell(4).getStringCellValue());
+            			str.setLevel2(currentRow.getCell(5).getStringCellValue());
+            			str.setLevel3(currentRow.getCell(6).getStringCellValue());
+            			str.setLevel4(currentRow.getCell(7).getStringCellValue());
+            			str.setLevel5(currentRow.getCell(8).getStringCellValue());
+            			str.setLevel6(currentRow.getCell(9).getStringCellValue());
+                		listStructure.add(str);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
                 }
+                i++;
             }
             
-            for (int i = 0; i < listStructure.size(); i++) {
-            	System.out.println(listStructure.get(i).getId());
-            	System.out.println(listStructure.get(i).getPath());
-			}
             
         } catch (Exception e) {
         	//System.out.println(listPostion.toString());
