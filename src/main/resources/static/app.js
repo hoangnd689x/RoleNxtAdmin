@@ -1,3 +1,4 @@
+
 var requestOptions = {
   method: 'GET',
   redirect: 'follow'
@@ -99,22 +100,6 @@ function nodeClicked(e, obj) {  // executed by click and doubleclick handlers
   var type = evt.clickCount === 2 ? "Double-Clicked: " : "Clicked: ";
   var msg = type + node.data.key + ". ";
   location.href = "/position/details/"+node.data.key;
-//  fetch("http://localhost:8080/api/getAllPositionDetails/", requestOptions)
-//  .then(response => response.json())
-//  .then(result => {
-//	  console.log(result);
-//	  result.forEach(e=>{
-//		  if(e.positionId==node.data.key ){
-//			  msg="roles: "+e.roles+"<br/>"+"project: " +e.projects+"<br/>"+"responsibilities: "+e.responsibilities;
-//			  document.getElementById("myStatus").innerHTML = msg;
-//		  }
-//	  })
-//  	  
-//  })
-  
-//  document.getElementById("myStatus").textContent = msg;
-//  console.log("clicked!");
-//  console.log(e, obj);
 }
 
 myDiagram.nodeTemplate =
@@ -324,23 +309,101 @@ function getLinkDataArray(tbl_roles) {
 
     return filtered;
 }
-//myDiagram.model = new go.GraphLinksModel(getNodeDataArray(), getLinkDataArray());
+
+//fetch("http://10.184.224.79:8080/api/getAllPositions/", requestOptions)
+//.then(response => response.json())
+//.then(result => {
+//	  var tbl_position=result;
+//	  fetch("http://10.184.224.79:8080/api/getAllStructures/", requestOptions)
+//	  .then(response => response.json())
+//	  .then(result => {
+//	  	  var tbl_roles=result;
+//	  	  console.log(tbl_roles);
+//	  	  myDiagram.model = new go.GraphLinksModel(getNodeDataArray(tbl_position), getLinkDataArray(tbl_roles));
+//	  	  
+//	  })
+//	  
+//	  
+//})
+//.catch(error => console.log('error', error));
 
 
-fetch("http://10.184.224.79:8080/api/getAllPositions/", requestOptions)
+// temporary
+
+var tmpNodeDataArray= [
+    { key: "Engineering", text: "Engineering", color: "lightblue" },
+    { key: "Member Engineering", text: "Member Engineering", color: "orange" },
+    { key: "Technical Lead", text: "Technical Lead", color: "lightgreen"},
+    { key: "Product Manager", text: "Product Manager", color: "pink"},
+    { key: "Architect", text: "Architect", color: "green"},
+    { key: "SW Delivery Manager", text: "SW Delivery Manager", color: "green"},
+    { key: "DQA", text: "DQA", color: "green"},
+    { key: "SQM", text: "SQM", color: "green"},
+    { key: "Subject Matter Expert", text: "Subject Matter Expert", color: "green"},
+    { key: "Architect", text: "Architect", color: "green"},
+    { key: "Principal Consultant", text: "Principal Consultant", color: "green"},
+    { key: "Program Manager", text: "Program Manager", color: "green"},
+    { key: "Engineering Manager", text: "Engineering Manager", color: "green"},
+    
+];
+function getTmpLinkDataArray(structures){
+	var temp=[];
+	// to reassign obj, remove id,departmentname & domain
+	var newStructure=structures.map(e=>{
+		let tmp={};
+		for(let i in e){
+			if(i!="id" && i!="departmentName" && i!="domain"){
+				tmp[i]=e[i];
+			}
+		}
+		return tmp;
+	});
+	
+	var tmpPair=[];
+	var arr=newStructure.map(e=>{
+		
+		let tmp=[];
+		for(let i in e){
+			if(e[i]!=null && e[i]!=undefined){
+				tmp.push(e[i]);
+			}
+		}
+
+		//
+		for (let i = 0; i < tmp.length - 1; i++) {
+            let tmpObj = {};
+            tmpObj["from"] = tmp[i];
+            tmpObj["to"] = tmp[i + 1];
+            tmpObj["color"] = "green";
+            tmpPair.push(tmpObj)
+        }
+	})
+	// to convert into new arr of obj
+	// obj: {from: ..., to: ..., color: ...}
+	let keys = ['from', 'to'];
+    let filtered = tmpPair.filter(
+        (s => o => 
+            (k => !s.has(k) && s.add(k))
+            (keys.map(k => o[k]).join('|'))
+        )
+        (new Set)
+    );
+
+    return filtered;
+	
+}
+fetch("http://localhost:8080/api/getAllStructures/", requestOptions)
 .then(response => response.json())
 .then(result => {
-	  var tbl_position=result;
-	  fetch("http://10.184.224.79:8080/api/getAllStructures/", requestOptions)
-	  .then(response => response.json())
-	  .then(result => {
-	  	  var tbl_roles=result;
-	  	  console.log(tbl_roles);
-	  	  myDiagram.model = new go.GraphLinksModel(getNodeDataArray(tbl_position), getLinkDataArray(tbl_roles));
-	  	  
-	  })
-	  
-	  
+	console.log(result);
+	let departmentName=window.location.href.split("/")[3];
+	let tmp=[];
+	result.forEach(e=>{
+		if(e.departmentName==departmentName){
+			tmp.push(e);
+		}
+	})
+	myDiagram.model = new go.GraphLinksModel(tmpNodeDataArray, getTmpLinkDataArray(tmp));
 })
-.catch(error => console.log('error', error));
+
   

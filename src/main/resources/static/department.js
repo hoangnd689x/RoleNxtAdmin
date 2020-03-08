@@ -1,3 +1,3 @@
-  document.getElementById("myButton").onclick = function () {
-        location.href = "/structure";
-    };
+function showDepartmentStructure(departmentName){
+	location.href = departmentName+"/structure";
+}
