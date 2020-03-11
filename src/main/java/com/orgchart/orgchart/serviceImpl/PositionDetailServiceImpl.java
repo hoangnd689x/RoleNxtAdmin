@@ -47,14 +47,15 @@ public class PositionDetailServiceImpl implements PositionDetailsService {
 					try {
 						poD.setDomain(currentRow.getCell(0).getStringCellValue());
 						poD.setCareerPath(currentRow.getCell(1).getStringCellValue());
-						poD.setDomainRoles(currentRow.getCell(2).getStringCellValue());
-						poD.setProjectCategory(currentRow.getCell(3).getStringCellValue());
-						poD.setCompetencyRequires(currentRow.getCell(4).getStringCellValue());
-						poD.setKRA(currentRow.getCell(5).getStringCellValue());
-						poD.setScope(currentRow.getCell(6).getStringCellValue());
-						poD.setResponsibilities(currentRow.getCell(7).getStringCellValue());
-						poD.setIndustrialRole(currentRow.getCell(8).getStringCellValue());
-						poD.setEntryCriteria(currentRow.getCell(9).getStringCellValue());
+						poD.setPosition(currentRow.getCell(2).getStringCellValue());
+						poD.setDomainRoles(currentRow.getCell(3).getStringCellValue());
+						poD.setProjectCategory(currentRow.getCell(4).getStringCellValue());
+						poD.setCompetencyRequires(currentRow.getCell(5).getStringCellValue());
+						poD.setKRA(currentRow.getCell(6).getStringCellValue());
+						poD.setScope(currentRow.getCell(7).getStringCellValue());
+						poD.setResponsibilities(currentRow.getCell(8).getStringCellValue());
+						poD.setIndustrialRole(currentRow.getCell(9).getStringCellValue());
+						poD.setEntryCriteria(currentRow.getCell(10).getStringCellValue());
 
 						listPositionDetail.add(poD);
 					} catch (Exception e) {

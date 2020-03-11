@@ -13,6 +13,7 @@ public class PositionDetails {
 	@Id
 	private String domain;
 	private String careerPath;
+	private String position;
 	private String domainRoles;
 	private String projectCategory;
 	private String competencyRequires;
@@ -80,6 +81,12 @@ public class PositionDetails {
 	}
 	public void setEntryCriteria(String entryCriteria) {
 		this.entryCriteria = entryCriteria;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
 	}
 	
 }
