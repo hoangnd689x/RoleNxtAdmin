@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -22,52 +21,52 @@ import com.orgchart.orgchart.service.StructureService;
  */
 @Repository
 public class StructureServiceImpl implements StructureService {
-	
-	private static final String FILE_NAME = "Structure.xlsx";
-	
-	@Override
-	public List<Structure> getAllStructures(){
-		List<Structure> listStructure = new ArrayList<>();
-        try {
-        	System.out.println(FILE_NAME);
-            FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
-            Workbook workbook = new XSSFWorkbook(excelFile);
-            Sheet datatypeSheet = workbook.getSheetAt(0);
-            Iterator<Row> iterator = datatypeSheet.iterator();
-            boolean firstRow = true;
-            
-            
-            
-            while (iterator.hasNext()) {
 
-                Row currentRow = iterator.next();
-                Iterator<Cell> cellIterator = currentRow.iterator();
-                Structure str = new Structure();
-                
-                
-                if(firstRow) {
-                	firstRow = false;
-                }else {
-                	//if(currentRow.getCell(0).getCellTypeEnum()== CellType.STRING || currentRow.getCell(0).getCellTypeEnum()== CellType.NUMERIC) {
-                		if(0 != currentRow.getCell(0).getNumericCellValue() || null != currentRow.getCell(0) || null != currentRow.getCell(0)  || null != currentRow.getCell(1)) {
-                			str.setId((long) currentRow.getCell(0).getNumericCellValue());
-                			str.setPath(currentRow.getCell(1).getStringCellValue());
-                    		listStructure.add(str);
-                    	}
-                	//}
-                }
-            }
-            
-            for (int i = 0; i < listStructure.size(); i++) {
-            	System.out.println(listStructure.get(i).getId());
-            	System.out.println(listStructure.get(i).getPath());
+	private static final String FILE_NAME = "data_structure.xlsx";
+
+	@Override
+	public List<Structure> getAllStructures() {
+		List<Structure> listStructure = new ArrayList<>();
+		try {
+			System.out.println(FILE_NAME);
+			FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
+			Workbook workbook = new XSSFWorkbook(excelFile);
+			Sheet datatypeSheet = workbook.getSheetAt(0);
+			Iterator<Row> iterator = datatypeSheet.iterator();
+			boolean firstRow = true;
+
+			while (iterator.hasNext()) {
+
+				Row currentRow = iterator.next();
+				Structure str = new Structure();
+
+				if (firstRow) {
+					firstRow = false;
+				} else {
+					try {
+						str.setId((long) currentRow.getCell(0).getNumericCellValue());
+						str.setDepartmentName(currentRow.getCell(1).getStringCellValue());
+						str.setDomain(currentRow.getCell(2).getStringCellValue());
+						str.setLevel0(currentRow.getCell(3).getStringCellValue());
+						str.setLevel1(currentRow.getCell(4).getStringCellValue());
+						str.setLevel2(currentRow.getCell(5).getStringCellValue());
+						str.setLevel3(currentRow.getCell(6).getStringCellValue());
+						str.setLevel4(currentRow.getCell(7).getStringCellValue());
+						str.setLevel5(currentRow.getCell(8).getStringCellValue());
+						str.setLevel6(currentRow.getCell(9).getStringCellValue());
+						str.setLevel7(currentRow.getCell(10).getStringCellValue());
+						listStructure.add(str);
+					} catch (Exception e) {
+						e.printStackTrace();
+						listStructure.add(str);
+					}
+				}
 			}
-            
-        } catch (Exception e) {
-        	//System.out.println(listPostion.toString());
-            e.printStackTrace();
-        }
-		
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return listStructure;
 	}
 }

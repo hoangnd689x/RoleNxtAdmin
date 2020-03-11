@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -22,52 +21,52 @@ import com.orgchart.orgchart.service.PositionDetailsService;
  */
 @Repository
 public class PositionDetailServiceImpl implements PositionDetailsService {
-	
-	private static final String FILE_NAME = "PositionDetails.xlsx";
-	
-	@Override
-	public List<PositionDetails> getAllPositionDetails(){
-		List<PositionDetails> listPositionDetail = new ArrayList<>();
-        try {
-        	System.out.println(FILE_NAME);
-            FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
-            Workbook workbook = new XSSFWorkbook(excelFile);
-            Sheet datatypeSheet = workbook.getSheetAt(0);
-            Iterator<Row> iterator = datatypeSheet.iterator();
-            boolean firstRow = true;
-            
-            
-            
-            while (iterator.hasNext()) {
 
-                Row currentRow = iterator.next();
-                Iterator<Cell> cellIterator = currentRow.iterator();
-                PositionDetails poD = new PositionDetails();
-                
-                
-                if(firstRow) {
-                	firstRow = false;
-                }else {
-                	//if(currentRow.getCell(0).getCellTypeEnum()== CellType.STRING || currentRow.getCell(0).getCellTypeEnum()== CellType.NUMERIC) {
-                		if(0 != currentRow.getCell(0).getNumericCellValue() || null != currentRow.getCell(0) || null != currentRow.getCell(0)  || null != currentRow.getCell(1)) {
-                			poD.setId((long) currentRow.getCell(0).getNumericCellValue());
-                			poD.setPositionId((long)currentRow.getCell(1).getNumericCellValue());
-                			poD.setRoles(currentRow.getCell(2).getStringCellValue());
-                			poD.setProjects(currentRow.getCell(3).getStringCellValue());
-                			poD.setResponsibilities(currentRow.getCell(4).getStringCellValue());
-                			
-                    		listPositionDetail.add(poD);
-                    	}
-                	//}
-                }
-            }
-            
-            
-        } catch (Exception e) {
-        	//System.out.println(listPostion.toString());
-            e.printStackTrace();
-        }
-		
+	private static final String FILE_NAME = "data_structure.xlsx";
+
+	@Override
+	public List<PositionDetails> getAllPositionDetails() {
+		List<PositionDetails> listPositionDetail = new ArrayList<>();
+		try {
+			System.out.println(FILE_NAME);
+			FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
+			Workbook workbook = new XSSFWorkbook(excelFile);
+			// Get sheet 1 - Roles
+			Sheet datatypeSheet = workbook.getSheetAt(1);
+			Iterator<Row> iterator = datatypeSheet.iterator();
+			boolean firstRow = true;
+
+			while (iterator.hasNext()) {
+
+				Row currentRow = iterator.next();
+				PositionDetails poD = new PositionDetails();
+
+				if (firstRow) {
+					firstRow = false;
+				} else {
+					try {
+						poD.setDomain(currentRow.getCell(0).getStringCellValue());
+						poD.setCareerPath(currentRow.getCell(1).getStringCellValue());
+						poD.setDomainRoles(currentRow.getCell(2).getStringCellValue());
+						poD.setProjectCategory(currentRow.getCell(3).getStringCellValue());
+						poD.setCompetencyRequires(currentRow.getCell(4).getStringCellValue());
+						poD.setKRA(currentRow.getCell(5).getStringCellValue());
+						poD.setScope(currentRow.getCell(6).getStringCellValue());
+						poD.setResponsibilities(currentRow.getCell(7).getStringCellValue());
+						poD.setIndustrialRole(currentRow.getCell(8).getStringCellValue());
+						poD.setEntryCriteria(currentRow.getCell(9).getStringCellValue());
+
+						listPositionDetail.add(poD);
+					} catch (Exception e) {
+						e.printStackTrace();
+						listPositionDetail.add(poD);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return listPositionDetail;
 	}
 }

@@ -78,13 +78,58 @@ function nodeInfo(d) {  // Tooltip info for a node data object
     return str;
 }
 
+function showProperties(e, obj) {  // executed by ContextMenuButton
+  var node = obj.part.adornedPart;
+  var msg = "Context clicked: " + node.data.key + ". ";
+  msg += "Selection includes:";
+  myDiagram.selection.each(function(part) {
+    msg += " " + part.toString();
+  });
+  document.getElementById("myStatus").textContent = msg;
+}
+
 // These nodes have text surrounded by a rounded rectangle
 // whose fill color is bound to the node data.
 // The user can drag a node by dragging its TextBlock label.
 // Dragging from the Shape will start drawing a new link.
+
+function nodeClicked(e, obj) {  // executed by click and doubleclick handlers
+  var evt = e.copy();
+  var node = obj.part;
+  var type = evt.clickCount === 2 ? "Double-Clicked: " : "Clicked: ";
+  var msg = type + node.data.key + ". ";
+  location.href = "/position/details/"+node.data.key;
+//  fetch("http://localhost:8080/api/getAllPositionDetails/", requestOptions)
+//  .then(response => response.json())
+//  .then(result => {
+//	  console.log(result);
+//	  result.forEach(e=>{
+//		  if(e.positionId==node.data.key ){
+//			  msg="roles: "+e.roles+"<br/>"+"project: " +e.projects+"<br/>"+"responsibilities: "+e.responsibilities;
+//			  document.getElementById("myStatus").innerHTML = msg;
+//		  }
+//	  })
+//  	  
+//  })
+  
+//  document.getElementById("myStatus").textContent = msg;
+//  console.log("clicked!");
+//  console.log(e, obj);
+}
+
 myDiagram.nodeTemplate =
     $(go.Node, "Auto",
         { locationSpot: go.Spot.Center },
+        {
+          click: nodeClicked,
+          doubleClick: nodeClicked,
+          contextMenu:
+            $("ContextMenu",
+              $("ContextMenuButton",
+                $(go.TextBlock, "Properties"),
+                { click: showProperties })
+            )
+        },
         $(go.Shape, "RoundedRectangle",
             {
                 fill: "white", // the default fill, if there is no data bound value
@@ -282,11 +327,11 @@ function getLinkDataArray(tbl_roles) {
 //myDiagram.model = new go.GraphLinksModel(getNodeDataArray(), getLinkDataArray());
 
 
-fetch("http://localhost:8080/api/getAllPositions/", requestOptions)
+fetch("http://10.184.224.79:8080/api/getAllPositions/", requestOptions)
 .then(response => response.json())
 .then(result => {
 	  var tbl_position=result;
-	  fetch("http://localhost:8080/api/getAllStructures/", requestOptions)
+	  fetch("http://10.184.224.79:8080/api/getAllStructures/", requestOptions)
 	  .then(response => response.json())
 	  .then(result => {
 	  	  var tbl_roles=result;
