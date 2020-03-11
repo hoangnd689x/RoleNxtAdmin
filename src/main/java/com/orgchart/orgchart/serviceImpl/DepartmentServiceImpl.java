@@ -2,6 +2,7 @@ package com.orgchart.orgchart.serviceImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,7 +12,10 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.orgchart.orgchart.model.Department;
 import com.orgchart.orgchart.model.Structure;
@@ -32,8 +36,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 		List<Department> listDepartment = new ArrayList<>();
 		try {
 			System.out.println(FILE_NAME);
-			FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
-			Workbook workbook = new XSSFWorkbook(excelFile);
+//			FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
+			InputStream inputStream = getClass()
+					.getClassLoader().getResourceAsStream(FILE_NAME);
+			
+			Workbook workbook = new XSSFWorkbook(inputStream);
+			///
+			
 			Sheet datatypeSheet = workbook.getSheetAt(2);
 			Iterator<Row> iterator = datatypeSheet.iterator();
 			boolean firstRow = true;

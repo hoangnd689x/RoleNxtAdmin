@@ -2,6 +2,7 @@ package com.orgchart.orgchart.serviceImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.orgchart.orgchart.model.Position;
 import com.orgchart.orgchart.service.PositionService;
@@ -30,8 +32,10 @@ public class PositionServiceImpl implements PositionService {
 		List<Position> listPosition = new ArrayList<>();
         try {
         	System.out.println(FILE_NAME);
-            FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
-            Workbook workbook = new XSSFWorkbook(excelFile);
+			InputStream inputStream = getClass()
+					.getClassLoader().getResourceAsStream(FILE_NAME);
+			
+			Workbook workbook = new XSSFWorkbook(inputStream);
             Sheet datatypeSheet = workbook.getSheetAt(0);
             Iterator<Row> iterator = datatypeSheet.iterator();
             boolean firstRow = true;

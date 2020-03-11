@@ -99,7 +99,7 @@ var requestOptions = {
 	var node = obj.part;
 	var type = evt.clickCount === 2 ? "Double-Clicked: " : "Clicked: ";
 	var msg = type + node.data.key + ". ";
-	location.href = "/position/details/"+node.data.key;
+	location.href = "/orgchart/position/details/"+node.data.key;
   }
   
   myDiagram.nodeTemplate =
@@ -438,11 +438,13 @@ var requestOptions = {
 
 //   })
 
-  fetch("http://localhost:8080/api/getAllStructures/", requestOptions)
+  fetch("http://localhost:8080/orgchart/api/getAllStructures/", requestOptions)
   .then(response => response.json())
   .then(result => {
 	  console.log(result);
-	  let departmentName=window.location.href.split("/")[3];
+	  let departmentName="";
+	  let url=window.location.href.split("/");
+	  departmentName=url[url.length-2];
 	  let tmp=[];
 	  result.forEach(e=>{
 		  if(e.departmentName==departmentName){
