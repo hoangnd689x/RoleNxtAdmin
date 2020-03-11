@@ -24,50 +24,45 @@ import com.orgchart.orgchart.service.StructureService;
  */
 @Repository
 public class DepartmentServiceImpl implements DepartmentService {
-	
-	private static final String FILE_NAME = "Department.xlsx";
-	
-	@Override
-	public List<Department> getAllDepartments(){
-		List<Department> listDepartment = new ArrayList<>();
-        try {
-        	System.out.println(FILE_NAME);
-            FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
-            Workbook workbook = new XSSFWorkbook(excelFile);
-            Sheet datatypeSheet = workbook.getSheetAt(0);
-            Iterator<Row> iterator = datatypeSheet.iterator();
-            boolean firstRow = true;
-            
-            while (iterator.hasNext()) {
 
-                Row currentRow = iterator.next();
-                Iterator<Cell> cellIterator = currentRow.iterator();
-                Department dm = new Department();
-                
-                
-                if(firstRow) {
-                	firstRow = false;
-                }else {
-                	//if(currentRow.getCell(0).getCellTypeEnum()== CellType.STRING || currentRow.getCell(0).getCellTypeEnum()== CellType.NUMERIC) {
-                		if(0 != currentRow.getCell(0).getNumericCellValue() || null != currentRow.getCell(0) || null != currentRow.getCell(0)  || null != currentRow.getCell(1)) {
-                			dm.setId((long) currentRow.getCell(0).getNumericCellValue());
-                			dm.setName(currentRow.getCell(1).getStringCellValue());
-                			listDepartment.add(dm);
-                    	}
-                	//}
-                }
-            }
-            
-            for (int i = 0; i < listDepartment.size(); i++) {
-            	System.out.println(listDepartment.get(i).getId());
-            	System.out.println(listDepartment.get(i).getName());
+	private static final String FILE_NAME = "data_structure.xlsx";
+
+	@Override
+	public List<Department> getAllDepartments() {
+		List<Department> listDepartment = new ArrayList<>();
+		try {
+			System.out.println(FILE_NAME);
+			FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
+			Workbook workbook = new XSSFWorkbook(excelFile);
+			Sheet datatypeSheet = workbook.getSheetAt(2);
+			Iterator<Row> iterator = datatypeSheet.iterator();
+			boolean firstRow = true;
+
+			while (iterator.hasNext()) {
+
+				Row currentRow = iterator.next();
+				Department dm = new Department();
+
+				if (firstRow) {
+					firstRow = false;
+				} else {
+					try {
+						dm.setId((long) currentRow.getCell(0).getNumericCellValue());
+						dm.setName(currentRow.getCell(1).getStringCellValue());
+						dm.setDomain(currentRow.getCell(2).getStringCellValue());
+						dm.setBusinessSector(currentRow.getCell(3).getStringCellValue());
+						listDepartment.add(dm);
+					} catch (Exception e) {
+						e.printStackTrace();
+						listDepartment.add(dm);
+					}
+					
+				}
 			}
-            
-        } catch (Exception e) {
-        	//System.out.println(listPostion.toString());
-            e.printStackTrace();
-        }
-		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return listDepartment;
 	}
 }

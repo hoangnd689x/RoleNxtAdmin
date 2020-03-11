@@ -23,6 +23,7 @@ public class Structure  implements Serializable{
 	private String level4;
 	private String level5;
 	private String level6;
+	private String level7;
 	
 	
 	public long getId() {
@@ -84,6 +85,12 @@ public class Structure  implements Serializable{
 	}
 	public void setLevel6(String level6) {
 		this.level6 = level6;
+	}
+	public String getLevel7() {
+		return level7;
+	}
+	public void setLevel7(String level7) {
+		this.level7 = level7;
 	}
 	
 }

@@ -10,42 +10,76 @@ import javax.persistence.Id;
 @Entity
 public class PositionDetails {
 	
-	private long id;
-	private long positionId;
-	private String roles;
-	private String projects;
-	private String responsibilities;
-	
 	@Id
-	public long getId() {
-		return id;
+	private String domain;
+	private String careerPath;
+	private String domainRoles;
+	private String projectCategory;
+	private String competencyRequires;
+	private String KRA;
+	private String scope;
+	private String responsibilities;
+	private String industrialRole;
+	private String entryCriteria;
+	public String getDomain() {
+		return domain;
 	}
-	public void setId(long id) {
-		this.id = id;
+	public void setDomain(String domain) {
+		this.domain = domain;
 	}
-	public long getPositionId() {
-		return positionId;
+	public String getCareerPath() {
+		return careerPath;
 	}
-	public void setPositionId(long positionId) {
-		this.positionId = positionId;
+	public void setCareerPath(String careerPath) {
+		this.careerPath = careerPath;
 	}
-	public String getRoles() {
-		return roles;
+	public String getDomainRoles() {
+		return domainRoles;
 	}
-	public void setRoles(String roles) {
-		this.roles = roles;
+	public void setDomainRoles(String domainRoles) {
+		this.domainRoles = domainRoles;
 	}
-	public String getProjects() {
-		return projects;
+	public String getProjectCategory() {
+		return projectCategory;
 	}
-	public void setProjects(String projects) {
-		this.projects = projects;
+	public void setProjectCategory(String projectCategory) {
+		this.projectCategory = projectCategory;
+	}
+	public String getCompetencyRequires() {
+		return competencyRequires;
+	}
+	public void setCompetencyRequires(String competencyRequires) {
+		this.competencyRequires = competencyRequires;
+	}
+	public String getKRA() {
+		return KRA;
+	}
+	public void setKRA(String kRA) {
+		KRA = kRA;
+	}
+	public String getScope() {
+		return scope;
+	}
+	public void setScope(String scope) {
+		this.scope = scope;
 	}
 	public String getResponsibilities() {
 		return responsibilities;
 	}
 	public void setResponsibilities(String responsibilities) {
 		this.responsibilities = responsibilities;
+	}
+	public String getIndustrialRole() {
+		return industrialRole;
+	}
+	public void setIndustrialRole(String industrialRole) {
+		this.industrialRole = industrialRole;
+	}
+	public String getEntryCriteria() {
+		return entryCriteria;
+	}
+	public void setEntryCriteria(String entryCriteria) {
+		this.entryCriteria = entryCriteria;
 	}
 	
 }

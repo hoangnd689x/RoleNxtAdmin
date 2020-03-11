@@ -14,17 +14,15 @@ import com.orgchart.orgchart.serviceImpl.PositionDetailServiceImpl;
 @Controller
 public class PositionDetailsController {
 	PositionDetailServiceImpl poDService = new PositionDetailServiceImpl();
-	 @GetMapping("/position/details/{id}")
-	    public String getPositionDetails(@PathVariable("id") long id, Model model ) {
-		 List<PositionDetails> listDepartment = new ArrayList();
-		 listDepartment = poDService.getAllPositionDetails();
-		 // start to loop
-		 for (PositionDetails positionDetail : listDepartment) {
-			    if(Long.compare(positionDetail.getPositionId(), id)==0) {
-			    	model.addAttribute("item",positionDetail);
-			    }
-			}
-		 
-		 return "position-detail";
-	    }
+	/*
+	 * @GetMapping("/position/details/{id}") public String
+	 * getPositionDetails(@PathVariable("id") long id, Model model ) {
+	 * List<PositionDetails> listDepartment = new ArrayList(); listDepartment =
+	 * poDService.getAllPositionDetails(); // start to loop for (PositionDetails
+	 * positionDetail : listDepartment) {
+	 * if(Long.compare(positionDetail.getPositionId(), id)==0) {
+	 * model.addAttribute("item",positionDetail); } }
+	 * 
+	 * return "position-detail"; }
+	 */
 }
