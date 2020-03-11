@@ -17,15 +17,7 @@ public class StructureController {
 	StructureServiceImpl structureService = new StructureServiceImpl();
 	
 	@GetMapping("/{department-name}/structure")
-    public String getPositionDetails(@PathVariable("department-name") String departmentName, Model model) {
-		List<Structure> listStructure = new ArrayList();
-		List<Structure> listStructureByDepartmentName = new ArrayList();
-		listStructure = structureService.getAllStructures();
-		listStructureByDepartmentName=listStructure
-				.stream()
-				  .filter(d -> d.getDepartmentName().equalsIgnoreCase(departmentName))
-				  .collect(Collectors.toList());
-		model.addAttribute("items",listStructureByDepartmentName);
+    public String getPositionDetails() {
 		return "structure";
     }
 }
