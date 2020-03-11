@@ -438,7 +438,7 @@ var requestOptions = {
 
 //   })
 
-  fetch("http://localhost:8080/orgchart/api/getAllStructures/", requestOptions)
+  fetch("/orgchart/api/getAllStructures/", requestOptions)
   .then(response => response.json())
   .then(result => {
 	  console.log(result);
