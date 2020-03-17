@@ -18,12 +18,6 @@ var requestOptions = {
 			  // enable undo & redo
 			  "undoManager.isEnabled": true
 		  });
-  
-  // Define the appearance and behavior for Nodes:
-  
-  // First, define the shared context menu for all Nodes, Links, and Groups.
-  
-  // To simplify this code we define a function for creating a context menu button:
   function makeButton(text, action, visiblePredicate) {
 	  return $("ContextMenuButton",
 		  $(go.TextBlock, text),
@@ -31,15 +25,12 @@ var requestOptions = {
 		  // don't bother with binding GraphObject.visible if there's no predicate
 		  visiblePredicate ? new go.Binding("visible", "", function (o, e) { return o.diagram ? visiblePredicate(o, e) : false; }).ofObject() : {});
   }
-  
-  // a context menu is an Adornment with a bunch of buttons in them
   var partContextMenu =
 	  $("ContextMenu",
 		  makeButton("Properties",
 			  function (e, obj) {  // OBJ is this Button
 				  var contextmenu = obj.part;  // the Button is in the context menu Adornment
 				  var part = contextmenu.adornedPart;  // the adornedPart is the Part that the context menu adorns
-				  // now can do something with PART, or with its data, or with the Adornment (the context menu)
 				  if (part instanceof go.Link) alert(linkInfo(part.data));
 				  else if (part instanceof go.Group) alert(groupInfo(contextmenu));
 				  else alert(nodeInfo(part.data));
@@ -89,11 +80,6 @@ var requestOptions = {
 	document.getElementById("myStatus").textContent = msg;
   }
   
-  // These nodes have text surrounded by a rounded rectangle
-  // whose fill color is bound to the node data.
-  // The user can drag a node by dragging its TextBlock label.
-  // Dragging from the Shape will start drawing a new link.
-  
   function nodeClicked(e, obj) {  // executed by click and doubleclick handlers
 	var evt = e.copy();
 	var node = obj.part;
@@ -104,7 +90,13 @@ var requestOptions = {
   
   myDiagram.nodeTemplate =
 	  $(go.Node, "Auto",
-		  { locationSpot: go.Spot.Center },
+			  {
+          locationSpot: go.Spot.TopCenter,
+          isShadowed: true, shadowBlur: 1,
+          shadowOffset: new go.Point(0, 1),
+          shadowColor: "rgba(0, 0, 0, .14)"
+        },
+		  new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
 		  {
 			click: nodeClicked,
 			doubleClick: nodeClicked,
@@ -119,7 +111,6 @@ var requestOptions = {
 			  {
 				  fill: "white", // the default fill, if there is no data bound value
 				  portId: "", cursor: "pointer",  // the Shape is the port, not the whole Node
-				  // allow all kinds of links from and to this port
 				  fromLinkable: true, fromLinkableSelfNode: true, fromLinkableDuplicates: true,
 				  toLinkable: true, toLinkableSelfNode: true, toLinkableDuplicates: true
 			  },
@@ -139,39 +130,32 @@ var requestOptions = {
 					  $(go.TextBlock, { margin: 4 },  // the tooltip shows the result of calling nodeInfo(data)
 						  new go.Binding("text", "", nodeInfo))
 				  ),
-			  // this context menu Adornment is shared by all nodes
 			  contextMenu: partContextMenu
 		  }
 	  );
-  
-  // Define the appearance and behavior for Links:
-  
   function linkInfo(d) {  // Tooltip info for a link data object
 	  return "Link:\nfrom " + d.from + " to " + d.to;
   }
-  
-  // The link shape and arrowhead have their stroke brush data bound to the "color" property
-  myDiagram.linkTemplate =
-	  $(go.Link,
-		  { toShortLength: 3, relinkableFrom: true, relinkableTo: true },  // allow the user to relink existing links
-		  $(go.Shape,
-			  { strokeWidth: 2 },
-			  new go.Binding("stroke", "color")),
-		  $(go.Shape,
-			  { toArrow: "Standard", stroke: null },
-			  new go.Binding("fill", "color")),
-		  { // this tooltip Adornment is shared by all links
-			  toolTip:
-				  $("ToolTip",
-					  $(go.TextBlock, { margin: 4 },  // the tooltip shows the result of calling linkInfo(data)
-						  new go.Binding("text", "", linkInfo))
-				  ),
-			  // the same context menu Adornment is shared by all links
-			  contextMenu: partContextMenu
-		  }
-	  );
-  
-  // Define the appearance and behavior for Groups:
+   // The link shape and arrowhead have their stroke brush data bound to the "color" property
+   myDiagram.linkTemplate =
+   $(go.Link,
+	 { toShortLength: 3, relinkableFrom: true, relinkableTo: true },  // allow the user to relink existing links
+	 $(go.Shape,
+	   { strokeWidth: 2 },
+	   new go.Binding("stroke", "color")),
+	 $(go.Shape,
+	   { toArrow: "Standard", stroke: null },
+	   new go.Binding("fill", "color")),
+	 { // this tooltip Adornment is shared by all links
+	   toolTip:
+		 $("ToolTip",
+		   $(go.TextBlock, { margin: 4 },  // the tooltip shows the result of calling linkInfo(data)
+			 new go.Binding("text", "", linkInfo))
+		 ),
+	   // the same context menu Adornment is shared by all links
+	   contextMenu: partContextMenu
+	 }
+   );
   
   function groupInfo(adornment) {  // takes the tooltip or context menu, not a group node data object
 	  var g = adornment.adornedPart;  // get the Group that the tooltip adorns
@@ -182,9 +166,6 @@ var requestOptions = {
 	  });
 	  return "Group " + g.data.key + ": " + g.data.text + "\n" + mems + " members including " + links + " links";
   }
-  
-  // Groups consist of a title in the color given by the group node data
-  // above a translucent gray rectangle surrounding the member parts
   myDiagram.groupTemplate =
 	  $(go.Group, "Vertical",
 		  {
@@ -224,20 +205,16 @@ var requestOptions = {
 		  }
 	  );
   
-  // Define the behavior for the Diagram background:
-  
   function diagramInfo(model) {  // Tooltip info for the diagram's model
 	  return "Model:\n" + model.nodeDataArray.length + " nodes, " + model.linkDataArray.length + " links";
   }
   
-  // provide a tooltip for the background of the Diagram, when not over any Part
   myDiagram.toolTip =
 	  $("ToolTip",
 		  $(go.TextBlock, { margin: 4 },
 			  new go.Binding("text", "", diagramInfo))
 	  );
   
-  // provide a context menu for the background of the Diagram, when not over any Part
   myDiagram.contextMenu =
 	  $("ContextMenu",
 		  makeButton("Paste",
@@ -251,7 +228,6 @@ var requestOptions = {
 			  function (o) { return o.diagram.commandHandler.canRedo(); })
 	  );
   
-  // Create the Diagram's Model:
   var nodeDataArray = [
 	  { key: 1, text: "Alpha", color: "lightblue" },
 	  { key: 2, text: "Beta", color: "orange" },
@@ -309,27 +285,6 @@ var requestOptions = {
   
 	  return filtered;
   }
-  
-  //fetch("http://10.184.224.79:8080/api/getAllPositions/", requestOptions)
-  //.then(response => response.json())
-  //.then(result => {
-  //	  var tbl_position=result;
-  //	  fetch("http://10.184.224.79:8080/api/getAllStructures/", requestOptions)
-  //	  .then(response => response.json())
-  //	  .then(result => {
-  //	  	  var tbl_roles=result;
-  //	  	  console.log(tbl_roles);
-  //	  	  myDiagram.model = new go.GraphLinksModel(getNodeDataArray(tbl_position), getLinkDataArray(tbl_roles));
-  //	  	  
-  //	  })
-  //	  
-  //	  
-  //})
-  //.catch(error => console.log('error', error));
-  
-  
-  // temporary
-  
   var tmpNodeDataArray= [
 	  { key: "Engineering", text: "Engineering", color: "lightblue" },
 	  { key: "Member Engineering", text: "Member Engineering", color: "orange" },
@@ -420,28 +375,24 @@ var requestOptions = {
 	// to convert into arr of obj
 	// { key: "Engineering", text: "Engineering", color: "lightblue" },
 	let result=[];
-	filtered.map(e=>{
+	filtered.map((e,i)=>{
 		let tmp={};
 		tmp["key"]=e;
 		tmp["text"]=e;
+		let loc=900-50*i;
+		let x=600+100*i;
+		tmp["loc"] = x+""+" "+loc+""; //hahaha
 		tmp["color"]="lightblue";
 		if(tmp["key"]!="") result.push(tmp);
 	})
+
 	return result;
 	
 }
-//   fetch("http://localhost:8080/api/getAllPositionDetails/", requestOptions)
-//   .then(response => response.json())
-//   .then(result => {
-	// Member Engineering
-	// domainRoles
-
-//   })
 
   fetch("/orgchart/api/getAllStructures/", requestOptions)
   .then(response => response.json())
   .then(result => {
-	  console.log(result);
 	  let departmentName="";
 	  let url=window.location.href.split("/");
 	  departmentName=url[url.length-2];
