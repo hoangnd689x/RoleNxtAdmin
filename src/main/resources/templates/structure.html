@@ -251,7 +251,9 @@
 					inputGraph.setAttribute("class", "");
 					oldInputGraphValue = inputGraph.value;
 					try {
-						g = graphlibDot.read(inputGraph.value);
+						
+						g=graphlibDot.read(inputGraph.value);
+						g.setGraph({rankDir:"BT"});
 					} catch (e) {
 						inputGraph.setAttribute("class", "error");
 						throw e;
