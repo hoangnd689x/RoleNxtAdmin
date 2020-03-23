@@ -1,33 +1,75 @@
-<h1><div th:text="${item.getPosition()}"></div></h1>
-<br/>
-<br/>
-<h3>Entry Criteria</h3>
-<div th:text="${item.getEntryCriteria()}"></div>
-<br/>
-<h3>Industrial Role</h3>
-<div th:text="${item.getIndustrialRole()}"></div>
-<br/>
-<h3>Responsibilities</h3>
-<div th:text="${item.getResponsibilities()}"></div>
-<br/>
-<h3>Scope</h3>
-<div th:text="${item.getScope()}"></div>
-<br/>
-<h3>KRA (key responsible area)</h3>
-<div th:text="${item.getKRA()}"></div>
-<br/>
-<h3>Competencies required</h3>
-<div th:text="${item.getCompetencyRequires()}"></div>
-<br/>
-<h3>Project Category</h3>
-<div th:text="${item.getProjectCategory()}"></div>
-<br/>
-<h3>Domain Roles</h3>
-<div th:text="${item.getDomainRoles()}"></div>
-<br/>
-<h3>Career path</h3>
-<div th:text="${item.getCareerPath()}"></div>
-<br/>
-<h3>Domain</h3>
-<div th:text="${item.getDomain()}"></div>
-<br/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>AS –Career Lattice</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+.fakeimg {
+	height: 200px;
+	background: #aaa;
+}
+
+h2 {
+	color: #003366;
+}
+</style>
+</head>
+
+<body>
+	<div class="jumbotron text-center" style="margin-bottom: 0">
+		<h1>AS –Career Lattice</h1>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<img class="fakeimg"
+					src="https://www.nicepng.com/png/detail/772-7726577_refrubished-employee-icon-admin-assets-upload-id.png" />
+				<h2>Entry Criteria</h2>
+				<h5 th:text="${item.getEntryCriteria()}"></h5>
+
+				<h2>Industrial Role</h2>
+				<h5 th:text="${item.getIndustrialRole()}"></h5>
+
+			</div>
+
+			<div class="col-md-4">
+				<h2>Responsibilities</h2>
+				<h5 th:text="${item.getResponsibilities()}"></h5>
+
+				<h2>Scope</h2>
+				<h5 th:text="${item.getScope()}"></h5>
+
+				<h2>Competencies required</h2>
+				<h5 th:text="${item.getDomain()}"></h5>
+
+				<h2>Domain</h2>
+				<h5 th:text="${item.getDomain()}"></h5>
+
+			</div>
+
+			<div class="col-md-4">
+				<h2>KRA (key responsible area)</h2>
+				<h5 th:text="${item.getKRA()}"></h5>
+
+				<h2>Project Category</h2>
+				<h5 th:text="${item.getProjectCategory()}"></h5>
+
+				<h2>Domain Roles</h2>
+				<h5 th:text="getDomainRoles"></h5>
+
+				<h2>Career path</h2>
+				<h5 th:text="${item.getCareerPath()}"></h5>
+			</div>
+		</div>
+
+	</div>
+
+</body>
