@@ -37,6 +37,22 @@
 		stroke-width: 1.5px;
 		fill: none;
 	}
+	/* This sets the color for "TK" nodes to a light blue green. */
+	g.type-TK > rect {
+	  fill: #00ffd0;
+	}
+	
+	text {
+	  font-weight: 300;
+	  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	  font-size: 14px;
+	}
+	
+	.node rect {
+	  stroke: #999;
+	  fill: #fff;
+	  stroke-width: 1.5px;
+	}
 </style>
 
 <style>
@@ -149,7 +165,25 @@
 		var render = dagreD3.render();
 
 		var g;
-
+		
+		function getColor(position){
+			let result;
+			switch (position) {
+			case "Member Engineering":
+				result ="#060691";
+				break;
+			case "Technical Lead":
+			case "SW Delivery Manager":
+			case "Product Manager":
+			case "Team Lead":
+				result ="#199c22";
+				break;
+			default:
+				result ="#060691";
+				break;
+			}
+			return result;
+		}
 		function getTmpNodeDataArray(structures) {
 			var temp = [];
 			// to reassign obj, remove id,departmentname & domain
@@ -176,11 +210,13 @@
 			let filtered = [...new Set(tmp)];
 			let converted = "digraph {\n";
 			filtered.forEach(e => {
-				converted += "\"" + e + "\";\n";
+				converted += "\"" + e +"\""+ " [labelType=\"html\" label=\" <span style='color:white;'>" + e +"</span>\"" +" style=\"fill: "+getColor(e)+"; font-weight: bold\"]" + ";\n";
 			})
 			return converted;
 
 		}
+		
+		
 		function getTmpLinkDataArray(structures) {
 			var temp = [];
 			// to reassign obj, remove id,departmentname & domain
