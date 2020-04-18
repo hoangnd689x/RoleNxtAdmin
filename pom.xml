@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.orgchart</groupId>
-	<artifactId>orgchart</artifactId>
+	<artifactId>orgchartapis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>orgchart</name>
+	<name>orgchartapis</name>
 	<description>Create Organize chart</description>
 	<packaging>war</packaging>
 	<properties>
@@ -66,13 +66,13 @@
 	</dependencies>
 
 		<build>
-		<finalName>orgchart</finalName>
+		<finalName>orgchartapis</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<warName>orgchart</warName>
+					<warName>orgchartapis</warName>
 				</configuration>
 			</plugin>
 			<plugin>

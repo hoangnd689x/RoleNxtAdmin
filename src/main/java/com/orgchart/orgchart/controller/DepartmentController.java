@@ -7,21 +7,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.orgchart.orgchart.model.Department;
+import com.orgchart.orgchart.model.Organization;
 import com.orgchart.orgchart.model.PositionDetails;
-import com.orgchart.orgchart.serviceImpl.DepartmentServiceImpl;
+import com.orgchart.orgchart.serviceImpl.OrganizationServiceImpl;
 import com.orgchart.orgchart.serviceImpl.PositionDetailServiceImpl;
 
 @Controller
 public class DepartmentController {
-	DepartmentServiceImpl departmentService = new DepartmentServiceImpl();
+	OrganizationServiceImpl departmentService = new OrganizationServiceImpl();
 
 	 @GetMapping("/")
 	    public String index(Model model) {
-		 List<Department> listDepartment = new ArrayList();
-		 List<Department> newListDepartment = new ArrayList();
-		 listDepartment = departmentService.getAllDepartments();
-		 for (Department department : listDepartment) {
+		 List<Organization> listDepartment = new ArrayList();
+		 List<Organization> newListDepartment = new ArrayList();
+		 listDepartment = departmentService.getAllOrgs();
+		 for (Organization department : listDepartment) {
 				  if(!department.getName().trim().isEmpty() && department.getName()!=null) {
 					  newListDepartment.add(department); } 
 				  }

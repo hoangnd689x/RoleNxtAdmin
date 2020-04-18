@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,150 +15,143 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.orgchart.orgchart.model.Domain;
 import com.orgchart.orgchart.model.Organization;
-import com.orgchart.orgchart.model.Position;
+import com.orgchart.orgchart.service.DomainService;
 import com.orgchart.orgchart.service.OrganizationService;
-import com.orgchart.orgchart.service.PositionService;
 
 /**
  * @author YOG1HC
  *
  */
-public class PositionServiceImpl implements PositionService {
+public class OrganizationServiceImpl implements OrganizationService {
 
 	private static final String FILE_NAME = "data_structure.xlsx";
 	private static String filePath = "";
-	
-	public PositionServiceImpl() {
+
+	public OrganizationServiceImpl() {
 		super();
-		// use this file path because in war file cannot point to resource folder, have
-				// to point to folder class/...
+		// use this file path because in war file cannot point to resource folder, have to point to folder class/...
 		filePath = Thread.currentThread().getContextClassLoader().getResource(FILE_NAME).getPath();
 	}
 
 	@Override
-	public List<Position> getAllPositions() {
-		List<Position> listPosition = new ArrayList<>();
+	public List<Organization> getAllOrgs() {
+		List<Organization> listDepartment = new ArrayList<>();
 		try {
 			File file = new File(filePath);
-
+			
 			FileInputStream inputStream = new FileInputStream(file);
-
 			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(4);
+			Sheet datatypeSheet = workbook.getSheetAt(2);
 			Iterator<Row> iterator = datatypeSheet.iterator();
 			boolean firstRow = true;
-			
-			OrganizationService orgService = new OrganizationServiceImpl();
-			List<Organization> listOrgs = orgService.getAllPureOrgs();
 
 			while (iterator.hasNext()) {
 
 				Row currentRow = iterator.next();
-				Iterator<Cell> cellIterator = currentRow.iterator();
-				Position pos = new Position();
+				Organization org = new Organization();
+
+				DomainService dmService = new DomainServiceImpl();
+				List<Domain> listDomain = dmService.getAllDomains();
 				
 				if (firstRow) {
 					firstRow = false;
 				} else {
 					try {
-						pos.setId((long) currentRow.getCell(0).getNumericCellValue());
+						org.setId((long) currentRow.getCell(0).getNumericCellValue());
+						org.setName(currentRow.getCell(1).getStringCellValue());
 						
-						for(Organization org: listOrgs) {
-							if((long) currentRow.getCell(1).getNumericCellValue() == org.getId()) {
-								pos.setOrganizationObj(org);
+						for(Domain dm: listDomain) {
+							if((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
+								org.setDomainObj(dm);
 							}
 						}
-						pos.setName(currentRow.getCell(2).toString());
+						
+						org.setBusinessSector(currentRow.getCell(3).getStringCellValue());
 						
 					} catch (Exception e) {
-						// TODO: handle exception
+						e.printStackTrace();
 					}
-					listPosition.add(pos);
+					listDepartment.add(org);
 				}
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
-
-		return listPosition;
+		return listDepartment;
 	}
 	
 	@Override
-	public List<Position> getAllPurePositions() {
-		List<Position> listPosition = new ArrayList<>();
+	public List<Organization> getAllPureOrgs() {
+		List<Organization> listDepartment = new ArrayList<>();
 		try {
 			File file = new File(filePath);
-
+			
 			FileInputStream inputStream = new FileInputStream(file);
-
 			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(4);
+			Sheet datatypeSheet = workbook.getSheetAt(2);
 			Iterator<Row> iterator = datatypeSheet.iterator();
 			boolean firstRow = true;
-			
-			OrganizationService orgService = new OrganizationServiceImpl();
-			List<Organization> listOrgs = orgService.getAllPureOrgs();
 
 			while (iterator.hasNext()) {
 
 				Row currentRow = iterator.next();
-				Iterator<Cell> cellIterator = currentRow.iterator();
-				Position pos = new Position();
+				Organization org = new Organization();
 				
 				if (firstRow) {
 					firstRow = false;
 				} else {
-					pos.setId((long) currentRow.getCell(0).getNumericCellValue());
-					pos.setName(currentRow.getCell(2).toString());
-					listPosition.add(pos);
+					try {
+						org.setId((long) currentRow.getCell(0).getNumericCellValue());
+						org.setName(currentRow.getCell(1).getStringCellValue());
+						org.setBusinessSector(currentRow.getCell(3).getStringCellValue());
+						listDepartment.add(org);
+					} catch (Exception e) {
+						e.printStackTrace();
+						listDepartment.add(org);
+					}
 				}
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
-
-		return listPosition;
+		return listDepartment;
 	}
 
 	@Override
-	public Position getPosById(long id) {
-		Position pos = new Position();
+	public Organization getOrgById(long id) {
+		Organization org = new Organization();
 		try {
 			File file = new File(filePath);
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(4);
+			Sheet datatypeSheet = workbook.getSheetAt(2);
 			Iterator<Row> iterator = datatypeSheet.iterator();
 			boolean firstRow = true;
-			
-			OrganizationService orgService = new OrganizationServiceImpl();
-			List<Organization> listOrgs = orgService.getAllOrgs();
 
 			while (iterator.hasNext()) {
 
 				Row currentRow = iterator.next();
+				
+				DomainService dmService = new DomainServiceImpl();
+				List<Domain> listDomain = dmService.getAllDomains();
 
 				if (firstRow) {
 					firstRow = false;
 				} else {
 					try {
 						if (currentRow.getCell(0).getNumericCellValue() == id) {
-							pos.setId((long) currentRow.getCell(0).getNumericCellValue());
+							org.setId((long) currentRow.getCell(0).getNumericCellValue());
+							org.setName(currentRow.getCell(1).getStringCellValue());
 							
-							for(Organization org: listOrgs) {
-								if((long) currentRow.getCell(1).getNumericCellValue() == org.getId()) {
-									pos.setOrganizationObj(org);
+							for(Domain dm: listDomain) {
+								if((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
+									org.setDomainObj(dm);
 								}
 							}
-							
-							pos.setName(currentRow.getCell(2).getStringCellValue());
+							org.setBusinessSector(currentRow.getCell(3).getStringCellValue());
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -168,25 +162,126 @@ public class PositionServiceImpl implements PositionService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return pos;
+		return org;
 	}
 
 	@Override
-	public boolean deletePos(long id) {
+	public boolean UpdateOrg(Organization orgUpdate) {
+		boolean isUpdated = false;
+		try {
+			File file = new File(filePath);
+			FileInputStream inputStream = new FileInputStream(file);
+			Workbook workbook = new XSSFWorkbook(inputStream);
+			Sheet datatypeSheet = workbook.getSheetAt(2);
+			Iterator<Row> iterator = datatypeSheet.iterator();
+			boolean firstRow = true;
+
+			while (iterator.hasNext()) {
+
+				Row row = iterator.next();
+				int columnCount = 0;
+
+				if (firstRow) {
+					firstRow = false;
+				} else {
+					try {
+						if (row.getCell(0).getNumericCellValue() == orgUpdate.getId()) {
+							Cell cell = row.createCell(columnCount);
+							cell.setCellValue(row.getRowNum());
+							cell = row.createCell(0);
+							cell.setCellValue(orgUpdate.getId());
+							cell = row.createCell(1);
+							cell.setCellValue(orgUpdate.getName());
+							cell = row.createCell(2);
+							cell.setCellValue(orgUpdate.getDomain());
+							cell = row.createCell(3);
+							cell.setCellValue(orgUpdate.getBusinessSector());
+							inputStream.close();
+							FileOutputStream out = new FileOutputStream(file);
+							workbook.write(out);
+							workbook.close();
+							out.close();
+							isUpdated = true;
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return isUpdated;
+	}
+
+	@Override
+	public boolean AddOrg(Organization orgUpdate) {
+		boolean isUpdated = false;
+		try {
+			File file = new File(filePath);
+			
+			FileInputStream inputStream = new FileInputStream(file);
+			Workbook workbook = new XSSFWorkbook(inputStream);
+			Sheet datatypeSheet = workbook.getSheetAt(2);
+			
+			int rowCount = datatypeSheet.getLastRowNum();
+			
+			// get the biggest id and +1 to create a new Organization
+			Row lastRow = datatypeSheet.getRow(rowCount);
+			long biggestId = 0;
+			Cell firstCell = lastRow.getCell(0);
+	        if (firstCell != null && firstCell.getCellType() != Cell.CELL_TYPE_BLANK) {
+	        	biggestId = (long)lastRow.getCell(0).getNumericCellValue();
+	        }else {
+	        	biggestId = 999;
+	        }
+			
+			Row row = datatypeSheet.createRow(++rowCount);
+			
+			Cell cell = row.createCell(rowCount);
+			cell.setCellValue(row.getRowNum());
+			cell = row.createCell(0);
+			cell.setCellValue(biggestId + 1);
+			cell = row.createCell(1);
+			cell.setCellValue(orgUpdate.getName());
+			cell = row.createCell(2);
+			cell.setCellValue(orgUpdate.getDomain());
+			cell = row.createCell(3);
+			cell.setCellValue(orgUpdate.getBusinessSector());
+			
+			inputStream.close();
+		
+			
+			FileOutputStream out = new FileOutputStream(file);
+			workbook.write(out);
+			workbook.close();
+			out.close();
+			
+			isUpdated = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return isUpdated;
+	}
+
+	@Override
+	public boolean deleteOrg(long id) {
 		boolean isDeleted = false;
 		try {
 			File file = new File(filePath);
 			
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(4);
+			Sheet datatypeSheet = workbook.getSheetAt(2);
 			Iterator<Row> iterator = datatypeSheet.iterator();
 			boolean firstRow = true;
 
 			while (iterator.hasNext()) {
 
 				Row currentRow = iterator.next();
+				System.out.println(currentRow);
 				int rowIndex = currentRow.getRowNum();
+				System.out.println("row index:" + rowIndex);
 				int lastRowNum = datatypeSheet.getLastRowNum();
 
 				if (firstRow) {
@@ -213,96 +308,5 @@ public class PositionServiceImpl implements PositionService {
 		}
 
 		return isDeleted;
-	}
-
-	@Override
-	public boolean UpdatePos(Position posUpdate) {
-		boolean isUpdated = false;
-		try {
-			File file = new File(filePath);
-			FileInputStream inputStream = new FileInputStream(file);
-			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(4);
-			Iterator<Row> iterator = datatypeSheet.iterator();
-			boolean firstRow = true;
-
-			while (iterator.hasNext()) {
-				Row row = iterator.next();
-				int columnCount = 0;
-
-				if (firstRow) {
-					firstRow = false;
-				} else {
-					try {
-						if (row.getCell(0).getNumericCellValue() == posUpdate.getId()) {
-							Cell cell = row.createCell(columnCount);
-							cell.setCellValue(row.getRowNum());
-							cell = row.createCell(0);
-							cell.setCellValue(posUpdate.getId());
-							cell = row.createCell(1);
-							cell.setCellValue(posUpdate.getOrganization());
-							cell = row.createCell(2);
-							cell.setCellValue(posUpdate.getName());
-							inputStream.close();
-							FileOutputStream out = new FileOutputStream(file);
-							workbook.write(out);
-							workbook.close();
-							out.close();
-							isUpdated = true;
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return isUpdated;
-	}
-
-	@Override
-	public boolean AddPos(Position posUpdate) {
-		boolean isUpdated = false;
-		try {
-			File file = new File(filePath);
-			
-			FileInputStream inputStream = new FileInputStream(file);
-			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(4);
-			
-			int rowCount = datatypeSheet.getLastRowNum();
-			
-			// get the biggest id and +1 to create a new Organization
-			Row lastRow = datatypeSheet.getRow(rowCount);
-			long biggestId = 0;
-			Cell firstCell = lastRow.getCell(0);
-	        if (firstCell != null && firstCell.getCellType() != Cell.CELL_TYPE_BLANK) {
-	        	biggestId = (long)lastRow.getCell(0).getNumericCellValue();
-	        }else {
-	        	biggestId = 999;
-	        }
-			
-			Row row = datatypeSheet.createRow(++rowCount);
-			
-			Cell cell = row.createCell(rowCount);
-			cell.setCellValue(row.getRowNum());
-			cell = row.createCell(0);
-			cell.setCellValue(biggestId + 1);
-			cell = row.createCell(1);
-			cell.setCellValue(posUpdate.getOrganization());
-			cell = row.createCell(2);
-			cell.setCellValue(posUpdate.getName());
-			inputStream.close();
-			FileOutputStream out = new FileOutputStream(file);
-			workbook.write(out);
-			workbook.close();
-			out.close();
-			
-			isUpdated = true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return isUpdated;
 	}
 }

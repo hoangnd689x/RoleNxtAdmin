@@ -8,14 +8,14 @@ import javax.persistence.Id;
  *
  */
 
-@Entity
-public class Department {
+public class Organization {
 	
-	@Id
 	private long id;
 	private String name;
-	private String domain;
+	private long domain;
 	private String businessSector;
+	
+	private Domain domainObj;
 	
 	public long getId() {
 		return id;
@@ -29,11 +29,18 @@ public class Department {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDomain() {
+
+	public long getDomain() {
 		return domain;
 	}
-	public void setDomain(String domain) {
+	public void setDomain(long domain) {
 		this.domain = domain;
+	}
+	public Domain getDomainObj() {
+		return domainObj;
+	}
+	public void setDomainObj(Domain domainObj) {
+		this.domainObj = domainObj;
 	}
 	public String getBusinessSector() {
 		return businessSector;

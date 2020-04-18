@@ -46,7 +46,7 @@ public class TestReadExcelFile {
                 	//if(currentRow.getCell(0).getCellTypeEnum()== CellType.STRING || currentRow.getCell(0).getCellTypeEnum()== CellType.NUMERIC) {
                 		if(0 != currentRow.getCell(0).getNumericCellValue() || null != currentRow.getCell(0) || null != currentRow.getCell(0)  || null != currentRow.getCell(1)) {
                     		pos.setId((long) currentRow.getCell(0).getNumericCellValue());
-                    		pos.setDepartmentID((long) currentRow.getCell(1).getNumericCellValue());
+                    		//pos.setDepartmentID((long) currentRow.getCell(1).getNumericCellValue());
                     		pos.setName(currentRow.getCell(2).toString());
                     		listPostion.add(pos);
                     	}
@@ -56,7 +56,7 @@ public class TestReadExcelFile {
             
             for (int i = 0; i < listPostion.size(); i++) {
             	System.out.println(listPostion.get(i).getId());
-            	System.out.println(listPostion.get(i).getDepartmentID());
+            	//System.out.println(listPostion.get(i).getDepartmentID());
             	System.out.println(listPostion.get(i).getName());
 			}
             

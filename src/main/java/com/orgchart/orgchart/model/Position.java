@@ -9,24 +9,19 @@ import javax.persistence.Id;
  * @author YOG1HC
  *
  */
-@Entity
 public class Position implements Serializable{
 	
-	@Id
 	private long id;
-	private long departmentID;
+	private long organization;
 	private String name;
+	
+	private Organization organizationObj;
+	
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
-	}
-	public long getDepartmentID() {
-		return departmentID;
-	}
-	public void setDepartmentID(long departmentID) {
-		this.departmentID = departmentID;
 	}
 	public String getName() {
 		return name;
@@ -34,7 +29,17 @@ public class Position implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+	public long getOrganization() {
+		return organization;
+	}
+	public void setOrganization(long organization) {
+		this.organization = organization;
+	}
+	public Organization getOrganizationObj() {
+		return organizationObj;
+	}
+	public void setOrganizationObj(Organization organizationObj) {
+		this.organizationObj = organizationObj;
+	}
 	
-	
-
 }
