@@ -1,5 +1,7 @@
 package com.orgchart.orgchart.model;
 
+import java.util.List;
+
 public class Role {
 	
 	private long id;
@@ -10,8 +12,8 @@ public class Role {
 	private Position positionObj;
 	private String domainRole;
 	private String category;
-	private long competency;
-	private Competency competencyObj;
+	private String competency;
+	private List<Competency> competencyObj;
 	private String KRA;
 	private String scope;
 	private String responsibilities;
@@ -65,16 +67,16 @@ public class Role {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public long getCompetency() {
+	public String getCompetency() {
 		return competency;
 	}
-	public void setCompetency(long competency) {
+	public void setCompetency(String competency) {
 		this.competency = competency;
 	}
-	public Competency getCompetencyObj() {
+	public List<Competency> getCompetencyObj() {
 		return competencyObj;
 	}
-	public void setCompetencyObj(Competency competencyObj) {
+	public void setCompetencyObj(List<Competency> competencyObj) {
 		this.competencyObj = competencyObj;
 	}
 	public String getKRA() {

@@ -56,8 +56,12 @@ public class DomainServiceImpl implements DomainService {
 					firstRow = false;
 				} else {
 					try {
-						dm.setId((long) currentRow.getCell(0).getNumericCellValue());
-						dm.setName(currentRow.getCell(1).toString());
+						if (currentRow.getCell(0) != null) {
+							dm.setId((long) currentRow.getCell(0).getNumericCellValue());
+						}
+						if (currentRow.getCell(1) != null) {
+							dm.setName(currentRow.getCell(1).toString());
+						}
 						
 					} catch (Exception e) {
 						// TODO: handle exception
@@ -94,8 +98,12 @@ public class DomainServiceImpl implements DomainService {
 				} else {
 					try {
 						if (currentRow.getCell(0).getNumericCellValue() == id) {
-							dm.setId((long) currentRow.getCell(0).getNumericCellValue());
-							dm.setName(currentRow.getCell(1).getStringCellValue());
+							if (currentRow.getCell(0) != null) {
+								dm.setId((long) currentRow.getCell(0).getNumericCellValue());
+							}
+							if (currentRow.getCell(1) != null) {
+								dm.setName(currentRow.getCell(1).toString());
+							}
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -248,7 +256,7 @@ public class DomainServiceImpl implements DomainService {
 			
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(5);
+			Sheet datatypeSheet = workbook.getSheetAt(2);
 			Iterator<Row> iterator = datatypeSheet.iterator();
 			boolean firstRow = true;
 
@@ -264,17 +272,19 @@ public class DomainServiceImpl implements DomainService {
 					firstRow = false;
 				} else {
 					try {
-						if((long) currentRow.getCell(2).getNumericCellValue() == id) {
-							org.setId((long) currentRow.getCell(0).getNumericCellValue());
-							org.setName(currentRow.getCell(1).getStringCellValue());
-							
-							for(Domain dm: listDomain) {
-								if((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
-									org.setDomainObj(dm);
+						if(currentRow.getCell(2) != null) {
+							if((long) currentRow.getCell(2).getNumericCellValue() == id) {
+								org.setId((long) currentRow.getCell(0).getNumericCellValue());
+								org.setName(currentRow.getCell(1).getStringCellValue());
+								
+								for(Domain dm: listDomain) {
+									if((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
+										org.setDomainObj(dm);
+									}
 								}
+								org.setBusinessSector(currentRow.getCell(3).getStringCellValue());
+								listDepartment.add(org);
 							}
-							org.setBusinessSector(currentRow.getCell(3).getStringCellValue());
-							listDepartment.add(org);
 						}
 						
 					} catch (Exception e) {

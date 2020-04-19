@@ -21,6 +21,7 @@ import com.orgchart.orgchart.service.CompetencyService;
 import com.orgchart.orgchart.service.DomainService;
 import com.orgchart.orgchart.service.PositionService;
 import com.orgchart.orgchart.service.RoleService;
+import com.orgchart.orgchart.util.Util;
 
 /**
  * @author YOG1HC
@@ -55,7 +56,7 @@ public class RoleServiceImpl implements RoleService {
 			PositionService posService = new PositionServiceImpl();
 			List<Position> listPos = posService.getAllPurePositions();
 			CompetencyService compService = new CompetencyServiceImpl();
-			List<Competency> listComp = compService.getAllPureCompetencies();
+			List<Competency> listComp = compService.GetAllPureCompetencies();
 
 			while (iterator.hasNext()) {
 
@@ -67,35 +68,72 @@ public class RoleServiceImpl implements RoleService {
 					firstRow = false;
 				} else {
 					try {
-						rl.setId((long) currentRow.getCell(0).getNumericCellValue());
-						for(Domain dm: listDomain) {
-							if((long) currentRow.getCell(1).getNumericCellValue() == dm.getId()) {
-								rl.setDomainObj(dm);
-							}
+						if(currentRow.getCell(0) != null) {
+							rl.setId((long) currentRow.getCell(0).getNumericCellValue());
 						}
-						rl.setCareerPath(currentRow.getCell(2).getStringCellValue());
-						for(Position pos: listPos) {
-							if((long) currentRow.getCell(3).getNumericCellValue() == pos.getId()) {
-								rl.setPositionObj(pos);
-							}
-						}
-						rl.setDomainRole(currentRow.getCell(4).getStringCellValue());
-						rl.setCategory(currentRow.getCell(5).getStringCellValue());
-						for(Competency comp: listComp) {
-							if((long) currentRow.getCell(6).getNumericCellValue() == comp.getId()) {
-								rl.setCompetencyObj(comp);
-							}
-						}
-						rl.setKRA(currentRow.getCell(7).getStringCellValue());
-						rl.setScope(currentRow.getCell(8).getStringCellValue());
-						rl.setResponsibilities(currentRow.getCell(9).getStringCellValue());
-						rl.setIndustrialRle(currentRow.getCell(10).getStringCellValue());
-						rl.setEntryCriteria(currentRow.getCell(11).getStringCellValue());
 						
+						if(currentRow.getCell(1) != null) {
+							for(Domain dm: listDomain) {
+								if((long) currentRow.getCell(1).getNumericCellValue() == dm.getId()) {
+									rl.setDomainObj(dm);
+								}
+							}
+						}
+						
+						
+						if(currentRow.getCell(2) != null) {
+							rl.setCareerPath(currentRow.getCell(2).getStringCellValue());
+						}
+						
+						if(currentRow.getCell(3) != null) {
+							for(Position pos: listPos) {
+								if((long) currentRow.getCell(3).getNumericCellValue() == pos.getId()) {
+									rl.setPositionObj(pos);
+								}
+							}
+						}
+						
+						if(currentRow.getCell(4) != null) {
+							rl.setDomainRole(currentRow.getCell(4).getStringCellValue());
+						}
+						if(currentRow.getCell(5) != null) {
+							rl.setCategory(currentRow.getCell(5).getStringCellValue());
+						}
+						
+						if(currentRow.getCell(6) != null && !currentRow.getCell(6).getStringCellValue().equals("")) {
+							List<Competency> listCompsByRole = new ArrayList<>();
+							Util util = new Util();
+							List<Long> listCompIds = util.ListStringToListLong(currentRow.getCell(6).getStringCellValue());
+							for(Competency comp: listComp) {
+								if(listCompIds.contains(comp.getId())) {
+									listCompsByRole.add(comp);
+								}
+							}
+							rl.setCompetencyObj(listCompsByRole);
+						}
+						
+						if(currentRow.getCell(7) != null) {
+							rl.setKRA(currentRow.getCell(7).getStringCellValue());
+						}
+						if(currentRow.getCell(8) != null) {
+							rl.setScope(currentRow.getCell(8).getStringCellValue());
+						}
+						if(currentRow.getCell(9) != null) {
+							rl.setResponsibilities(currentRow.getCell(9).getStringCellValue());
+						}
+						if(currentRow.getCell(10) != null) {
+							rl.setIndustrialRle(currentRow.getCell(10).getStringCellValue());
+						}
+						if(currentRow.getCell(11) != null) {
+							rl.setEntryCriteria(currentRow.getCell(11).getStringCellValue());
+						}
+						
+						listRoles.add(rl);
 					} catch (Exception e) {
+						e.printStackTrace();
 						// TODO: handle exception
 					}
-					listRoles.add(rl);
+					
 				}
 			}
 
@@ -122,7 +160,7 @@ public class RoleServiceImpl implements RoleService {
 			PositionService posService = new PositionServiceImpl();
 			List<Position> listPos = posService.getAllPurePositions();
 			CompetencyService compService = new CompetencyServiceImpl();
-			List<Competency> listComp = compService.getAllCompetencies();
+			List<Competency> listComp = compService.GetAllCompetencies();
 
 			while (iterator.hasNext()) {
 
@@ -133,30 +171,64 @@ public class RoleServiceImpl implements RoleService {
 				} else {
 					try {
 						if (currentRow.getCell(0).getNumericCellValue() == id) {
-							rl.setId((long) currentRow.getCell(0).getNumericCellValue());
-							for(Domain dm: listDomain) {
-								if((long) currentRow.getCell(1).getNumericCellValue() == dm.getId()) {
-									rl.setDomainObj(dm);
+							if(currentRow.getCell(0) != null) {
+								rl.setId((long) currentRow.getCell(0).getNumericCellValue());
+							}
+							
+							if(currentRow.getCell(1) != null) {
+								for(Domain dm: listDomain) {
+									if((long) currentRow.getCell(1).getNumericCellValue() == dm.getId()) {
+										rl.setDomainObj(dm);
+									}
 								}
 							}
-							rl.setCareerPath(currentRow.getCell(2).getStringCellValue());
-							for(Position pos: listPos) {
-								if((long) currentRow.getCell(3).getNumericCellValue() == pos.getId()) {
-									rl.setPositionObj(pos);
+							
+							if(currentRow.getCell(2) != null) {
+								rl.setCareerPath(currentRow.getCell(2).getStringCellValue());
+							}
+							
+							if(currentRow.getCell(3) != null) {
+								for(Position pos: listPos) {
+									if((long) currentRow.getCell(3).getNumericCellValue() == pos.getId()) {
+										rl.setPositionObj(pos);
+									}
 								}
 							}
-							rl.setDomainRole(currentRow.getCell(4).getStringCellValue());
-							rl.setCategory(currentRow.getCell(5).getStringCellValue());
-							for(Competency comp: listComp) {
-								if((long) currentRow.getCell(6).getNumericCellValue() == comp.getId()) {
-									rl.setCompetencyObj(comp);
-								}
+							
+							if(currentRow.getCell(4) != null) {
+								rl.setDomainRole(currentRow.getCell(4).getStringCellValue());
 							}
-							rl.setKRA(currentRow.getCell(7).getStringCellValue());
-							rl.setScope(currentRow.getCell(8).getStringCellValue());
-							rl.setResponsibilities(currentRow.getCell(9).getStringCellValue());
-							rl.setIndustrialRle(currentRow.getCell(10).getStringCellValue());
-							rl.setEntryCriteria(currentRow.getCell(11).getStringCellValue());
+							if(currentRow.getCell(5) != null) {
+								rl.setCategory(currentRow.getCell(5).getStringCellValue());
+							}
+							
+							if(currentRow.getCell(6) != null && !currentRow.getCell(6).getStringCellValue().equals("")) {
+								List<Competency> listCompsByRole = new ArrayList<>();
+								Util util = new Util();
+								List<Long> listCompIds = util.ListStringToListLong(currentRow.getCell(6).getStringCellValue());
+								for(Competency comp: listComp) {
+									if(listCompIds.contains(comp.getId())) {
+										listCompsByRole.add(comp);
+									}
+								}
+								rl.setCompetencyObj(listCompsByRole);
+							}
+							
+							if(currentRow.getCell(7) != null) {
+								rl.setKRA(currentRow.getCell(7).getStringCellValue());
+							}
+							if(currentRow.getCell(8) != null) {
+								rl.setScope(currentRow.getCell(8).getStringCellValue());
+							}
+							if(currentRow.getCell(9) != null) {
+								rl.setResponsibilities(currentRow.getCell(9).getStringCellValue());
+							}
+							if(currentRow.getCell(10) != null) {
+								rl.setIndustrialRle(currentRow.getCell(10).getStringCellValue());
+							}
+							if(currentRow.getCell(11) != null) {
+								rl.setEntryCriteria(currentRow.getCell(11).getStringCellValue());
+							}
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -192,16 +264,19 @@ public class RoleServiceImpl implements RoleService {
 					firstRow = false;
 				} else {
 					try {
-						if (currentRow.getCell(0).getNumericCellValue() == id) {
-							datatypeSheet.removeRow(datatypeSheet.getRow(rowIndex));
-							FileOutputStream out = new FileOutputStream(file);
-							workbook.write(out);
+						if(currentRow.getCell(0) != null) {
+							if (currentRow.getCell(0).getNumericCellValue() == id) {
+								datatypeSheet.removeRow(datatypeSheet.getRow(rowIndex));
+								FileOutputStream out = new FileOutputStream(file);
+								workbook.write(out);
 
-							if (rowIndex > 0 && rowIndex < lastRowNum) {
-								datatypeSheet.shiftRows(rowIndex + 1, lastRowNum, -1);
+								if (rowIndex > 0 && rowIndex < lastRowNum) {
+									datatypeSheet.shiftRows(rowIndex + 1, lastRowNum, -1);
+								}
+								isDeleted = true;
 							}
-							isDeleted = true;
 						}
+						
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

@@ -16,24 +16,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.orgchart.orgchart.model.CareerPath;
 import com.orgchart.orgchart.model.Competency;
 import com.orgchart.orgchart.model.Domain;
 import com.orgchart.orgchart.model.Organization;
 import com.orgchart.orgchart.model.Position;
-import com.orgchart.orgchart.model.PositionDetails;
 import com.orgchart.orgchart.model.Role;
 import com.orgchart.orgchart.model.Structure;
+import com.orgchart.orgchart.service.CareerPathService;
 import com.orgchart.orgchart.service.CompetencyService;
 import com.orgchart.orgchart.service.DomainService;
 import com.orgchart.orgchart.service.OrganizationService;
-import com.orgchart.orgchart.service.PositionDetailsService;
 import com.orgchart.orgchart.service.PositionService;
 import com.orgchart.orgchart.service.RoleService;
 import com.orgchart.orgchart.service.StructureService;
+import com.orgchart.orgchart.serviceImpl.CareerPathServiceImpl;
 import com.orgchart.orgchart.serviceImpl.CompetencyServiceImpl;
 import com.orgchart.orgchart.serviceImpl.DomainServiceImpl;
 import com.orgchart.orgchart.serviceImpl.OrganizationServiceImpl;
-import com.orgchart.orgchart.serviceImpl.PositionDetailServiceImpl;
 import com.orgchart.orgchart.serviceImpl.PositionServiceImpl;
 import com.orgchart.orgchart.serviceImpl.RoleServiceImpl;
 import com.orgchart.orgchart.serviceImpl.StructureServiceImpl;
@@ -55,13 +55,13 @@ public class RestApiController {
 	
 	OrganizationService departmentService = new OrganizationServiceImpl();
 	
-	PositionDetailsService poDService = new PositionDetailServiceImpl();
-	
 	DomainService dmService = new DomainServiceImpl();
 	
 	CompetencyService compService = new CompetencyServiceImpl();
 	
 	RoleService rlService = new RoleServiceImpl();
+	
+	CareerPathService cpService = new CareerPathServiceImpl();
 	
 	
 	/**
@@ -395,7 +395,7 @@ public class RestApiController {
 	public ResponseEntity<List<Competency>> getAllCompetencies(){
 		
 		List<Competency> listCompetencies = new ArrayList();
-		listCompetencies = compService.getAllCompetencies();
+		listCompetencies = compService.GetAllCompetencies();
 		
 		return new ResponseEntity<List<Competency>>(listCompetencies, HttpStatus.OK);
 	}
@@ -408,7 +408,7 @@ public class RestApiController {
 	public ResponseEntity<Competency> GetCompById(@PathVariable(required = false) long id){
 		
 		Competency comp = new Competency();
-		comp = compService.getCompById(id);
+		comp = compService.GetCompById(id);
 		
 		return new ResponseEntity<Competency>(comp, HttpStatus.OK);
 	}
@@ -457,7 +457,7 @@ public class RestApiController {
 	public ResponseEntity<Integer> DeleteComp(@PathVariable(required = false) long id){
 		
 		int deleteStatus;
-		boolean isDetele = compService.deleteComp(id);
+		boolean isDetele = compService.DeleteComp(id);
 		if(isDetele) {
 			deleteStatus = 1;
 		}else {
@@ -465,20 +465,6 @@ public class RestApiController {
 		}
 		
 		return new ResponseEntity<Integer>(deleteStatus, HttpStatus.OK);
-	}
-	
-	/**
-	 * get Organizations by domain Id
-	 *
-	 */
-	@RequestMapping(value = "/getOrgsByDomainId/{id}", method = RequestMethod.GET)
-	public ResponseEntity<List<Organization>> GetOrgsByDomainId(@PathVariable(required = false) long id){
-		
-		List<Organization> listOrgs = new ArrayList<Organization>();
-		
-		listOrgs = dmService.GetOrgsByDomainId(id);
-		
-		return new ResponseEntity<List<Organization>>(listOrgs, HttpStatus.OK);
 	}
 	
 	/**
@@ -559,6 +545,128 @@ public class RestApiController {
 		}
 		
 		return new ResponseEntity<Integer>(deleteStatus, HttpStatus.OK);
+	}
+	
+	
+	/**
+	 * get all get all roles
+	 *
+	 */
+	@GetMapping(path = "/getAllCPs")
+	public ResponseEntity<List<CareerPath>> getAllCPs(){
+		
+		List<CareerPath> listCareerPaths = new ArrayList();
+		listCareerPaths = cpService.GetAllCareerpaths();
+		
+		return new ResponseEntity<List<CareerPath>>(listCareerPaths, HttpStatus.OK);
+	}
+	
+	/**
+	 * get Roles by Id
+	 *
+	 */
+	@RequestMapping(value = "/getCPById/{id}", method = RequestMethod.GET)
+	public ResponseEntity<CareerPath> GetCPById(@PathVariable(required = false) long id){
+		
+		CareerPath cp = new CareerPath();
+		cp = cpService.GetCPById(id);
+		
+		return new ResponseEntity<CareerPath>(cp, HttpStatus.OK);
+	}
+	
+	/**
+	 * update roles
+	 *
+	 */
+	@PostMapping(path = "/updateCP")
+	public ResponseEntity<Integer> UpdateCP(@RequestBody CareerPath cp){
+		
+		int deleteStatus;
+		boolean isDetele = cpService.UpdateCP(cp);
+		if(isDetele) {
+			deleteStatus = 1;
+		}else {
+			deleteStatus = 0;
+		}
+		
+		return new ResponseEntity<Integer>(deleteStatus, HttpStatus.OK);
+	}
+	
+	/**
+	 * add Roles
+	 *
+	 */
+	@PostMapping(path = "/addCP")
+	public ResponseEntity<Integer> AddCP(@RequestBody CareerPath cp){
+		
+		int deleteStatus;
+		boolean isDetele = cpService.AddCP(cp);
+		if(isDetele) {
+			deleteStatus = 1;
+		}else {
+			deleteStatus = 0;
+		}
+		
+		return new ResponseEntity<Integer>(deleteStatus, HttpStatus.OK);
+	}
+	
+	/**
+	 * Delete rlService
+	 *
+	 */
+	@RequestMapping(value = "/deleteCP/{id}", method = RequestMethod.POST)
+	public ResponseEntity<Integer> DeleteCP(@PathVariable(required = false) long id){
+		
+		int deleteStatus;
+		boolean isDetele = cpService.DeleteCP(id);
+		if(isDetele) {
+			deleteStatus = 1;
+		}else {
+			deleteStatus = 0;
+		}
+		
+		return new ResponseEntity<Integer>(deleteStatus, HttpStatus.OK);
+	}
+	
+	// Other APIs
+	/**
+	 * get Organizations by domain Id
+	 *
+	 */
+	@RequestMapping(value = "/getOrgsByDomainId/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<Organization>> GetOrgsByDomainId(@PathVariable(required = false) long id){
+		
+		List<Organization> listOrgs = new ArrayList<Organization>();
+		
+		listOrgs = dmService.GetOrgsByDomainId(id);
+		
+		return new ResponseEntity<List<Organization>>(listOrgs, HttpStatus.OK);
+	}
+	
+	/**
+	 * get positions by org id
+	 *
+	 */
+	@RequestMapping(value = "/getPositionsByOrgId/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<Position>> GetPositionsByOrgId(@PathVariable(required = false) long id){
+		
+		List<Position> listPosition = new ArrayList();
+		listPosition = positionService.getPositionsByOrgId(id);
+		
+		return new ResponseEntity<List<Position>>(listPosition, HttpStatus.OK);
+	}
+	
+	/**
+	 * get positions by org id
+	 *
+	 */
+	@RequestMapping(value = "/getCompetenciesByDomainId/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<Competency>> GetCompetenciesByDomainId(@PathVariable(required = false) long id){
+		
+		List<Competency> listCompetency = new ArrayList();
+		listCompetency = compService.GetCompetenciesByDomainId(id);
+		
+		return new ResponseEntity<List<Competency>>(listCompetency, HttpStatus.OK);
 	}
 	
 }

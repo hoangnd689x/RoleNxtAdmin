@@ -60,16 +60,22 @@ public class OrganizationServiceImpl implements OrganizationService {
 					firstRow = false;
 				} else {
 					try {
-						org.setId((long) currentRow.getCell(0).getNumericCellValue());
-						org.setName(currentRow.getCell(1).getStringCellValue());
-						
-						for(Domain dm: listDomain) {
-							if((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
-								org.setDomainObj(dm);
+						if (currentRow.getCell(0) != null) {
+							org.setId((long) currentRow.getCell(0).getNumericCellValue());
+						}
+						if (currentRow.getCell(1) != null) {
+							org.setName(currentRow.getCell(1).getStringCellValue());
+						}
+						if (currentRow.getCell(2) != null) {
+							for(Domain dm: listDomain) {
+								if((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
+									org.setDomainObj(dm);
+								}
 							}
 						}
-						
-						org.setBusinessSector(currentRow.getCell(3).getStringCellValue());
+						if (currentRow.getCell(3) != null) {
+							org.setBusinessSector(currentRow.getCell(3).getStringCellValue());
+						}
 						
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -104,9 +110,15 @@ public class OrganizationServiceImpl implements OrganizationService {
 					firstRow = false;
 				} else {
 					try {
-						org.setId((long) currentRow.getCell(0).getNumericCellValue());
-						org.setName(currentRow.getCell(1).getStringCellValue());
-						org.setBusinessSector(currentRow.getCell(3).getStringCellValue());
+						if (currentRow.getCell(0) != null) {
+							org.setId((long) currentRow.getCell(0).getNumericCellValue());
+						}
+						if (currentRow.getCell(1) != null) {
+							org.setName(currentRow.getCell(1).getStringCellValue());
+						}
+						if (currentRow.getCell(3) != null) {
+							org.setBusinessSector(currentRow.getCell(3).getStringCellValue());
+						}
 						listDepartment.add(org);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -143,15 +155,22 @@ public class OrganizationServiceImpl implements OrganizationService {
 				} else {
 					try {
 						if (currentRow.getCell(0).getNumericCellValue() == id) {
-							org.setId((long) currentRow.getCell(0).getNumericCellValue());
-							org.setName(currentRow.getCell(1).getStringCellValue());
-							
-							for(Domain dm: listDomain) {
-								if((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
-									org.setDomainObj(dm);
+							if (currentRow.getCell(0) != null) {
+								org.setId((long) currentRow.getCell(0).getNumericCellValue());
+							}
+							if (currentRow.getCell(1) != null) {
+								org.setName(currentRow.getCell(1).getStringCellValue());
+							}
+							if (currentRow.getCell(2) != null) {
+								for(Domain dm: listDomain) {
+									if((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
+										org.setDomainObj(dm);
+									}
 								}
 							}
-							org.setBusinessSector(currentRow.getCell(3).getStringCellValue());
+							if (currentRow.getCell(3) != null) {
+								org.setBusinessSector(currentRow.getCell(3).getStringCellValue());
+							}
 						}
 					} catch (Exception e) {
 						e.printStackTrace();

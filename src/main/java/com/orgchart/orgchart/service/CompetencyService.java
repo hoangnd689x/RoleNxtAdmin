@@ -13,13 +13,15 @@ import com.orgchart.orgchart.model.Competency;
 @Transactional
 public interface CompetencyService {
 	
-	 List<Competency> getAllCompetencies();
+	 List<Competency> GetAllCompetencies();
 	 
-	 List<Competency> getAllPureCompetencies();
+	 List<Competency> GetAllPureCompetencies();
 	 
-	 Competency getCompById(long id);
+	 List<Competency> GetCompetenciesByDomainId(long id);
 	 
-	 boolean deleteComp(long id);
+	 Competency GetCompById(long id);
+	 
+	 boolean DeleteComp(long id);
 	 
 	 boolean UpdateComp(Competency compUpdate);
 	 

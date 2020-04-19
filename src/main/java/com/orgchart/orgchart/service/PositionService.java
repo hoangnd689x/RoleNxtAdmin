@@ -19,6 +19,8 @@ public interface PositionService {
 	 
 	 List<Position> getAllPurePositions();
 	 
+	 List<Position> getPositionsByOrgId(long orgId);
+	 
 	 Position getPosById(long id);
 	 
 	 boolean deletePos(long id);

@@ -14,8 +14,10 @@ public class Position implements Serializable{
 	private long id;
 	private long organization;
 	private String name;
+	private String careerPath;
 	
 	private Organization organizationObj;
+	private CareerPath careerpathObj;
 	
 	public long getId() {
 		return id;
@@ -40,6 +42,18 @@ public class Position implements Serializable{
 	}
 	public void setOrganizationObj(Organization organizationObj) {
 		this.organizationObj = organizationObj;
+	}
+	public String getCareerPath() {
+		return careerPath;
+	}
+	public void setCareerPath(String careerPath) {
+		this.careerPath = careerPath;
+	}
+	public CareerPath getCareerpathObj() {
+		return careerpathObj;
+	}
+	public void setCareerpathObj(CareerPath careerpathObj) {
+		this.careerpathObj = careerpathObj;
 	}
 	
 }

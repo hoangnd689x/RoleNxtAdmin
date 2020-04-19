@@ -13,21 +13,22 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.orgchart.orgchart.model.Competency;
+import com.orgchart.orgchart.model.CareerPath;
 import com.orgchart.orgchart.model.Domain;
-import com.orgchart.orgchart.service.CompetencyService;
+import com.orgchart.orgchart.model.Organization;
+import com.orgchart.orgchart.service.CareerPathService;
 import com.orgchart.orgchart.service.DomainService;
 
 /**
  * @author YOG1HC
  *
  */
-public class CompetencyServiceImpl implements CompetencyService {
+public class CareerPathServiceImpl implements CareerPathService {
 
 	private static final String FILE_NAME = "data_structure.xlsx";
 	private static String filePath = "";
 
-	public CompetencyServiceImpl() {
+	public CareerPathServiceImpl() {
 		super();
 		// use this file path because in war file cannot point to resource folder, have
 		// to point to folder class/...
@@ -35,54 +36,42 @@ public class CompetencyServiceImpl implements CompetencyService {
 	}
 
 	@Override
-	public List<Competency> GetAllCompetencies() {
-		List<Competency> listCompetency = new ArrayList<>();
+	public List<CareerPath> GetAllCareerpaths() {
+		List<CareerPath> listCareerPath = new ArrayList<>();
 		try {
 			File file = new File(filePath);
 
 			FileInputStream inputStream = new FileInputStream(file);
 
 			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(3);
+			Sheet datatypeSheet = workbook.getSheetAt(6);
 			Iterator<Row> iterator = datatypeSheet.iterator();
 			boolean firstRow = true;
-			DomainService dmService = new DomainServiceImpl();
-			List<Domain> listDomain = dmService.getAllDomains();
 
 			while (iterator.hasNext()) {
 
 				Row currentRow = iterator.next();
 				Iterator<Cell> cellIterator = currentRow.iterator();
-				Competency comp = new Competency();
+				CareerPath cp = new CareerPath();
 
 				if (firstRow) {
 					firstRow = false;
 				} else {
 					try {
-
 						if (currentRow.getCell(0) != null) {
-							comp.setId((long) currentRow.getCell(0).getNumericCellValue());
+							cp.setId((long) currentRow.getCell(0).getNumericCellValue());
 						}
 						if (currentRow.getCell(1) != null) {
-							comp.setName(currentRow.getCell(1).toString());
+							cp.setName(currentRow.getCell(1).toString());
 						}
 						if (currentRow.getCell(2) != null) {
-							comp.setCategory(currentRow.getCell(2).toString());
+							cp.setColor(currentRow.getCell(2).toString());
 						}
 
-						if (currentRow.getCell(3) != null) {
-							for (Domain dm : listDomain) {
-								if ((long) currentRow.getCell(3).getNumericCellValue() == dm.getId()) {
-									comp.setDmOjb(dm);
-								}
-							}
-						}
-
-						listCompetency.add(comp);
 					} catch (Exception e) {
 						// TODO: handle exception
 					}
-
+					listCareerPath.add(cp);
 				}
 			}
 
@@ -91,71 +80,19 @@ public class CompetencyServiceImpl implements CompetencyService {
 
 		}
 
-		return listCompetency;
+		return listCareerPath;
 	}
 
 	@Override
-	public List<Competency> GetAllPureCompetencies() {
-		List<Competency> listCompetency = new ArrayList<>();
-		try {
-			File file = new File(filePath);
-
-			FileInputStream inputStream = new FileInputStream(file);
-
-			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(3);
-			Iterator<Row> iterator = datatypeSheet.iterator();
-			boolean firstRow = true;
-			DomainService dmService = new DomainServiceImpl();
-			List<Domain> listDomain = dmService.getAllDomains();
-
-			while (iterator.hasNext()) {
-
-				Row currentRow = iterator.next();
-				Iterator<Cell> cellIterator = currentRow.iterator();
-				Competency comp = new Competency();
-
-				if (firstRow) {
-					firstRow = false;
-				} else {
-					try {
-						if (currentRow.getCell(0) != null) {
-							comp.setId((long) currentRow.getCell(0).getNumericCellValue());
-						}
-						if (currentRow.getCell(1) != null) {
-							comp.setName(currentRow.getCell(1).toString());
-						}
-						if (currentRow.getCell(2) != null) {
-							comp.setCategory(currentRow.getCell(2).toString());
-						}
-
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-					listCompetency.add(comp);
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
-
-		return listCompetency;
-	}
-
-	@Override
-	public Competency GetCompById(long id) {
-		Competency comp = new Competency();
+	public CareerPath GetCPById(long id) {
+		CareerPath cp = new CareerPath();
 		try {
 			File file = new File(filePath);
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(3);
+			Sheet datatypeSheet = workbook.getSheetAt(6);
 			Iterator<Row> iterator = datatypeSheet.iterator();
 			boolean firstRow = true;
-			DomainService dmService = new DomainServiceImpl();
-			List<Domain> listDomain = dmService.getAllDomains();
 
 			while (iterator.hasNext()) {
 
@@ -167,21 +104,13 @@ public class CompetencyServiceImpl implements CompetencyService {
 					try {
 						if (currentRow.getCell(0).getNumericCellValue() == id) {
 							if (currentRow.getCell(0) != null) {
-								comp.setId((long) currentRow.getCell(0).getNumericCellValue());
+								cp.setId((long) currentRow.getCell(0).getNumericCellValue());
 							}
 							if (currentRow.getCell(1) != null) {
-								comp.setName(currentRow.getCell(1).toString());
+								cp.setName(currentRow.getCell(1).toString());
 							}
 							if (currentRow.getCell(2) != null) {
-								comp.setCategory(currentRow.getCell(2).toString());
-							}
-
-							if (currentRow.getCell(3) != null) {
-								for (Domain dm : listDomain) {
-									if ((long) currentRow.getCell(3).getNumericCellValue() == dm.getId()) {
-										comp.setDmOjb(dm);
-									}
-								}
+								cp.setColor(currentRow.getCell(2).toString());
 							}
 						}
 					} catch (Exception e) {
@@ -193,18 +122,18 @@ public class CompetencyServiceImpl implements CompetencyService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return comp;
+		return cp;
 	}
 
 	@Override
-	public boolean DeleteComp(long id) {
+	public boolean DeleteCP(long id) {
 		boolean isDeleted = false;
 		try {
 			File file = new File(filePath);
 
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(3);
+			Sheet datatypeSheet = workbook.getSheetAt(6);
 			Iterator<Row> iterator = datatypeSheet.iterator();
 			boolean firstRow = true;
 
@@ -241,13 +170,13 @@ public class CompetencyServiceImpl implements CompetencyService {
 	}
 
 	@Override
-	public boolean UpdateComp(Competency compUpdate) {
+	public boolean UpdateCP(CareerPath cpUpdate) {
 		boolean isUpdated = false;
 		try {
 			File file = new File(filePath);
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(3);
+			Sheet datatypeSheet = workbook.getSheetAt(6);
 			Iterator<Row> iterator = datatypeSheet.iterator();
 			boolean firstRow = true;
 
@@ -259,17 +188,15 @@ public class CompetencyServiceImpl implements CompetencyService {
 					firstRow = false;
 				} else {
 					try {
-						if (row.getCell(0).getNumericCellValue() == compUpdate.getId()) {
+						if (row.getCell(0).getNumericCellValue() == cpUpdate.getId()) {
 							Cell cell = row.createCell(columnCount);
 							cell.setCellValue(row.getRowNum());
 							cell = row.createCell(0);
-							cell.setCellValue(compUpdate.getId());
+							cell.setCellValue(cpUpdate.getId());
 							cell = row.createCell(1);
-							cell.setCellValue(compUpdate.getName());
+							cell.setCellValue(cpUpdate.getName());
 							cell = row.createCell(2);
-							cell.setCellValue(compUpdate.getCategory());
-							cell = row.createCell(3);
-							cell.setCellValue(compUpdate.getDm());
+							cell.setCellValue(cpUpdate.getColor());
 							inputStream.close();
 							FileOutputStream out = new FileOutputStream(file);
 							workbook.write(out);
@@ -289,14 +216,14 @@ public class CompetencyServiceImpl implements CompetencyService {
 	}
 
 	@Override
-	public boolean AddComp(Competency comp) {
+	public boolean AddCP(CareerPath cp) {
 		boolean isUpdated = false;
 		try {
 			File file = new File(filePath);
 
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(3);
+			Sheet datatypeSheet = workbook.getSheetAt(6);
 
 			int rowCount = datatypeSheet.getLastRowNum();
 
@@ -317,11 +244,10 @@ public class CompetencyServiceImpl implements CompetencyService {
 			cell = row.createCell(0);
 			cell.setCellValue(biggestId + 1);
 			cell = row.createCell(1);
-			cell.setCellValue(comp.getName());
+			cell.setCellValue(cp.getName());
 			cell = row.createCell(2);
-			cell.setCellValue(comp.getCategory());
-			cell = row.createCell(3);
-			cell.setCellValue(comp.getDm());
+			cell.setCellValue(cp.getColor());
+			inputStream.close();
 			FileOutputStream out = new FileOutputStream(file);
 			workbook.write(out);
 			workbook.close();
@@ -332,65 +258,6 @@ public class CompetencyServiceImpl implements CompetencyService {
 			e.printStackTrace();
 		}
 		return isUpdated;
-	}
-
-	@Override
-	public List<Competency> GetCompetenciesByDomainId(long id) {
-		List<Competency> listCompetency = new ArrayList<>();
-		try {
-			File file = new File(filePath);
-
-			FileInputStream inputStream = new FileInputStream(file);
-
-			Workbook workbook = new XSSFWorkbook(inputStream);
-			Sheet datatypeSheet = workbook.getSheetAt(3);
-			Iterator<Row> iterator = datatypeSheet.iterator();
-			boolean firstRow = true;
-			DomainService dmService = new DomainServiceImpl();
-			List<Domain> listDomain = dmService.getAllDomains();
-
-			while (iterator.hasNext()) {
-
-				Row currentRow = iterator.next();
-				Iterator<Cell> cellIterator = currentRow.iterator();
-				Competency comp = new Competency();
-
-				if (firstRow) {
-					firstRow = false;
-				} else {
-					try {
-						if (currentRow.getCell(3) != null) {
-							if ((long) currentRow.getCell(3).getNumericCellValue() == id) {
-								if (currentRow.getCell(0) != null) {
-									comp.setId((long) currentRow.getCell(0).getNumericCellValue());
-								}
-								if (currentRow.getCell(1) != null) {
-									comp.setName(currentRow.getCell(1).toString());
-								}
-								if (currentRow.getCell(2) != null) {
-									comp.setCategory(currentRow.getCell(2).toString());
-								}
-								for (Domain dm : listDomain) {
-									if ((long) currentRow.getCell(3).getNumericCellValue() == dm.getId()) {
-										comp.setDmOjb(dm);
-									}
-								}
-								listCompetency.add(comp);
-							}
-						}
-
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
-		return listCompetency;
 	}
 
 }
