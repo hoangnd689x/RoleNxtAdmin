@@ -2,8 +2,8 @@ package com.orgchart.orgchart.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.orgchart.orgchart.model.Structure;
 
 /**
@@ -13,13 +13,14 @@ import com.orgchart.orgchart.model.Structure;
 @Transactional
 public interface StructureService {
 	
-	 List<Structure> getAllStructures();
+	 List<Structure> GetAllStructures();
 	 
-	 Structure getStrById(long id);
+	 Structure GetStrById(long id);
 	 
-	 boolean deleteStr(long id);
+	 boolean DeleteStr(long id);
 	 
 	 boolean UpdateStr(Structure strUpdate);
 	 
 	 public boolean AddStr(Structure strUpdate);
+	 
 }

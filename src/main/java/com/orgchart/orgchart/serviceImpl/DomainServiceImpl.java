@@ -51,7 +51,7 @@ public class DomainServiceImpl implements DomainService {
 				Row currentRow = iterator.next();
 				Iterator<Cell> cellIterator = currentRow.iterator();
 				Domain dm = new Domain();
-				
+
 				if (firstRow) {
 					firstRow = false;
 				} else {
@@ -62,7 +62,7 @@ public class DomainServiceImpl implements DomainService {
 						if (currentRow.getCell(1) != null) {
 							dm.setName(currentRow.getCell(1).toString());
 						}
-						
+
 					} catch (Exception e) {
 						// TODO: handle exception
 					}
@@ -122,7 +122,7 @@ public class DomainServiceImpl implements DomainService {
 		boolean isDeleted = false;
 		try {
 			File file = new File(filePath);
-			
+
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
 			Sheet datatypeSheet = workbook.getSheetAt(5);
@@ -210,25 +210,25 @@ public class DomainServiceImpl implements DomainService {
 		boolean isUpdated = false;
 		try {
 			File file = new File(filePath);
-			
+
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
 			Sheet datatypeSheet = workbook.getSheetAt(5);
-			
+
 			int rowCount = datatypeSheet.getLastRowNum();
-			
+
 			// get the biggest id and +1 to create a new Organization
 			Row lastRow = datatypeSheet.getRow(rowCount);
 			long biggestId = 0;
 			Cell firstCell = lastRow.getCell(0);
-	        if (firstCell != null && firstCell.getCellType() != Cell.CELL_TYPE_BLANK) {
-	        	biggestId = (long)lastRow.getCell(0).getNumericCellValue();
-	        }else {
-	        	biggestId = 999;
-	        }
-			
+			if (firstCell != null && firstCell.getCellType() != Cell.CELL_TYPE_BLANK) {
+				biggestId = (long) lastRow.getCell(0).getNumericCellValue();
+			} else {
+				biggestId = 999;
+			}
+
 			Row row = datatypeSheet.createRow(++rowCount);
-			
+
 			Cell cell = row.createCell(rowCount);
 			cell.setCellValue(row.getRowNum());
 			cell = row.createCell(0);
@@ -240,7 +240,7 @@ public class DomainServiceImpl implements DomainService {
 			workbook.write(out);
 			workbook.close();
 			out.close();
-			
+
 			isUpdated = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -253,7 +253,7 @@ public class DomainServiceImpl implements DomainService {
 		List<Organization> listDepartment = new ArrayList<>();
 		try {
 			File file = new File(filePath);
-			
+
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
 			Sheet datatypeSheet = workbook.getSheetAt(2);
@@ -267,18 +267,18 @@ public class DomainServiceImpl implements DomainService {
 
 				DomainService dmService = new DomainServiceImpl();
 				List<Domain> listDomain = dmService.getAllDomains();
-				
+
 				if (firstRow) {
 					firstRow = false;
 				} else {
 					try {
-						if(currentRow.getCell(2) != null) {
-							if((long) currentRow.getCell(2).getNumericCellValue() == id) {
+						if (currentRow.getCell(2) != null) {
+							if ((long) currentRow.getCell(2).getNumericCellValue() == id) {
 								org.setId((long) currentRow.getCell(0).getNumericCellValue());
 								org.setName(currentRow.getCell(1).getStringCellValue());
-								
-								for(Domain dm: listDomain) {
-									if((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
+
+								for (Domain dm : listDomain) {
+									if ((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
 										org.setDomainObj(dm);
 									}
 								}
@@ -286,7 +286,7 @@ public class DomainServiceImpl implements DomainService {
 								listDepartment.add(org);
 							}
 						}
-						
+
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

@@ -3,8 +3,6 @@ package com.orgchart.orgchart.serviceImpl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,7 +12,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Repository;
 
 import com.orgchart.orgchart.model.Domain;
 import com.orgchart.orgchart.model.Organization;
@@ -32,7 +29,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	public OrganizationServiceImpl() {
 		super();
-		// use this file path because in war file cannot point to resource folder, have to point to folder class/...
+		// use this file path because in war file cannot point to resource folder, have
+		// to point to folder class/...
 		filePath = Thread.currentThread().getContextClassLoader().getResource(FILE_NAME).getPath();
 	}
 
@@ -41,7 +39,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		List<Organization> listDepartment = new ArrayList<>();
 		try {
 			File file = new File(filePath);
-			
+
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
 			Sheet datatypeSheet = workbook.getSheetAt(2);
@@ -55,7 +53,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 				DomainService dmService = new DomainServiceImpl();
 				List<Domain> listDomain = dmService.getAllDomains();
-				
+
 				if (firstRow) {
 					firstRow = false;
 				} else {
@@ -67,8 +65,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 							org.setName(currentRow.getCell(1).getStringCellValue());
 						}
 						if (currentRow.getCell(2) != null) {
-							for(Domain dm: listDomain) {
-								if((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
+							for (Domain dm : listDomain) {
+								if ((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
 									org.setDomainObj(dm);
 								}
 							}
@@ -76,7 +74,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 						if (currentRow.getCell(3) != null) {
 							org.setBusinessSector(currentRow.getCell(3).getStringCellValue());
 						}
-						
+
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -88,13 +86,13 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		return listDepartment;
 	}
-	
+
 	@Override
 	public List<Organization> getAllPureOrgs() {
 		List<Organization> listDepartment = new ArrayList<>();
 		try {
 			File file = new File(filePath);
-			
+
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
 			Sheet datatypeSheet = workbook.getSheetAt(2);
@@ -105,7 +103,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 				Row currentRow = iterator.next();
 				Organization org = new Organization();
-				
+
 				if (firstRow) {
 					firstRow = false;
 				} else {
@@ -146,7 +144,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 			while (iterator.hasNext()) {
 
 				Row currentRow = iterator.next();
-				
+
 				DomainService dmService = new DomainServiceImpl();
 				List<Domain> listDomain = dmService.getAllDomains();
 
@@ -162,8 +160,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 								org.setName(currentRow.getCell(1).getStringCellValue());
 							}
 							if (currentRow.getCell(2) != null) {
-								for(Domain dm: listDomain) {
-									if((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
+								for (Domain dm : listDomain) {
+									if ((long) currentRow.getCell(2).getNumericCellValue() == dm.getId()) {
 										org.setDomainObj(dm);
 									}
 								}
@@ -238,25 +236,25 @@ public class OrganizationServiceImpl implements OrganizationService {
 		boolean isUpdated = false;
 		try {
 			File file = new File(filePath);
-			
+
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
 			Sheet datatypeSheet = workbook.getSheetAt(2);
-			
+
 			int rowCount = datatypeSheet.getLastRowNum();
-			
+
 			// get the biggest id and +1 to create a new Organization
 			Row lastRow = datatypeSheet.getRow(rowCount);
 			long biggestId = 0;
 			Cell firstCell = lastRow.getCell(0);
-	        if (firstCell != null && firstCell.getCellType() != Cell.CELL_TYPE_BLANK) {
-	        	biggestId = (long)lastRow.getCell(0).getNumericCellValue();
-	        }else {
-	        	biggestId = 999;
-	        }
-			
+			if (firstCell != null && firstCell.getCellType() != Cell.CELL_TYPE_BLANK) {
+				biggestId = (long) lastRow.getCell(0).getNumericCellValue();
+			} else {
+				biggestId = 999;
+			}
+
 			Row row = datatypeSheet.createRow(++rowCount);
-			
+
 			Cell cell = row.createCell(rowCount);
 			cell.setCellValue(row.getRowNum());
 			cell = row.createCell(0);
@@ -267,15 +265,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 			cell.setCellValue(orgUpdate.getDomain());
 			cell = row.createCell(3);
 			cell.setCellValue(orgUpdate.getBusinessSector());
-			
+
 			inputStream.close();
-		
-			
+
 			FileOutputStream out = new FileOutputStream(file);
 			workbook.write(out);
 			workbook.close();
 			out.close();
-			
+
 			isUpdated = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -288,7 +285,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		boolean isDeleted = false;
 		try {
 			File file = new File(filePath);
-			
+
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
 			Sheet datatypeSheet = workbook.getSheetAt(2);

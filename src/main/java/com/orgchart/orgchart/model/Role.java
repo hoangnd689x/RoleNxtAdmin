@@ -10,6 +10,10 @@ public class Role {
 	private String careerPath;
 	private long position;
 	private Position positionObj;
+	
+	private long org;
+	private Organization orgObj;
+	
 	private String domainRole;
 	private String category;
 	private String competency;
@@ -19,6 +23,20 @@ public class Role {
 	private String responsibilities;
 	private String industrialRle;
 	private String entryCriteria;
+	
+	
+	public long getOrg() {
+		return org;
+	}
+	public void setOrg(long org) {
+		this.org = org;
+	}
+	public Organization getOrgObj() {
+		return orgObj;
+	}
+	public void setOrgObj(Organization orgObj) {
+		this.orgObj = orgObj;
+	}
 	public long getId() {
 		return id;
 	}

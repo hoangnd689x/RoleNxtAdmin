@@ -16,6 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.orgchart.orgchart.model.Connection;
 import com.orgchart.orgchart.model.Domain;
 import com.orgchart.orgchart.model.Organization;
 import com.orgchart.orgchart.model.Position;
@@ -42,7 +43,7 @@ public class StructureServiceImpl implements StructureService {
 	}
 
 	@Override
-	public List<Structure> getAllStructures() {
+	public List<Structure> GetAllStructures() {
 		List<Structure> listStructure = new ArrayList<>();
 		try {
 			System.out.println(FILE_NAME);
@@ -127,7 +128,7 @@ public class StructureServiceImpl implements StructureService {
 	}
 
 	@Override
-	public Structure getStrById(long id) {
+	public Structure GetStrById(long id) {
 		Structure str = new Structure();
 		try {
 			File file = new File(filePath);
@@ -206,7 +207,7 @@ public class StructureServiceImpl implements StructureService {
 	}
 
 	@Override
-	public boolean deleteStr(long id) {
+	public boolean DeleteStr(long id) {
 		boolean isDeleted = false;
 		try {
 			File file = new File(filePath);
@@ -371,4 +372,5 @@ public class StructureServiceImpl implements StructureService {
 		}
 		return isUpdated;
 	}
+
 }

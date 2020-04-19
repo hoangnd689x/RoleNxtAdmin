@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.orgchart.orgchart.model.CareerPath;
 import com.orgchart.orgchart.model.Competency;
+import com.orgchart.orgchart.model.Connection;
 import com.orgchart.orgchart.model.Domain;
 import com.orgchart.orgchart.model.Organization;
 import com.orgchart.orgchart.model.Position;
@@ -25,6 +26,7 @@ import com.orgchart.orgchart.model.Role;
 import com.orgchart.orgchart.model.Structure;
 import com.orgchart.orgchart.service.CareerPathService;
 import com.orgchart.orgchart.service.CompetencyService;
+import com.orgchart.orgchart.service.ConnectionService;
 import com.orgchart.orgchart.service.DomainService;
 import com.orgchart.orgchart.service.OrganizationService;
 import com.orgchart.orgchart.service.PositionService;
@@ -32,6 +34,7 @@ import com.orgchart.orgchart.service.RoleService;
 import com.orgchart.orgchart.service.StructureService;
 import com.orgchart.orgchart.serviceImpl.CareerPathServiceImpl;
 import com.orgchart.orgchart.serviceImpl.CompetencyServiceImpl;
+import com.orgchart.orgchart.serviceImpl.ConnectionServiceImpl;
 import com.orgchart.orgchart.serviceImpl.DomainServiceImpl;
 import com.orgchart.orgchart.serviceImpl.OrganizationServiceImpl;
 import com.orgchart.orgchart.serviceImpl.PositionServiceImpl;
@@ -62,6 +65,8 @@ public class RestApiController {
 	RoleService rlService = new RoleServiceImpl();
 	
 	CareerPathService cpService = new CareerPathServiceImpl();
+	
+	ConnectionService conService = new ConnectionServiceImpl();
 	
 	
 	/**
@@ -315,7 +320,7 @@ public class RestApiController {
 	public ResponseEntity<List<Structure>> getAllStructures(){
 		
 		List<Structure> listStructure = new ArrayList();
-		listStructure = structureService.getAllStructures();
+		listStructure = structureService.GetAllStructures();
 		
 		return new ResponseEntity<List<Structure>>(listStructure, HttpStatus.OK);
 	}
@@ -328,7 +333,7 @@ public class RestApiController {
 	public ResponseEntity<Structure> GetStrById(@PathVariable(required = false) long id){
 		
 		Structure str = new Structure();
-		str = structureService.getStrById(id);
+		str = structureService.GetStrById(id);
 		
 		return new ResponseEntity<Structure>(str, HttpStatus.OK);
 	}
@@ -377,7 +382,7 @@ public class RestApiController {
 	public ResponseEntity<Integer> DeleteStr(@PathVariable(required = false) long id){
 		
 		int deleteStatus;
-		boolean isDetele = structureService.deleteStr(id);
+		boolean isDetele = structureService.DeleteStr(id);
 		if(isDetele) {
 			deleteStatus = 1;
 		}else {
@@ -619,6 +624,37 @@ public class RestApiController {
 		
 		int deleteStatus;
 		boolean isDetele = cpService.DeleteCP(id);
+		if(isDetele) {
+			deleteStatus = 1;
+		}else {
+			deleteStatus = 0;
+		}
+		
+		return new ResponseEntity<Integer>(deleteStatus, HttpStatus.OK);
+	}
+	
+	/**
+	 * get all connections
+	 *
+	 */
+	@RequestMapping(value = "/getAllConnections", method = RequestMethod.GET)
+	public ResponseEntity<List<Connection>> GetAllConnections(){
+		
+		List<Connection> listConnection = new ArrayList();
+		listConnection = conService.GetAllConnections();
+		
+		return new ResponseEntity<List<Connection>>(listConnection, HttpStatus.OK);
+	}
+	
+	/**
+	 * add Connections
+	 *
+	 */
+	@PostMapping(path = "/addCon")
+	public ResponseEntity<Integer> AddCon(@RequestBody Connection con){
+		
+		int deleteStatus;
+		boolean isDetele = conService.AddCon(con);
 		if(isDetele) {
 			deleteStatus = 1;
 		}else {
