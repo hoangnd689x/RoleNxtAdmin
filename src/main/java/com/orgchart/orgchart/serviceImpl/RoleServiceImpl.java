@@ -94,9 +94,10 @@ public class RoleServiceImpl implements RoleService {
 						}
 						
 						
-						if(currentRow.getCell(3) != null) {
-							rl.setCareerPath(currentRow.getCell(3).getStringCellValue());
-						}
+						/*
+						 * if(currentRow.getCell(3) != null) {
+						 * rl.setCareerPath(currentRow.getCell(3).getStringCellValue()); }
+						 */
 						
 						if(currentRow.getCell(4) != null) {
 							for(Position pos: listPos) {
@@ -207,9 +208,10 @@ public class RoleServiceImpl implements RoleService {
 							}
 							
 							
-							if(currentRow.getCell(3) != null) {
-								rl.setCareerPath(currentRow.getCell(3).getStringCellValue());
-							}
+							/*
+							 * if(currentRow.getCell(3) != null) {
+							 * rl.setCareerPath(currentRow.getCell(3).getStringCellValue()); }
+							 */
 							
 							if(currentRow.getCell(4) != null) {
 								for(Position pos: listPos) {
@@ -339,25 +341,28 @@ public class RoleServiceImpl implements RoleService {
 							cell.setCellValue(rl.getId());
 							cell = row.createCell(1);
 							cell.setCellValue(rl.getDomain());
-							cell = row.createCell(2);
-							cell.setCellValue(rl.getCareerPath());
+							/*
+							 * cell = row.createCell(2); cell.setCellValue(rl.getCareerPath());
+							 */
 							cell = row.createCell(3);
-							cell.setCellValue(rl.getPosition());
+							cell.setCellValue(rl.getOrg());
 							cell = row.createCell(4);
-							cell.setCellValue(rl.getDomainRole());
+							cell.setCellValue(rl.getPosition());
 							cell = row.createCell(5);
-							cell.setCellValue(rl.getCategory());
+							cell.setCellValue(rl.getDomainRole());
 							cell = row.createCell(6);
-							cell.setCellValue(rl.getCompetency());
+							cell.setCellValue(rl.getCategory());
 							cell = row.createCell(7);
-							cell.setCellValue(rl.getKRA());
+							cell.setCellValue(rl.getCompetency());
 							cell = row.createCell(8);
-							cell.setCellValue(rl.getScope());
+							cell.setCellValue(rl.getKRA());
 							cell = row.createCell(9);
-							cell.setCellValue(rl.getResponsibilities());
+							cell.setCellValue(rl.getScope());
 							cell = row.createCell(10);
-							cell.setCellValue(rl.getIndustrialRle());
+							cell.setCellValue(rl.getResponsibilities());
 							cell = row.createCell(11);
+							cell.setCellValue(rl.getIndustrialRle());
+							cell = row.createCell(12);
 							cell.setCellValue(rl.getEntryCriteria());
 							inputStream.close();
 							FileOutputStream out = new FileOutputStream(file);
@@ -393,7 +398,7 @@ public class RoleServiceImpl implements RoleService {
 			Row lastRow = datatypeSheet.getRow(rowCount);
 			long biggestId = 0;
 			Cell firstCell = lastRow.getCell(0);
-	        if (firstCell != null && firstCell.getCellType() != Cell.CELL_TYPE_BLANK) {
+	        if (firstCell != null) {
 	        	biggestId = (long)lastRow.getCell(0).getNumericCellValue();
 	        }else {
 	        	biggestId = 999;
@@ -407,25 +412,28 @@ public class RoleServiceImpl implements RoleService {
 			cell.setCellValue(biggestId + 1);
 			cell = row.createCell(1);
 			cell.setCellValue(rl.getDomain());
-			cell = row.createCell(2);
-			cell.setCellValue(rl.getCareerPath());
+			/*
+			 * cell = row.createCell(2); cell.setCellValue(rl.getCareerPath());
+			 */
 			cell = row.createCell(3);
-			cell.setCellValue(rl.getPosition());
+			cell.setCellValue(rl.getOrg());
 			cell = row.createCell(4);
-			cell.setCellValue(rl.getDomainRole());
+			cell.setCellValue(rl.getPosition());
 			cell = row.createCell(5);
-			cell.setCellValue(rl.getCategory());
+			cell.setCellValue(rl.getDomainRole());
 			cell = row.createCell(6);
-			cell.setCellValue(rl.getCompetency());
+			cell.setCellValue(rl.getCategory());
 			cell = row.createCell(7);
-			cell.setCellValue(rl.getKRA());
+			cell.setCellValue(rl.getCompetency());
 			cell = row.createCell(8);
-			cell.setCellValue(rl.getScope());
+			cell.setCellValue(rl.getKRA());
 			cell = row.createCell(9);
-			cell.setCellValue(rl.getResponsibilities());
+			cell.setCellValue(rl.getScope());
 			cell = row.createCell(10);
-			cell.setCellValue(rl.getIndustrialRle());
+			cell.setCellValue(rl.getResponsibilities());
 			cell = row.createCell(11);
+			cell.setCellValue(rl.getIndustrialRle());
+			cell = row.createCell(12);
 			cell.setCellValue(rl.getEntryCriteria());
 			FileOutputStream out = new FileOutputStream(file);
 			workbook.write(out);
