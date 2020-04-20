@@ -16,4 +16,6 @@ public interface ConnectionService {
 	 List<Connection> GetAllConnections();
 	 
 	 public boolean AddCon(Connection orgUpdate);
+
+	List<Connection> GetAllConnectionsByDepartmentID(long id);
 }

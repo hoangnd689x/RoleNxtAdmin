@@ -704,5 +704,17 @@ public class RestApiController {
 		
 		return new ResponseEntity<List<Competency>>(listCompetency, HttpStatus.OK);
 	}
+	/**
+	 * rra81hc
+	 * get all connections by department ID
+	 *
+	 */
+	@RequestMapping(value = "/getAllConnectionsByDepartmentID/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<Connection>> GetAllConnectionsByDepartmentID(@PathVariable long id){
+		
+		List<Connection> listConnection = new ArrayList();
+		listConnection = conService.GetAllConnectionsByDepartmentID(id);
+		return new ResponseEntity<List<Connection>>(listConnection, HttpStatus.OK);
+	}
 	
 }

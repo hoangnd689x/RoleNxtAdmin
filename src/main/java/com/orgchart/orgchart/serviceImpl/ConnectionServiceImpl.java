@@ -90,7 +90,8 @@ public class ConnectionServiceImpl implements ConnectionService {
 		return listDomain;
 	}
 
-	@Override
+	
+@Override
 	public boolean AddCon(Connection con) {
 		boolean isUpdated = false;
 		try {
@@ -106,11 +107,14 @@ public class ConnectionServiceImpl implements ConnectionService {
 			Row lastRow = datatypeSheet.getRow(rowCount);
 			long biggestId = 0;
 			Cell firstCell = lastRow.getCell(0);
-			if (firstCell != null) {
-				biggestId = (long) lastRow.getCell(0).getNumericCellValue();
-			} else {
-				biggestId = 999;
+			if(rowCount!=0) {
+				if (firstCell != null) {
+					biggestId = (long) lastRow.getCell(0).getNumericCellValue();
+				} else {
+					biggestId = 999;
+				}
 			}
+			
 			
 			// check if a connection is exist --> dont add
 			boolean isDuplicate = true;
@@ -145,4 +149,64 @@ public class ConnectionServiceImpl implements ConnectionService {
 		}
 		return isUpdated;
 	}
+		@Override
+		public List<Connection> GetAllConnectionsByDepartmentID(long id) {
+			long departmentID=id;
+			List<Connection> listConnection = new ArrayList<>();
+			try {
+				File file = new File(filePath);
+	
+				FileInputStream inputStream = new FileInputStream(file);
+	
+				Workbook workbook = new XSSFWorkbook(inputStream);
+				Sheet datatypeSheet = workbook.getSheetAt(7);
+				Iterator<Row> iterator = datatypeSheet.iterator();
+				boolean firstRow = true;
+	
+				while (iterator.hasNext()) {
+	
+					Row currentRow = iterator.next();
+					Iterator<Cell> cellIterator = currentRow.iterator();
+					Connection con = new Connection();
+					OrganizationService orgService = new OrganizationServiceImpl();
+					List<Organization> listOrganization = orgService.getAllPureOrgs();
+	
+					if (firstRow) {
+						firstRow = false;
+					} else {
+						try {
+							// check if it's needed departmentID
+							if ((long) currentRow.getCell(3).getNumericCellValue() != departmentID) {
+								continue;
+							}
+							if (currentRow.getCell(0) != null) {
+								con.setId((long) currentRow.getCell(0).getNumericCellValue());
+							}
+							if (currentRow.getCell(1) != null) {
+								con.setSource((long) currentRow.getCell(1).getNumericCellValue());
+							}
+	
+							if (currentRow.getCell(2) != null) {
+								con.setTarget((long) currentRow.getCell(2).getNumericCellValue());
+							}
+	
+							for (Organization org : listOrganization) {
+								if ((long) currentRow.getCell(3).getNumericCellValue() == org.getId()) {
+									con.setOrgObj(org);
+								}
+							}
+							listConnection.add(con);
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+					}
+				}
+	
+			} catch (Exception e) {
+				e.printStackTrace();
+	
+			}
+	
+			return listConnection;
+		}
 }
