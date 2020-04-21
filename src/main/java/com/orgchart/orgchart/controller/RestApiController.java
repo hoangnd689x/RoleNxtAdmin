@@ -651,10 +651,10 @@ public class RestApiController {
 	 *
 	 */
 	@PostMapping(path = "/addCon")
-	public ResponseEntity<Integer> AddCon(@RequestBody Connection con){
+	public ResponseEntity<Integer> AddCon(@RequestBody List<Connection> cons){
 		
 		int deleteStatus;
-		boolean isDetele = conService.AddCon(con);
+		boolean isDetele = conService.AddCon(cons);
 		if(isDetele) {
 			deleteStatus = 1;
 		}else {

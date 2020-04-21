@@ -92,7 +92,7 @@ public class ConnectionServiceImpl implements ConnectionService {
 
 	
 @Override
-	public boolean AddCon(Connection con) {
+	public boolean AddCon(List<Connection> cons) {
 		boolean isUpdated = false;
 		try {
 			File file = new File(filePath);
@@ -100,50 +100,60 @@ public class ConnectionServiceImpl implements ConnectionService {
 			FileInputStream inputStream = new FileInputStream(file);
 			Workbook workbook = new XSSFWorkbook(inputStream);
 			Sheet datatypeSheet = workbook.getSheetAt(7);
+			for (Connection con : cons) {
+	            // start loop
+	            int rowCount = datatypeSheet.getLastRowNum();
 
-			int rowCount = datatypeSheet.getLastRowNum();
-
-			// get the biggest id and +1 to create a new Organization
-			Row lastRow = datatypeSheet.getRow(rowCount);
-			long biggestId = 0;
-			Cell firstCell = lastRow.getCell(0);
-			if(rowCount!=0) {
-				if (firstCell != null) {
-					biggestId = (long) lastRow.getCell(0).getNumericCellValue();
-				} else {
-					biggestId = 999;
+				// get the biggest id and +1 to create a new connection
+				Row lastRow = datatypeSheet.getRow(rowCount);
+				long biggestId = 0;
+				long departmentID = (long)con.getOrgID();
+				if(rowCount>0) {
+					Cell firstCell = lastRow.getCell(0);
+					if(rowCount!=0) {
+						if (firstCell != null) {
+							biggestId = (long) lastRow.getCell(0).getNumericCellValue();
+						} else {
+							biggestId = 999;
+						}
+					}
 				}
-			}
-			
-			
-			// check if a connection is exist --> dont add
-			boolean isDuplicate = true;
-			List<Connection> listConn = this.GetAllConnections();
-			for (Connection conn : listConn) {
-				if(conn.getSource() == con.getSource() && conn.getTarget() == con.getTarget()) {
-					isDuplicate = false;
+				
+				
+				
+				// check if a connection is exist --> dont add
+				boolean isDuplicate = false;
+				List<Connection> listConn = this.GetAllConnectionsByDepartmentID(departmentID);
+				if(listConn != null & !listConn.isEmpty()) {
+					for (Connection conn : listConn) {
+						if(conn.getSource() == con.getSource() && conn.getTarget() == con.getTarget()) {
+							isDuplicate = true;
+						}
+					}
 				}
-			}
-			
-			if(isDuplicate) {
-				Row row = datatypeSheet.createRow(++rowCount);
-				Cell cell = row.createCell(rowCount);
-				cell.setCellValue(row.getRowNum());
-				cell = row.createCell(0);
-				cell.setCellValue(biggestId + 1);
-				cell = row.createCell(1);
-				cell.setCellValue(con.getSource());
-				cell = row.createCell(2);
-				cell.setCellValue(con.getTarget());
-				cell = row.createCell(3);
-				cell.setCellValue(con.getOrgID());
-				inputStream.close();
-				FileOutputStream out = new FileOutputStream(file);
-				workbook.write(out);
-				out.close();
-				workbook.close();
-				isUpdated = true;
-			}
+				
+				
+				if(!isDuplicate) {
+					Row row = datatypeSheet.createRow(++rowCount);
+					Cell cell = row.createCell(rowCount);
+					cell.setCellValue(row.getRowNum());
+					cell = row.createCell(0);
+					cell.setCellValue(biggestId + 1);
+					cell = row.createCell(1);
+					cell.setCellValue(con.getSource());
+					cell = row.createCell(2);
+					cell.setCellValue(con.getTarget());
+					cell = row.createCell(3);
+					cell.setCellValue(con.getOrgID());
+					FileOutputStream out = new FileOutputStream(file);
+					workbook.write(out);
+					out.close();
+					isUpdated = true;	
+				}
+	            //end loop
+	        }
+			inputStream.close();
+			workbook.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
