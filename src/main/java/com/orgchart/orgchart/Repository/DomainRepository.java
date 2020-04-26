@@ -17,5 +17,5 @@ import com.orgchart.orgchart.model.Domain;
 public interface DomainRepository extends JpaRepository<Domain, Integer>{
 	
 	@Query("SELECT d FROM Domain d WHERE d.activate = true")
-	List<Domain> getAllDomain();
+	List<Domain> getAll();
 }

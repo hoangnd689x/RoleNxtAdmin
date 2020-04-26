@@ -1,42 +1,27 @@
-package com.orgchart.orgchart.model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+package com.orgchart.orgchart.DTO;
 
 /**
  * @author NNA7HC
  *
  */
-@Entity
-@Table(name = "CAREERPATH")
-public class CareerPath {
+public class CareerPathDTO {
 	
-	@Id
-	@Column(name = "CP_ID", nullable = false, unique = true)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(name = "CP_NAME")
 	private String name;
 	
-	@Column(name = "CP_COLOR")
 	private String color;
 	
-	@Column(name = "ACTIVATE")
 	private boolean activate;
 	
-	public CareerPath(long id, String name, String color, boolean activate) {
+	public CareerPathDTO(long id, String name, String color, boolean activate) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.color = color;
 		this.activate = activate;
 	}
-	public CareerPath() {
+	public CareerPathDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

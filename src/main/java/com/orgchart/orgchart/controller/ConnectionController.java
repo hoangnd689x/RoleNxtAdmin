@@ -11,43 +11,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.orgchart.orgchart.DTO.OrganizationDTO;
-import com.orgchart.orgchart.Mapper.OrganizationMapper;
-import com.orgchart.orgchart.service.OrganizationService;
-
-/**
- * @author NNA7HC
- *
- */
+import com.orgchart.orgchart.DTO.ConnectionDTO;
+import com.orgchart.orgchart.Mapper.ConnectionMapper;
+import com.orgchart.orgchart.service.ConnectionService;
 
 @RestController
-@RequestMapping(path = "api/org")
-public class OrganizationController {
-
+@RequestMapping(path = "api/connection")
+public class ConnectionController {
+	
 	@Autowired
-	OrganizationService orgService;
+	ConnectionService connectionService;
 	
 	@RequestMapping(value = "/get-all", method = RequestMethod.GET)
 	@ResponseBody
-	public List<OrganizationDTO> getAll(){
-		return OrganizationMapper.toOrganizationDTOList(this.orgService.getAll());
+	public List<ConnectionDTO> getAll(){
+		return ConnectionMapper.toConnectionDTOList(this.connectionService.getAll());
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Integer> add(@RequestBody OrganizationDTO item) {
-		return new ResponseEntity<Integer>(orgService.add(item), HttpStatus.OK);
+	public ResponseEntity<Integer> add(@RequestBody ConnectionDTO item) {
+		return new ResponseEntity<Integer>(connectionService.add(item), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Integer> update(@RequestBody OrganizationDTO item) {
-		return new ResponseEntity<Integer>(orgService.update(item), HttpStatus.OK);
+	public ResponseEntity<Integer> update(@RequestBody ConnectionDTO item) {
+		return new ResponseEntity<Integer>(connectionService.update(item), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Integer> delete(@RequestBody OrganizationDTO item) {
-		return new ResponseEntity<Integer>(orgService.delete(item), HttpStatus.OK);
+	public ResponseEntity<Integer> delete(@RequestBody ConnectionDTO item) {
+		return new ResponseEntity<Integer>(connectionService.delete(item), HttpStatus.OK);
 	}
 }

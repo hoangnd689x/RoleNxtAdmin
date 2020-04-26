@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.orgchart.orgchart.DTO.OrganizationDTO;
-import com.orgchart.orgchart.Mapper.OrganizationMapper;
-import com.orgchart.orgchart.service.OrganizationService;
+import com.orgchart.orgchart.DTO.PositionDTO;
+import com.orgchart.orgchart.Mapper.PositionMapper;
+import com.orgchart.orgchart.service.PositionService;
 
 /**
  * @author NNA7HC
@@ -21,33 +21,33 @@ import com.orgchart.orgchart.service.OrganizationService;
  */
 
 @RestController
-@RequestMapping(path = "api/org")
-public class OrganizationController {
+@RequestMapping(path = "api/position")
+public class PositionController {
 
 	@Autowired
-	OrganizationService orgService;
+	PositionService positionService;
 	
 	@RequestMapping(value = "/get-all", method = RequestMethod.GET)
 	@ResponseBody
-	public List<OrganizationDTO> getAll(){
-		return OrganizationMapper.toOrganizationDTOList(this.orgService.getAll());
+	public List<PositionDTO> getAll(){
+		return PositionMapper.toPositionDTOList(this.positionService.getAll());
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Integer> add(@RequestBody OrganizationDTO item) {
-		return new ResponseEntity<Integer>(orgService.add(item), HttpStatus.OK);
+	public ResponseEntity<Integer> add(@RequestBody PositionDTO item) {
+		return new ResponseEntity<Integer>(positionService.add(item), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Integer> update(@RequestBody OrganizationDTO item) {
-		return new ResponseEntity<Integer>(orgService.update(item), HttpStatus.OK);
+	public ResponseEntity<Integer> update(@RequestBody PositionDTO item) {
+		return new ResponseEntity<Integer>(positionService.update(item), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Integer> delete(@RequestBody OrganizationDTO item) {
-		return new ResponseEntity<Integer>(orgService.delete(item), HttpStatus.OK);
+	public ResponseEntity<Integer> delete(@RequestBody PositionDTO item) {
+		return new ResponseEntity<Integer>(positionService.delete(item), HttpStatus.OK);
 	}
 }

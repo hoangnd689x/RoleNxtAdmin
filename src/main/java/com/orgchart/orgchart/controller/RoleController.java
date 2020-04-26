@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.orgchart.orgchart.DTO.OrganizationDTO;
-import com.orgchart.orgchart.Mapper.OrganizationMapper;
-import com.orgchart.orgchart.service.OrganizationService;
+import com.orgchart.orgchart.DTO.RoleDTO;
+import com.orgchart.orgchart.Mapper.RoleMapper;
+import com.orgchart.orgchart.service.RoleService;
 
 /**
  * @author NNA7HC
@@ -21,33 +21,33 @@ import com.orgchart.orgchart.service.OrganizationService;
  */
 
 @RestController
-@RequestMapping(path = "api/org")
-public class OrganizationController {
+@RequestMapping(path = "api/role")
+public class RoleController {
 
 	@Autowired
-	OrganizationService orgService;
+	RoleService roleService;
 	
 	@RequestMapping(value = "/get-all", method = RequestMethod.GET)
 	@ResponseBody
-	public List<OrganizationDTO> getAll(){
-		return OrganizationMapper.toOrganizationDTOList(this.orgService.getAll());
+	public List<RoleDTO> getAll(){
+		return RoleMapper.toRoleDTOList(this.roleService.getAll());
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Integer> add(@RequestBody OrganizationDTO item) {
-		return new ResponseEntity<Integer>(orgService.add(item), HttpStatus.OK);
+	public ResponseEntity<Integer> add(@RequestBody RoleDTO item) {
+		return new ResponseEntity<Integer>(roleService.add(item), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Integer> update(@RequestBody OrganizationDTO item) {
-		return new ResponseEntity<Integer>(orgService.update(item), HttpStatus.OK);
+	public ResponseEntity<Integer> update(@RequestBody RoleDTO item) {
+		return new ResponseEntity<Integer>(roleService.update(item), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Integer> delete(@RequestBody OrganizationDTO item) {
-		return new ResponseEntity<Integer>(orgService.delete(item), HttpStatus.OK);
+	public ResponseEntity<Integer> delete(@RequestBody RoleDTO item) {
+		return new ResponseEntity<Integer>(roleService.delete(item), HttpStatus.OK);
 	}
 }

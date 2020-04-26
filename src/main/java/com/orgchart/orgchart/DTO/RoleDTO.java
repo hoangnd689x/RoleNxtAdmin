@@ -1,73 +1,32 @@
-package com.orgchart.orgchart.model;
+package com.orgchart.orgchart.DTO;
 
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 /**
  * @author NNA7HC
  *
  */
-@Entity
-@Table(name = "ROLES")
-public class Role {
 
-	@Id
-	@Column(name = "ROLE_ID", nullable = false, unique = true)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class RoleDTO {
 	private int id;
-
-	@ManyToOne
-	@JoinColumn(name = "POSITION_ID")
-	private Position positionObj;
-
-	@ManyToOne
-	@JoinColumn(name = "CP_ID")
-	private CareerPath careerPath;
-
-	@ManyToMany
-//	@JoinTable(name = "ROLE_COMPETENCY", joinColumns = @JoinColumn(name = "ROLE_ID"), inverseJoinColumns = @JoinColumn(name = "COM_ID"))
-	private List<Competency> competencies;
-
-	@Column(name = "DOMAIN_ROLES")
+	private PositionDTO positionObj;
+	private CareerPathDTO careerPath;
+	private List<CompetencyDTO> competencies;
 	private String domainRole;
-
-	@Column(name = "PROJECT_CATEGORY")
 	private String category;
-
-	@Column(name = "KRA")
 	private String KRA;
-
-	@Column(name = "SCOPE")
 	private String scope;
-
-	@Column(name = "RESPONSIBILITIES")
 	private String responsibilities;
-
-	@Column(name = "INDUSTRIAL_ROLE")
 	private String industrialRole;
-
-	@Column(name = "ENTRY_CRIDENTIA")
 	private String entryCriteria;
-
-	@Column(name = "ACTIVATE")
 	private boolean activate;
 
-	public Role() {
+	public RoleDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Role(int id, CareerPath careerPath, Position positionObj, String domainRole, String category, String kRA,
+	public RoleDTO(int id, CareerPathDTO careerPath, PositionDTO positionObj, String domainRole, String category, String kRA,
 			String scope, String responsibilities, String industrialRole, String entryCriteria, boolean activate) {
 		super();
 		this.id = id;
@@ -83,14 +42,6 @@ public class Role {
 		this.activate = activate;
 	}
 
-	public List<Competency> getCompetencies() {
-		return competencies;
-	}
-
-	public void setCompetencies(List<Competency> competencies) {
-		this.competencies = competencies;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -99,20 +50,28 @@ public class Role {
 		this.id = id;
 	}
 
-	public CareerPath getCareerPath() {
+	public CareerPathDTO getCareerPath() {
 		return careerPath;
 	}
 
-	public void setCareerPath(CareerPath careerPath) {
+	public void setCareerPath(CareerPathDTO careerPath) {
 		this.careerPath = careerPath;
 	}
 
-	public Position getPositionObj() {
+	public PositionDTO getPositionObj() {
 		return positionObj;
 	}
 
-	public void setPositionObj(Position positionObj) {
+	public void setPositionObj(PositionDTO positionObj) {
 		this.positionObj = positionObj;
+	}
+
+	public List<CompetencyDTO> getCompetencies() {
+		return competencies;
+	}
+
+	public void setCompetencies(List<CompetencyDTO> competencies) {
+		this.competencies = competencies;
 	}
 
 	public String getDomainRole() {

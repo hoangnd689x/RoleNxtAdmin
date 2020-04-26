@@ -15,6 +15,11 @@ import com.orgchart.orgchart.DTO.DomainDTO;
 import com.orgchart.orgchart.Mapper.DomainMapper;
 import com.orgchart.orgchart.service.DomainService;
 
+/**
+ * @author NNA7HC
+ *
+ */
+
 @RestController
 @RequestMapping(path = "api/domain")
 public class DomainController {
@@ -28,19 +33,19 @@ public class DomainController {
 		return DomainMapper.toDomainDTOList(this.dmService.getAll());
 	}
 	
-	@RequestMapping(value = "/add-domain", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Integer> addDomain(@RequestBody DomainDTO item) {
 		return new ResponseEntity<Integer>(dmService.add(item), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/update-domain", method = RequestMethod.POST)
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Integer> updateDomain(@RequestBody DomainDTO item) {
 		return new ResponseEntity<Integer>(dmService.update(item), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/delete-domain", method = RequestMethod.POST)
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Integer> deleteDomain(@RequestBody DomainDTO item) {
 		return new ResponseEntity<Integer>(dmService.delete(item), HttpStatus.OK);

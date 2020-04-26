@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.orgchart.orgchart.DTO.OrganizationDTO;
-import com.orgchart.orgchart.Mapper.OrganizationMapper;
-import com.orgchart.orgchart.service.OrganizationService;
+import com.orgchart.orgchart.DTO.CareerPathDTO;
+import com.orgchart.orgchart.Mapper.CareerPathMapper;
+import com.orgchart.orgchart.service.CareerPathService;
 
 /**
  * @author NNA7HC
@@ -21,33 +21,32 @@ import com.orgchart.orgchart.service.OrganizationService;
  */
 
 @RestController
-@RequestMapping(path = "api/org")
-public class OrganizationController {
-
+@RequestMapping(path = "api/career-path")
+public class CareerPathController {
 	@Autowired
-	OrganizationService orgService;
+	CareerPathService careerPathService;
 	
 	@RequestMapping(value = "/get-all", method = RequestMethod.GET)
 	@ResponseBody
-	public List<OrganizationDTO> getAll(){
-		return OrganizationMapper.toOrganizationDTOList(this.orgService.getAll());
+	public List<CareerPathDTO> getAll(){
+		return CareerPathMapper.toCareerPathDTOList(this.careerPathService.getAll());
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Integer> add(@RequestBody OrganizationDTO item) {
-		return new ResponseEntity<Integer>(orgService.add(item), HttpStatus.OK);
+	public ResponseEntity<Integer> add(@RequestBody CareerPathDTO item) {
+		return new ResponseEntity<Integer>(careerPathService.add(item), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Integer> update(@RequestBody OrganizationDTO item) {
-		return new ResponseEntity<Integer>(orgService.update(item), HttpStatus.OK);
+	public ResponseEntity<Integer> update(@RequestBody CareerPathDTO item) {
+		return new ResponseEntity<Integer>(careerPathService.update(item), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Integer> delete(@RequestBody OrganizationDTO item) {
-		return new ResponseEntity<Integer>(orgService.delete(item), HttpStatus.OK);
+	public ResponseEntity<Integer> delete(@RequestBody CareerPathDTO item) {
+		return new ResponseEntity<Integer>(careerPathService.delete(item), HttpStatus.OK);
 	}
 }

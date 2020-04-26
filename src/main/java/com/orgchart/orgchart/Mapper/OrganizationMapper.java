@@ -40,8 +40,8 @@ public class OrganizationMapper {
 	public static List<OrganizationDTO> toOrganizationDTOList(List<Organization> list)
 	{
 		List<OrganizationDTO> rs = new ArrayList<OrganizationDTO>();
-		for (Organization org : list) {
-			rs.add(toOrganizationDTO(org));
+		for (Organization item : list) {
+			rs.add(toOrganizationDTO(item));
 		}
 		return rs;
 	}

@@ -35,8 +35,8 @@ public class DomainMapper {
 	public static List<DomainDTO> toDomainDTOList(List<Domain> list)
 	{
 		List<DomainDTO> rs = new ArrayList<DomainDTO>();
-		for (Domain dm : list) {
-			rs.add(toDomainDTO(dm));
+		for (Domain item : list) {
+			rs.add(toDomainDTO(item));
 		}
 		return rs;
 	}

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.orgchart.orgchart.DTO.OrganizationDTO;
+import com.orgchart.orgchart.Mapper.DomainMapper;
 import com.orgchart.orgchart.Mapper.OrganizationMapper;
-import com.orgchart.orgchart.Repository.DomainRepository;
 import com.orgchart.orgchart.Repository.OrganizationRepository;
 import com.orgchart.orgchart.model.Organization;
 
@@ -21,13 +21,10 @@ import com.orgchart.orgchart.model.Organization;
 public class OrganizationService {
 	
 	@Autowired
-	DomainService domainService;
-	
-	@Autowired
 	OrganizationRepository orgRepository;
 	
 	public List<Organization> getAll(){
-		return orgRepository.getAllOrg();
+		return orgRepository.getAll();
 	}
 	
 	public OrganizationDTO findById(int id) {
@@ -38,7 +35,7 @@ public class OrganizationService {
 		Organization rs = new Organization();
 		
 		rs.setName(obj.getName());
-		rs.setDomainObj(domainService.findById(obj.getDomainObj().getId()));
+		rs.setDomainObj(DomainMapper.toDomain(obj.getDomainObj()));
 		rs.setBusinessSector(obj.getBusinessSector());
 		rs.setActivate(true);
 		

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.orgchart.orgchart.model.Organization;
+import com.orgchart.orgchart.model.Connection;
 
 /**
  * @author NNA7HC
@@ -14,8 +14,8 @@ import com.orgchart.orgchart.model.Organization;
  */
 
 @Repository
-public interface OrganizationRepository extends JpaRepository<Organization, Integer>{
+public interface ConnectionRepository extends JpaRepository<Connection, Integer> {
 	
-	@Query("SELECT o FROM Organization o WHERE o.activate = true")
-	List<Organization> getAll();
+	@Query("SELECT c FROM Connection c WHERE c.activate = true")
+	List<Connection> getAll();
 }

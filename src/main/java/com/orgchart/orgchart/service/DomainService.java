@@ -23,7 +23,7 @@ public class DomainService {
 	private DomainRepository domainRepository;
 	
 	public List<Domain> getAll(){
-		return domainRepository.getAllDomain();
+		return domainRepository.getAll();
 	}
 	
 	public Domain findById(int id) {
