@@ -1,0 +1,24 @@
+<div class="col-md-6 user-container">
+    <h2 style="margin: auto"> Structure List</h2>
+    <button class="btn btn-success" style="width:200px; margin-bottom : 10px" (click)="addStructure()"> Add New Structure</button>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Organization</th>
+        <th>Domain</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let structure of structures">
+        <td>{{structure.orgObj.name}}</td>
+        <td>{{structure.dmObj.name}}</td>
+        <td>
+          <button class="btn btn-info" (click)="editStructure(structure)"> Edit</button>
+          <button class="btn btn-danger" (click)="deleteStructure(structure)" style="margin-left: 20px;"> Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  

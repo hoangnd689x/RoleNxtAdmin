@@ -1,18 +1,19 @@
 <div class="col-md-6 user-container">
   <h2 style="margin: auto"> Organization Details</h2>
-  <button class="btn btn-success" style="width:200px" (click)="addOrg()"> Add Organization Data</button>
+  <button class="btn btn-success" style="width:200px; margin-bottom : 10px" (click)="addOrg()"> Add Organization Data</button>
   <table class="table table-striped">
     <thead>
     <tr>
       <th>Name</th>
       <th>Domain</th>
       <th>Business Sector</th>
+      <th>Action</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let org of orgs">
       <td>{{org.name}}</td>
-      <td>{{org.domain}}</td>
+      <td>{{org.domainObj.name}}</td>
       <td>{{org.businessSector}}</td>
       <td>
         <button class="btn btn-info" (click)="editOrg(org)"> Edit</button>

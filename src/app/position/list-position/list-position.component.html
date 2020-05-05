@@ -1,0 +1,24 @@
+<div class="col-md-6 user-container">
+    <h2 style="margin: auto"> List Position</h2>
+    <button class="btn btn-success" style="width:200px; margin-bottom : 10px" (click)="addPosition()"> Add Position</button>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Organization</th>
+        <th>Position Name</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let position of positions">
+        <td>{{position.organizationObj.name}}</td>
+        <td>{{position.name}}</td>
+        <td>
+          <button class="btn btn-info" (click)="editPosition(position)">Edit</button>
+          <button class="btn btn-danger" (click)="deletePosition(position)" style="margin-left: 20px;"> Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  

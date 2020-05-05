@@ -1,22 +1,31 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="https://www.devglan.com">Organization Data</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <a class="navbar-brand" href="https://www.devglan.com">Roles</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <a class="navbar-brand" href="https://www.devglan.com">Structures</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <a class="navbar-brand" href="https://www.devglan.com">Competency MD</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="navbar-header">
+    <a class="navbar-brand" href="">RoleNxt-Admin</a>
+  </div>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item " [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['/list-domain']">Domain</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']" >
+        <a class="nav-link" [routerLink]="['/list-org']">Organization</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']" >
+        <a class="nav-link" [routerLink]="['/list-position']">Position</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']" >
+        <a class="nav-link" [routerLink]="['/list-structure']">Structure</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']" >
+        <a class="nav-link" [routerLink]="['/list-com']">Competencies</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']" >
+        <a class="nav-link" [routerLink]="['/list-role']">Roles</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']" >
+        <a class="nav-link" [routerLink]="['/list-cp']">Career Path</a>
+      </li>
+    </ul>
+  </div>
 </nav>
 <router-outlet></router-outlet>

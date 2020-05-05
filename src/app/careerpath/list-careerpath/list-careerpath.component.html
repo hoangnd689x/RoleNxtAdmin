@@ -1,0 +1,24 @@
+<div class="col-md-6 user-container">
+    <h2 style="margin: auto"> List Career Path</h2>
+    <button class="btn btn-success" style="width:200px; margin-bottom : 10px" (click)="addCP()"> Add Career Path</button>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Career Path</th>
+        <th>Color</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let cp of cps">
+        <td>{{cp.name}}</td>
+        <td>{{cp.color}}</td>
+        <td>
+          <button class="btn btn-info" (click)="editCP(cp)"> Edit</button>
+          <button class="btn btn-danger" (click)="deleteCP(cp)" style="margin-left: 20px;"> Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  

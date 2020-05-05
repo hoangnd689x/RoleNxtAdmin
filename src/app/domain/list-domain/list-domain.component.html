@@ -1,0 +1,22 @@
+<div class="col-md-6 user-container">
+    <h2 style="margin: auto"> List Domain</h2>
+    <button class="btn btn-success" style="width:200px; margin-bottom : 10px" (click)="addDomain()"> Add Domain</button>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Domain</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let domain of domains">
+        <td>{{domain.name}}</td>
+        <td>
+          <button class="btn btn-info" (click)="editDomain(domain)"> Edit</button>
+          <button class="btn btn-danger" (click)="deleteDomain(domain)" style="margin-left: 20px;"> Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  

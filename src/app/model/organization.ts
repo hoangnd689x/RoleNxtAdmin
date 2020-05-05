@@ -1,6 +1,9 @@
+import { Domain } from './domain';
+
 export class Organization{
-    id: string;
-    deparment: string;
-    domain: string;
+    id: number;
+    name: string;
+    domain: number;
     businessSector: string;
+    domainObj: Domain
 }
