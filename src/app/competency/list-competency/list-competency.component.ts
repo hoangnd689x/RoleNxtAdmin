@@ -28,7 +28,7 @@ export class ListCompetencyComponent implements OnInit {
 
   deleteCom(com: Competency): void {
     if (confirm("Are you sure you want to delete?")) {
-      this.apiService.deleteCompetency(com.id.toString())
+      this.apiService.deleteCompetency(com)
         .subscribe(data => {
           this.getAllCompetencies();
         })

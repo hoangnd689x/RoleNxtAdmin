@@ -27,7 +27,7 @@ export class ListDomainComponent implements OnInit {
 
   deleteDomain(dm: Domain): void {
     if (confirm("Are you sure you want to delete?")) {
-      this.apiService.deleteDomain(dm.id.toString())
+      this.apiService.deleteDomain(dm)
         .subscribe(data => {
           this.getAllDomain();
         })

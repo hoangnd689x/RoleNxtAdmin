@@ -37,7 +37,7 @@ export class ListRoleComponent implements OnInit {
   deleteRole(role: Role): void {
     if(confirm("Are you sure you want to delete?"))
     {
-      this.apiService.deleteRole(role.id.toString())
+      this.apiService.deleteRole(role)
       .subscribe( data => {
         this.getAllRoles();
       })

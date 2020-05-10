@@ -23,6 +23,7 @@ export class EditDomainComponent implements OnInit {
     this.editForm = this.formBuilder.group({
       id: '',
       name: '',
+      activate: '',
     });
     this.loadDomain();
   }
@@ -35,6 +36,7 @@ export class EditDomainComponent implements OnInit {
         this.editForm = this.formBuilder.group({
           id: this.domainData.id,
           name: this.domainData.name,
+          activate: this.domainData.activate
         });
       });
   }

@@ -5,13 +5,14 @@
 
     <div class="form-group">
       <label for="name">Career Path:</label>
-      <input type="text" formControlName="name" placeholder="Career Path" name="name" class="form-control" id="name">
+      <input type="text" formControlName="name" placeholder="Career Path" name="name" class="form-control" id="name" disabled>
     </div>
 
     <div class="form-group">
-        <label for="name">Color:</label>
-        <input type="text" formControlName="color" placeholder="Color" name="name" class="form-control" id="color">
-      </div>
+      <label for="name">Color:</label>
+      <app-color-picker></app-color-picker>
+      <!-- <input type="text" formControlName="color" placeholder="Color" name="name" class="form-control" id="color"> -->
+    </div>
    
     <div class="row">
       <div class="col-md-6" style="display: flex; justify-content: center;">

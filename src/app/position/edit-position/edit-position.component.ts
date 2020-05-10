@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { Domain } from 'src/app/model/domain';
 import { Position } from 'src/app/model/position';
 import { Organization } from 'src/app/model/organization';
+import { CareerPath } from 'src/app/model/careerpath';
 
 @Component({
   selector: 'app-edit-position',
@@ -21,16 +22,22 @@ export class EditPositionComponent implements OnInit {
   positionData: Position;
   positionId: Number;
   orgs: Organization[];
+  cps: CareerPath[];
 
   ngOnInit() {
     this.editForm = this.formBuilder.group({
       id: [''],
       organization: ['-1', Validators.required],
+      careerPath: ['-1', Validators.required],
+      organizationObj: null,
+      careerpathObj: null,
       name: ['', Validators.required],
-      organizationObj: ['-1']
+      cluster: [0, Validators.required],
+      activate: ''
     });
 
     this.getOrg();
+    this.getCPs();
     this.getPosition();
   }
 
@@ -50,6 +57,14 @@ export class EditPositionComponent implements OnInit {
     });
   }
 
+  getCPs() {
+    this.apiService.getAllCareerPaths()
+      .subscribe(data => {
+        this.cps = data;
+        console.log(this.cps);
+      });
+  }
+
   getPosition() {
     this.positionId = parseInt(this.route.snapshot.paramMap.get("id"));
     this.apiService.getPositionById(this.positionId.toString())
@@ -61,6 +76,10 @@ export class EditPositionComponent implements OnInit {
           organization: this.positionData.organizationObj.id,
           name: this.positionData.name,
           organizationObj: this.positionData.organizationObj,
+          careerPath: this.positionData.careerpathObj.id,
+          careerpathObj: this.positionData.careerpathObj,
+          cluster: this.positionData.cluster,
+          activate: this.positionData.activate,
         });
         console.log(this.editForm.value);
       });

@@ -2,23 +2,19 @@ import { Domain } from './domain';
 import { Position } from './position';
 import { Competency } from './Competency';
 import { Organization } from './organization';
+import { CareerPath } from './careerpath';
 
 export class Role {
     id: number;
-    domain: number;
-    domainObj: Domain;
-    careerPath: string;
-    position : number;
     positionObj: Position;
-    org: string;
-    orgObj: Organization;
+    //careerPath: CareerPath;
     domainRole: string;
     category: string;
-    competency: string;
-    competencyObj: Competency[];
+    competencies: Competency[];
     scope: string;
     responsibilities: string;
-    industrialRle: string;
+    industrialRole: string;
     entryCriteria: string;
     kra: string;
+    activate: boolean;
 }

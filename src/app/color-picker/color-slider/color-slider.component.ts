@@ -88,10 +88,20 @@ export class ColorSliderComponent implements AfterViewInit {
     this.color.emit(rgbaColor)
   }
 
+  componentToHex(c: number) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  }
+  
+  rgbToHex(r: number, g: number, b: number) {
+    return "#" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
+  }
+
   getColorAtPosition(x: number, y: number) {
     const imageData = this.ctx.getImageData(x, y, 1, 1).data
     return (
-      'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)'
+      //'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)'
+      this.rgbToHex(imageData[0],imageData[1],imageData[2])
     )
   }
 }

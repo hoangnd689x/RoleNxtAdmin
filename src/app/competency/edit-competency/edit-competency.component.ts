@@ -29,7 +29,8 @@ export class EditCompetencyComponent implements OnInit {
       name: ['', Validators.required],
       category: ['', Validators.required],
       dm: ['-1', Validators.required],
-      dmOjb: ['-1']
+      dmOjb: ['-1'],
+      activate: '',
     });
 
     this.getAllDomain();
@@ -63,7 +64,8 @@ export class EditCompetencyComponent implements OnInit {
           name: this.competencyData.name,
           category: this.competencyData.category,
           dm: this.competencyData.dmOjb.id,
-          dmOjb: this.competencyData.dmOjb
+          dmOjb: this.competencyData.dmOjb,
+          activate: this.competencyData.activate
         });
         console.log(this.editForm.value);
       });

@@ -21,14 +21,17 @@ import { ListDomainComponent } from './domain/list-domain/list-domain.component'
 import { AddCareerpathComponent } from './careerpath/add-careerpath/add-careerpath.component';
 import { EditCareerpathComponent } from './careerpath/edit-careerpath/edit-careerpath.component';
 import { ListCareerpathComponent } from './careerpath/list-careerpath/list-careerpath.component';
+import { AddConnectionComponent } from './connection/add-connection/add-connection.component';
+import { EditConnectionComponent } from './connection/edit-connection/edit-connection.component';
+import { ListConnectionComponent } from './connection/list-connection/list-connection.component';
 
 const routes: Routes = [
   { path: 'add-org', component: AddOrgComponent },
   { path: 'list-org', component: ListOrgComponent },
   { path: 'edit-org/:id', component: EditOrgComponent },
-  { path: 'add-structure', component: AddStructureComponent },
-  { path: 'edit-structure/:id', component: EditStructureComponent },
-  { path: 'list-structure', component: ListStructureComponent },
+  // { path: 'add-structure', component: AddStructureComponent },
+  // { path: 'edit-structure/:id', component: EditStructureComponent },
+  // { path: 'list-structure', component: ListStructureComponent },
   { path: 'add-role', component: AddRoleComponent },
   { path: 'edit-role/:id', component: EditRoleComponent },
   { path: 'add-position', component: AddPositionComponent },
@@ -44,6 +47,9 @@ const routes: Routes = [
   { path: 'add-cp', component: AddCareerpathComponent },
   { path: 'edit-cp/:id', component: EditCareerpathComponent },
   { path: 'list-cp', component: ListCareerpathComponent },
+  { path: 'add-con', component: AddConnectionComponent },
+  { path: 'edit-con/:id', component: EditConnectionComponent },
+  { path: 'list-con', component: ListConnectionComponent },
   {path : '', component : ListDomainComponent}
 ];
 

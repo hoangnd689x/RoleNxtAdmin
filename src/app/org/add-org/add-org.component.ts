@@ -24,7 +24,6 @@ export class AddOrgComponent implements OnInit {
     this.getAllDomain();
 
     this.addForm = this.formBuilder.group({
-      id: [''],
       name: ['', Validators.required],
       domain: ['-1', Validators.required],
       businessSector: ['', Validators.required],

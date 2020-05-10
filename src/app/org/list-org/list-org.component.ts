@@ -29,7 +29,7 @@ export class ListOrgComponent implements OnInit {
 
   deleteOrg(org: Organization): void {
     if (confirm("Are you sure you want to delete?")) {
-      this.apiService.deleteOrg(org.id.toString())
+      this.apiService.deleteOrg(org)
         .subscribe(data => {
           this.getOrgs();
         })

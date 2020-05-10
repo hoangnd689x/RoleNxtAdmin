@@ -27,7 +27,7 @@ export class ListCareerpathComponent implements OnInit {
 
   deleteCP(cp: CareerPath): void {
     if (confirm("Are you sure you want to delete?")) {
-      this.apiService.deleteCareerPath(cp.id.toString())
+      this.apiService.deleteCareerPath(cp)
         .subscribe(data => {
           this.getAllCP();
         })

@@ -4,6 +4,6 @@ export class Competency {
     id: number;
     name: string;
     category: string;
-    dm: number;
     dmOjb: Domain;
+    activate: boolean;
 }

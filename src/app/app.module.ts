@@ -30,6 +30,9 @@ import { AddDomainComponent } from './domain/add-domain/add-domain.component';
 import { EditDomainComponent } from './domain/edit-domain/edit-domain.component';
 import { ListDomainComponent } from './domain/list-domain/list-domain.component';
 import { ColorPickerModule } from './color-picker/color-picker.module';
+import { AddConnectionComponent } from './connection/add-connection/add-connection.component';
+import { EditConnectionComponent } from './connection/edit-connection/edit-connection.component';
+import { ListConnectionComponent } from './connection/list-connection/list-connection.component';
 
 
 @NgModule({
@@ -56,7 +59,10 @@ import { ColorPickerModule } from './color-picker/color-picker.module';
     ListCareerpathComponent,
     AddDomainComponent,
     EditDomainComponent,
-    ListDomainComponent
+    ListDomainComponent,
+    AddConnectionComponent,
+    EditConnectionComponent,
+    ListConnectionComponent
   ],
   imports: [
     BrowserModule,

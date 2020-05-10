@@ -1,9 +1,12 @@
 import { Domain } from './domain';
 import { Organization } from './organization';
+import { CareerPath } from './careerpath';
 
 export class Position {
     id: number;
-    organization: number;
+    organizationObj: Organization;
+    careerpathObj: CareerPath;
     name: string;
-    organizationObj: Organization
+    cluster: number;
+    activate: boolean;
 }

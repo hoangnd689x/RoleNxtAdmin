@@ -29,9 +29,8 @@ export class EditRoleComponent implements OnInit {
   orgs: Organization[];
   selectedCompetencyObject: Competency;
   competencies: Competency[];
-  selectedCompetenciesArray: string[] = [];
-  competenciesMap: Map<number, Competency> = new Map();
   selectedCompetencies: Map<number, Competency> = new Map();
+  competenciesMap: Map<number, Competency> = new Map();
 
   roleData: Role;
 
@@ -40,21 +39,18 @@ export class EditRoleComponent implements OnInit {
     this.editForm = this.formBuilder.group({
       id: [''],
       domain: ['-1', Validators.required],
-      domainObj: null,
-      careerPath: [''],
       org: ['-1'],
-      orgObj: null,
       position: ['-1', Validators.required],
       positionObj: null,
       domainRole: ['', Validators.required],
-      competency: [null, Validators.required],
-      competencyObj: [[], Validators.required],
+      competencies: [[], Validators.required],
       category: ['', Validators.required],
       kra: ['', Validators.required],
       scope: ['', Validators.required],
       responsibilities: ['', Validators.required],
-      industrialRle: ['', Validators.required],
+      industrialRole: ['', Validators.required],
       entryCriteria: ['', Validators.required],
+      activate: ''
     });
 
     this.getAllDomain();
@@ -71,30 +67,31 @@ export class EditRoleComponent implements OnInit {
         console.log(this.roleData);
         this.editForm.setValue({
           id: this.roleData.id,
-          domain: this.roleData.domainObj.id,
-          domainObj: this.roleData.domainObj,
-          careerPath: this.roleData.careerPath,
-          org: this.roleData.orgObj.id,
-          orgObj: this.roleData.orgObj,
+          domain: this.roleData.positionObj.organizationObj.domainObj.id,
+          //careerPath: this.roleData.careerPath,
+          org: this.roleData.positionObj.organizationObj.id,
           position: this.roleData.positionObj.id,
           positionObj: this.roleData.positionObj,
           domainRole: this.roleData.domainRole,
-          competency: this.roleData.competency,
-          competencyObj: this.roleData.competencyObj,
+          competencies: this.roleData.competencies,
           category: this.roleData.category,
           kra: this.roleData.kra,
           scope: this.roleData.scope,
           responsibilities: this.roleData.responsibilities,
-          industrialRle: this.roleData.industrialRle,
-          entryCriteria: this.roleData.entryCriteria
+          industrialRole: this.roleData.industrialRole,
+          entryCriteria: this.roleData.entryCriteria,
+          activate: this.roleData.activate
         });
-        console.log(this.editForm.value);
-        this.getOrgByDomainId(this.roleData.orgObj.id.toString());
-        this.apiService.getPositionsByOrgId(this.roleData.domainObj.id.toString()).subscribe(data => {
+
+        //console.log(this.editForm.value);
+        this.getOrgByDomainId(this.roleData.positionObj.organizationObj.domainObj.id.toString());
+
+        this.apiService.getPositionsByOrgId(this.roleData.positionObj.organizationObj.id.toString()).subscribe(data => {
           this.positions = data;
           console.log(this.positions);
         })
-        this.loadSelectedCompetencies(this.roleData.domainObj.id.toString())
+        this.getCompetenciesByDomainId(this.roleData.positionObj.organizationObj.domainObj.id.toString());
+        this.loadSelectedCompetencies()
       });
   }
 
@@ -117,7 +114,7 @@ export class EditRoleComponent implements OnInit {
     this.editForm.get('position').setValue('-1');
   }
 
-  loadPosition(orgId: string){
+  loadPosition(orgId: string) {
     this.apiService.getPositionsByOrgId(orgId).subscribe(data => {
       this.positions = data;
       console.log(this.positions);
@@ -125,29 +122,23 @@ export class EditRoleComponent implements OnInit {
     })
   }
 
-  getOrgByDomainId(domainId: string){
+  getOrgByDomainId(domainId: string) {
     this.apiService.getOrgsByDomainId(domainId).subscribe(data => {
       this.orgs = data;
       console.log(this.orgs);
     });
   }
 
-  loadSelectedCompetencies(domainId: string){
-    this.apiService.getCompetencyByDomainId(domainId).subscribe(data => {
-      this.competencies = data;
-      console.log(this.competencies);
-      this.competencies.forEach(val => {
-        this.competenciesMap.set(val.id, val);
-      });
-      this.roleData.competencyObj.forEach(val => {
-        this.selectedCompetenciesArray.push(val.id.toString());
-      })
-      
-      console.log(this.selectedCompetenciesArray);
-      this.selectedCompetenciesArray.forEach(val => {
-        this.selectedCompetencies.set(parseInt(val), this.competenciesMap.get(parseInt(val)));
-      });
-      console.log(this.selectedCompetencies);
+  loadSelectedCompetencies() {
+    this.roleData.competencies.forEach(val => {
+      this.selectedCompetencies.set(val.id, val);
+      // this.apiService.getCompetencyByDomainId(domainId).subscribe(data => {
+      //   this.competencies = data;
+      //   console.log(this.competencies);
+
+
+      //   })
+
     });
   }
 
@@ -155,9 +146,11 @@ export class EditRoleComponent implements OnInit {
     this.apiService.getCompetencyByDomainId(domainId).subscribe(data => {
       this.competencies = data;
       console.log(this.competencies);
+
       this.competencies.forEach(val => {
         this.competenciesMap.set(val.id, val);
       });
+      console.log(this.competenciesMap);
     });
   }
 
@@ -167,22 +160,22 @@ export class EditRoleComponent implements OnInit {
   }
 
   addCompetency() {
-    this.selectedCompetencies.set(this.selectedCompetencyObject.id, this.selectedCompetencyObject);
-    console.log(Array.from(this.selectedCompetencies.values()));
+    if (this.selectedCompetencyObject) {
+      this.selectedCompetencies.set(this.selectedCompetencyObject.id, this.selectedCompetencyObject);
+      console.log(Array.from(this.selectedCompetencies.values()));
+    }
   }
 
   getArray() {
     return Array.from(this.selectedCompetencies.values());
   }
+
   deleteCompetency(competency: Competency) {
     this.selectedCompetencies.delete(competency.id);
   }
 
   onSubmit() {
-    Array.from(this.selectedCompetencies.values()).forEach(val => {
-      this.selectedCompetenciesText += val.id + ","
-    })
-    this.editForm.get('competency').setValue(this.selectedCompetenciesText);
+    this.editForm.get('competencies').setValue(Array.from(this.selectedCompetencies.values()));
     console.log(this.editForm.value);
     this.apiService.updateRole(this.editForm.value)
       .subscribe(data => {

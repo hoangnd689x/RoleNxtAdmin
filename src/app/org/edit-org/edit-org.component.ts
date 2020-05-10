@@ -29,7 +29,8 @@ export class EditOrgComponent implements OnInit {
       name: ['', Validators.required],
       domain: ['-1', Validators.required],
       businessSector: ['', Validators.required],
-      domainObj: ['-1']
+      domainObj: ['-1'],
+      activate : ''
     });
 
     this.getAllDomain();
@@ -56,6 +57,7 @@ export class EditOrgComponent implements OnInit {
           domain: this.org.domainObj.id,
           businessSector: this.org.businessSector,
           domainObj: this.org.domainObj,
+          activate: this.org.activate
         });
         console.log(this.editForm.value);
       });

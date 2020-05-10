@@ -11,6 +11,19 @@
     </div>
 
     <div class="form-group">
+      <label for="cp">Career Path</label>
+      <select formControlName="careerPath" class="form-control" name="cpId"(change)="updateCPObj($event)" disabled>
+        <option value="-1">Please select</option>
+        <option [value]="cp.id" *ngFor="let cp of cps">{{cp.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Cluster:</label>
+      <input type="number" formControlName="cluster" placeholder="cluster" name="cluster" class="form-control" id="cluster">
+    </div>
+
+    <div class="form-group">
       <label for="name">Position name:</label>
       <input type="text" formControlName="name" placeholder="Position name" name="name" class="form-control" id="name">
     </div>

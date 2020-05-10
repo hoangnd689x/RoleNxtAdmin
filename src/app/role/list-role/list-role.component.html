@@ -11,7 +11,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let role of roles">
-        <td>{{role.domainObj.name}}</td>
+        <td>{{role.positionObj.organizationObj.domainObj.name}}</td>
         <td>{{role.category}}</td>
         <td>
           <button class="btn btn-info" (click)="editRole(role)">Edit</button>

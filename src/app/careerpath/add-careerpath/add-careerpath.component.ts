@@ -21,7 +21,6 @@ export class AddCareerpathComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.addForm = this.formBuilder.group({
-      id: [''],
       name: ['', Validators.required],
       color: ['', Validators.required]
     });
@@ -34,20 +33,15 @@ export class AddCareerpathComponent implements OnInit, AfterViewInit {
   onSubmit() {
     this.addForm.get('color').setValue(this.colorPicker.color);
     console.log(this.addForm.value);
-    // this.apiService.createCareerPath(this.addForm.value)
-    //   .subscribe(data => {
-    //     console.log(data)
-    //     this.router.navigate(['list-cp']);
-    //   });
+    this.apiService.createCareerPath(this.addForm.value)
+      .subscribe(data => {
+        console.log(data)
+        this.router.navigate(['list-cp']);
+      });
   }
 
   goBack() {
     this._location.back();
-  }
-
-  logColor()
-  {
-    console.log("Log");
   }
 
 }

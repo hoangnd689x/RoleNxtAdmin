@@ -24,11 +24,10 @@ export class AddCompetencyComponent implements OnInit {
     this.getAllDomain();
 
     this.addForm = this.formBuilder.group({
-      id: [''],
       name: ['', Validators.required],
       category: ['', Validators.required],
       dm: ['-1', Validators.required],
-      dmOjb: ['-1']
+      dmOjb: null,
     });
   }
 

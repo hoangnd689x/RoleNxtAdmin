@@ -5,6 +5,7 @@ import { ApiService } from "../../service/api.service";
 import { Location } from '@angular/common';
 import { Domain } from 'src/app/model/domain';
 import { Organization } from 'src/app/model/organization';
+import { CareerPath } from 'src/app/model/careerpath';
 
 
 @Component({
@@ -18,17 +19,22 @@ export class AddPositionComponent implements OnInit {
     private apiService: ApiService, private _location: Location) { }
 
   orgs: Organization[];
+  cps: CareerPath[];
   addForm: FormGroup;
-  orgMap: Map <number, Domain> = new Map();
+  orgMap: Map <number, Organization> = new Map();
+  cpMap: Map <number, CareerPath> = new Map();
 
   ngOnInit() {
 
     this.getOrgs();
+    this.getCPs();
     this.addForm = this.formBuilder.group({
-      id: [''],
       organization: ['-1', Validators.required],
+      careerPath: ['-1', Validators.required],
+      organizationObj: null,
+      careerpathObj: null,
       name: ['', Validators.required],
-      organizationObj: ['-1']
+      cluster: [0, Validators.required]
     });
   }
 
@@ -50,6 +56,22 @@ export class AddPositionComponent implements OnInit {
           this.orgMap.set(val.id,val);
         });
       });
+  }
+
+  getCPs() {
+    this.apiService.getAllCareerPaths()
+      .subscribe(data => {
+        this.cps = data;
+        console.log(this.cps);
+        this.cps.forEach(val => {
+          this.cpMap.set(val.id,val);
+        });
+      });
+  }
+
+  updateCPObj(val: any){
+    console.log(this.cpMap.has(parseInt(val.target.value)));
+    this.addForm.get('careerpathObj').setValue(this.cpMap.get(parseInt(val.target.value)));
   }
 
   updateOrgObj(val: any){

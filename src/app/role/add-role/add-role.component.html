@@ -21,7 +21,7 @@
 
             <div class="form-group col-md-6">
                 <label for="position">Position</label>
-                <select formControlName="position" class="form-control" name="position" >
+                <select formControlName="position" class="form-control" name="position" (change)="updatePositionObj($event)" >
                     <option value="-1">Please select</option>
                     <option value={{position.id}} *ngFor="let position of positions">{{position.name}}</option>
                 </select>
@@ -98,7 +98,7 @@
 
             <div class="form-group col-md-6">
                 <label for="industrialRole">Industrial Role:</label>
-                <input formControlName="industrialRle" placeholder="Industrial Role" name="industrialRole"
+                <input formControlName="industrialRole" placeholder="Industrial Role" name="industrialRole"
                     class="form-control" id="industrialRole">
             </div>
             <div class="form-group col-md-6">

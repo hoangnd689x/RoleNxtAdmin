@@ -15,8 +15,8 @@ import { CareerPath } from '../model/careerpath';
 export class ApiService {
 
   constructor(private http: HttpClient) { }
-  //baseUrl: string = 'http://localhost:8080/orgchart/api/';
-  baseUrl: string = 'http://10.184.93.88:6060/orgchartapis/api/';
+  baseUrl: string = 'http://localhost:8080/orgchart/api/';
+  //baseUrl: string = 'http://10.184.93.88:6060/orgchartapis/api/';
 
   login(loginPayload) : Observable<ApiResponse> {
     return this.http.post<ApiResponse>('http://localhost:8080/' + 'token/generate-token', loginPayload);
@@ -24,100 +24,100 @@ export class ApiService {
 
   //Domain
   getAllDomain(): Observable<Domain[]> {
-    return this.http.get<Domain[]>(this.baseUrl+'getAllDomains/')
+    return this.http.get<Domain[]>(this.baseUrl+'domain/get-all')
   }
 
   createDomain(domain: Domain): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'addDm/', domain);
+    return this.http.post<ApiResponse>(this.baseUrl+'domain/add', domain);
   }
 
-  deleteDomain(id: string): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'deleteDm/' + id, null);
+  deleteDomain(domain: Domain): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl+'domain/delete', domain);
   }
 
   updateDomain(domain: Domain): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'updateDm/', domain);
+    return this.http.post<ApiResponse>(this.baseUrl+'domain/update', domain);
   }
 
   getDomainById(id: string): Observable<Domain> {
-    return this.http.get<Domain>(this.baseUrl+'getDmById/' + id);
+    return this.http.get<Domain>(this.baseUrl+'domain/get-by-id/' + id);
   }
 
   //Organization
   getOrgs() : Observable<Organization[]> {
-    return this.http.get<Organization[]>(this.baseUrl+'getAllOrgs/');
+    return this.http.get<Organization[]>(this.baseUrl+'org/get-all');
   }
 
   getOrgsByDomainId(domainId: string) : Observable<Organization[]> {
-    return this.http.get<Organization[]>(this.baseUrl+'getOrgsByDomainId/'+domainId);
+    return this.http.get<Organization[]>(this.baseUrl+'org/get-by-domain/'+domainId);
   }
 
   getOrgById(id: string): Observable<Organization> {
-    return this.http.get<Organization>(this.baseUrl+'getOrgById/' + id);
+    return this.http.get<Organization>(this.baseUrl+'org/get-by-id/' + id);
   }
 
   createOrg(org: Organization): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'addOrg/', org);
+    return this.http.post<ApiResponse>(this.baseUrl+'org/add', org);
   }
 
   updateOrg(org: Organization): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'updateOrg/', org);
+    return this.http.post<ApiResponse>(this.baseUrl+'org/update', org);
   }
 
-  deleteOrg(id: string): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'deleteOrg/' + id, null);
+  deleteOrg(org: Organization): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl+'org/delete', org);
   }
 
   //Position
 
   getAllPositions() : Observable<Position[]> {
-    return this.http.get<Position[]>(this.baseUrl+'getAllPositions/');
+    return this.http.get<Position[]>(this.baseUrl+'position/get-all');
   }
 
   createPosition(pos: Position): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'addPos/', pos);
+    return this.http.post<ApiResponse>(this.baseUrl+'position/add', pos);
   }
 
   getPositionById(id: string): Observable<Position> {
-    return this.http.get<Position>(this.baseUrl+'getPosById/' + id);
+    return this.http.get<Position>(this.baseUrl+'position/get-by-id/' + id);
   }
 
   updatePosition(pos: Position): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'updatePos/', pos);
+    return this.http.post<ApiResponse>(this.baseUrl+'position/update', pos);
   }
 
-  deletePosition(id: string): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'deletePos/' + id, null);
+  deletePosition(pos: Position): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl+'position/delete', pos);
   }
 
   getPositionsByOrgId(id: string) : Observable<Position[]> {
-    return this.http.get<Position[]>(this.baseUrl+'getPositionsByOrgId/' + id);
+    return this.http.get<Position[]>(this.baseUrl+'position/get-by-org/' + id);
   }
 
   //Competency
 
   getAllCompetencies() : Observable<Competency[]> {
-    return this.http.get<Competency[]>(this.baseUrl+'getAllCompetencies/');
+    return this.http.get<Competency[]>(this.baseUrl+'competency/get-all');
   }
 
   createCompetencies(comp: Competency): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'addComp/', comp);
+    return this.http.post<ApiResponse>(this.baseUrl+'competency/add', comp);
   }
 
-  deleteCompetency(id: string): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'deleteComp/' + id, null);
+  deleteCompetency(comp: Competency): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl+'competency/delete/', comp);
   }
 
   getCompetencyById(id: string): Observable<Competency> {
-    return this.http.get<Competency>(this.baseUrl+'getCompById/' + id);
+    return this.http.get<Competency>(this.baseUrl+'competency/get-by-id/' + id);
   }
 
   updateCompetency(comp: Competency): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'updateComp/', comp);
+    return this.http.post<ApiResponse>(this.baseUrl+'competency/update', comp);
   }
 
   getCompetencyByDomainId(id: string): Observable<Competency[]> {
-    return this.http.get<Competency[]>(this.baseUrl+'getCompetenciesByDomainId/' + id);
+    return this.http.get<Competency[]>(this.baseUrl+'competency/get-by-domain/' + id);
   }
 
   //Structure
@@ -145,45 +145,45 @@ export class ApiService {
   //Role
 
   getAllRoles() : Observable<Role[]> {
-    return this.http.get<Role[]>(this.baseUrl+'getAllRoles/');
+    return this.http.get<Role[]>(this.baseUrl+'role/get-all');
   }
 
   createRole(role: Role): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'addRole/', role);
+    return this.http.post<ApiResponse>(this.baseUrl+'role/add', role);
   }
 
-  deleteRole(id: string): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'deleteRole/' + id, null);
+  deleteRole(role: Role): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl+'role/delete', role);
   }
 
   updateRole(role: Role): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'updateRole/', role);
+    return this.http.post<ApiResponse>(this.baseUrl+'role/update', role);
   }
 
   getRoleById(id: string): Observable<Role> {
-    return this.http.get<Role>(this.baseUrl+'getRoleById/' + id);
+    return this.http.get<Role>(this.baseUrl+'role/get-by-id/' + id);
   }
 
   //Career Path
 
   getAllCareerPaths() : Observable<CareerPath[]> {
-    return this.http.get<CareerPath[]>(this.baseUrl+'getAllCPs/');
+    return this.http.get<CareerPath[]>(this.baseUrl+'career-path/get-all');
   }
 
   createCareerPath(careerPath: CareerPath): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'addCP/', careerPath);
+    return this.http.post<ApiResponse>(this.baseUrl+'career-path/add', careerPath);
   }
 
-  deleteCareerPath(id: string): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'deleteCP/' + id, null);
+  deleteCareerPath(careerPath: CareerPath): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl+'career-path/delete', careerPath);
   }
 
   updateCareerPath(careerPath: CareerPath): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl+'updateCP/', careerPath);
+    return this.http.post<ApiResponse>(this.baseUrl+'career-path/update', careerPath);
   }
 
   getCareerPathById(id: string): Observable<CareerPath> {
-    return this.http.get<CareerPath>(this.baseUrl+'getCPById/' + id);
+    return this.http.get<CareerPath>(this.baseUrl+'career-path/get-by-id/' + id);
   }
 
 }

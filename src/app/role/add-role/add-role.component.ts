@@ -31,26 +31,23 @@ export class AddRoleComponent implements OnInit {
   selectedCompetencies: Map<number, Competency> = new Map();
   //selectedCompetencies: Competency[];
 
+  positionMap: Map <number, Position> = new Map();
+
   ngOnInit() {
     this.getAllDomain();
 
     this.addForm = this.formBuilder.group({
-      id: [''],
       domain: ['-1', Validators.required],
-      domainObj: null,
-      careerPath: [''],
       org: ['-1'],
-      orgObj: null,
       position: ['-1', Validators.required],
       positionObj: null,
       domainRole: ['', Validators.required],
-      competency: [null, Validators.required],
-      competencyObj: [[], Validators.required],
       category: ['', Validators.required],
+      competencies: [[], Validators.required],
       kra: ['', Validators.required],
       scope: ['', Validators.required],
       responsibilities: ['', Validators.required],
-      industrialRle: ['', Validators.required],
+      industrialRole: ['', Validators.required],
       entryCriteria: ['', Validators.required],
     });
   }
@@ -63,10 +60,16 @@ export class AddRoleComponent implements OnInit {
   }
 
   loadCompetencyAndOrg(domainId: string) {
+    console.log(domainId);
     this.getCompetenciesByDomainId(domainId);
     this.getOrgByDomainId(domainId);
     this.addForm.get('org').setValue('-1');
     this.addForm.get('position').setValue('-1');
+  }
+
+  updatePositionObj(val: any){
+    console.log(this.positionMap.has(parseInt(val.target.value)));
+    this.addForm.get('positionObj').setValue(this.positionMap.get(parseInt(val.target.value)));
   }
 
   getOrgByDomainId(domainId: string){
@@ -81,6 +84,9 @@ export class AddRoleComponent implements OnInit {
       this.positions = data;
       console.log(this.positions);
       this.addForm.get('position').setValue('-1');
+      this.positions.forEach(val => {
+        this.positionMap.set(val.id,val);
+      });
     })
   }
 
@@ -100,8 +106,11 @@ export class AddRoleComponent implements OnInit {
   }
 
   addCompetency() {
-    this.selectedCompetencies.set(this.selectedCompetencyObject.id, this.selectedCompetencyObject);
-    console.log(Array.from(this.selectedCompetencies.values()));
+    if(this.selectedCompetencyObject)
+    {
+      this.selectedCompetencies.set(this.selectedCompetencyObject.id, this.selectedCompetencyObject);
+      console.log(Array.from(this.selectedCompetencies.values()));
+    }
   }
 
   getArray() {
@@ -112,10 +121,10 @@ export class AddRoleComponent implements OnInit {
   }
 
   onSubmit() {
-    Array.from(this.selectedCompetencies.values()).forEach(val => {
-      this.selectedCompetenciesText += val.id + ","
-    })
-    this.addForm.get('competency').setValue(this.selectedCompetenciesText);
+    // Array.from(this.selectedCompetencies.values()).forEach(val => {
+    //   this.selectedCompetenciesText += val.id + ","
+    // })
+    this.addForm.get('competencies').setValue(Array.from(this.selectedCompetencies.values()));
     console.log(this.addForm.value);
     this.apiService.createRole(this.addForm.value)
       .subscribe(data => {

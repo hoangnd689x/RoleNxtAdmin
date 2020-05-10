@@ -22,7 +22,7 @@ export class ListPositionComponent implements OnInit {
 
   deletePosition(position: Position): void {
     if(confirm("Are you sure you want to delete?")){
-    this.apiService.deletePosition(position.id.toString())
+    this.apiService.deletePosition(position)
       .subscribe( data => {
         this.getAllPosition();
       })
