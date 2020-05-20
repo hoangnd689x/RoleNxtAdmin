@@ -1,1 +1,26 @@
-<p>list-connection works!</p>
+<div class="col-md-6 user-container">
+    <h2 style="margin: auto"> List Connection</h2>
+    <button class="btn btn-success" style="width:200px; margin-bottom : 10px" (click)="addConnection()"> Add Connection</button>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Organization</th>
+        <th>Source</th>
+        <th>Target</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let connection of connections">
+        <td>{{connection.orgObj.name}}</td>
+        <td>{{connection.source.name}}</td>
+        <td>{{connection.target.name}}</td>
+        <td>
+          <button class="btn btn-info" (click)="editConnection(connection)"> Edit</button>
+          <button class="btn btn-danger" (click)="deleteConnection(connection)" style="margin-left: 20px;"> Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  

@@ -21,12 +21,14 @@ export class EditPositionComponent implements OnInit {
   editForm: FormGroup;
   positionData: Position;
   positionId: Number;
+  domains: Domain[];
   orgs: Organization[];
   cps: CareerPath[];
 
   ngOnInit() {
     this.editForm = this.formBuilder.group({
       id: [''],
+      domain: ['-1'],
       organization: ['-1', Validators.required],
       careerPath: ['-1', Validators.required],
       organizationObj: null,
@@ -36,7 +38,7 @@ export class EditPositionComponent implements OnInit {
       activate: ''
     });
 
-    this.getOrg();
+    this.getDomains();
     this.getCPs();
     this.getPosition();
   }
@@ -44,14 +46,22 @@ export class EditPositionComponent implements OnInit {
   onUpdate() {
     console.log(this.editForm.value);
     this.apiService.updatePosition(this.editForm.value)
-    .subscribe(data => {
-      console.log(data);
-      this.router.navigate(['list-position']);
-    });
+      .subscribe(data => {
+        console.log(data);
+        this.router.navigate(['list-position']);
+      });
   }
 
-  getOrg() {
-    this.apiService.getOrgs().subscribe(data => {
+  getDomains(){
+    this.apiService.getAllDomain()
+      .subscribe(data => {
+        this.domains = data;
+        console.log(this.orgs);
+      });
+  }
+
+  getOrg(domainId: string) {
+    this.apiService.getOrgsByDomainId(domainId).subscribe(data => {
       this.orgs = data;
       console.log(this.orgs);
     });
@@ -73,6 +83,7 @@ export class EditPositionComponent implements OnInit {
         console.log(this.positionData);
         this.editForm.setValue({
           id: this.positionData.id,
+          domain: this.positionData.organizationObj.domainObj.id,
           organization: this.positionData.organizationObj.id,
           name: this.positionData.name,
           organizationObj: this.positionData.organizationObj,
@@ -83,6 +94,7 @@ export class EditPositionComponent implements OnInit {
         });
         console.log(this.editForm.value);
       });
+    this.getOrg(this.positionData.organizationObj.domainObj.id.toString());
   }
 
   goBack() {

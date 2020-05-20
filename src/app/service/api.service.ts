@@ -10,6 +10,7 @@ import { Competency } from '../model/Competency';
 import { Structure } from '../model/structure';
 import { Role } from '../model/role';
 import { CareerPath } from '../model/careerpath';
+import { Connection } from '../model/connection';
 
 @Injectable()
 export class ApiService {
@@ -184,6 +185,28 @@ export class ApiService {
 
   getCareerPathById(id: string): Observable<CareerPath> {
     return this.http.get<CareerPath>(this.baseUrl+'career-path/get-by-id/' + id);
+  }
+
+  //Connection
+
+  getAllConnections() : Observable<Connection[]> {
+    return this.http.get<Connection[]>(this.baseUrl+'connection/get-all');
+  }
+
+  createConnection(con: Connection): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl+'connection/add', con);
+  }
+
+  deleteConnection(con: Connection): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl+'connection/delete', con);
+  }
+
+  updateConnection(con: Connection): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl+'connection/update', con);
+  }
+
+  getConnectionById(id: string): Observable<Connection> {
+    return this.http.get<Connection>(this.baseUrl+'connection/get-by-id/' + id);
   }
 
 }

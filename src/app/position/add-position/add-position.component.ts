@@ -19,6 +19,7 @@ export class AddPositionComponent implements OnInit {
     private apiService: ApiService, private _location: Location) { }
 
   orgs: Organization[];
+  domains: Domain[];
   cps: CareerPath[];
   addForm: FormGroup;
   orgMap: Map <number, Organization> = new Map();
@@ -26,9 +27,11 @@ export class AddPositionComponent implements OnInit {
 
   ngOnInit() {
 
-    this.getOrgs();
+    this.getDomains();
+    //this.getOrgs();
     this.getCPs();
     this.addForm = this.formBuilder.group({
+      domain: ['-1'],
       organization: ['-1', Validators.required],
       careerPath: ['-1', Validators.required],
       organizationObj: null,
@@ -47,8 +50,16 @@ export class AddPositionComponent implements OnInit {
       });
   }
 
-  getOrgs() {
-    this.apiService.getOrgs()
+  getDomains(){
+    this.apiService.getAllDomain()
+      .subscribe(data => {
+        this.domains = data;
+        console.log(this.domains);
+      });
+  }
+  
+  loadOrg(domainId: string) {
+    this.apiService.getOrgsByDomainId(domainId)
       .subscribe(data => {
         this.orgs = data;
         console.log(this.orgs);
