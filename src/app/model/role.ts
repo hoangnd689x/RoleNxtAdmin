@@ -10,7 +10,7 @@ export class Role {
     //careerPath: CareerPath;
     domainRole: string;
     category: string;
-    competencies: Competency[];
+    competencies: string;
     scope: string;
     responsibilities: string;
     industrialRole: string;

@@ -1,8 +1,8 @@
 import { RouterModule, Routes } from '@angular/router';
-import {LoginComponent} from "./login/login.component";
-import {AddOrgComponent} from "./org/add-org/add-org.component";
-import {ListOrgComponent} from "./org/list-org/list-org.component";
-import {EditOrgComponent} from "./org/edit-org/edit-org.component";
+import { LoginComponent } from "./login/login.component";
+import { AddOrgComponent } from "./org/add-org/add-org.component";
+import { ListOrgComponent } from "./org/list-org/list-org.component";
+import { EditOrgComponent } from "./org/edit-org/edit-org.component";
 import { AddStructureComponent } from './structure/add-structure/add-structure.component';
 import { EditStructureComponent } from './structure/edit-structure/edit-structure.component';
 import { ListStructureComponent } from './structure/list-structure/list-structure.component';
@@ -24,6 +24,9 @@ import { ListCareerpathComponent } from './careerpath/list-careerpath/list-caree
 import { AddConnectionComponent } from './connection/add-connection/add-connection.component';
 import { EditConnectionComponent } from './connection/edit-connection/edit-connection.component';
 import { ListConnectionComponent } from './connection/list-connection/list-connection.component';
+import { AddDeptDomainComponent } from './departmentDomain/add-dept-domain/add-dept-domain.component';
+import { EditDeptDomainComponent } from './departmentDomain/edit-dept-domain/edit-dept-domain.component';
+import { ListDeptDomainComponent } from './departmentDomain/list-dept-domain/list-dept-domain.component';
 
 const routes: Routes = [
   { path: 'add-org', component: AddOrgComponent },
@@ -38,9 +41,9 @@ const routes: Routes = [
   { path: 'edit-position/:id', component: EditPositionComponent },
   { path: 'list-position', component: ListPositionComponent },
   { path: 'list-role', component: ListRoleComponent },
-  { path: 'add-com', component: AddCompetencyComponent },
-  { path: 'edit-com/:id', component: EditCompetencyComponent },
-  { path: 'list-com', component: ListCompetencyComponent },
+  // { path: 'add-com', component: AddCompetencyComponent },
+  // { path: 'edit-com/:id', component: EditCompetencyComponent },
+  // { path: 'list-com', component: ListCompetencyComponent },
   { path: 'add-domain', component: AddDomainComponent },
   { path: 'edit-domain/:id', component: EditDomainComponent },
   { path: 'list-domain', component: ListDomainComponent },
@@ -50,7 +53,10 @@ const routes: Routes = [
   { path: 'add-con', component: AddConnectionComponent },
   { path: 'edit-con/:id', component: EditConnectionComponent },
   { path: 'list-con', component: ListConnectionComponent },
-  {path : '', component : ListDomainComponent}
+  { path: 'add-deptDomain', component: AddDeptDomainComponent },
+  { path: 'edit-deptDomain/:id', component: EditDeptDomainComponent },
+  { path: 'list-deptDomain', component: ListDeptDomainComponent },
+  { path: '', component: ListDomainComponent }
 ];
 
 export const routing = RouterModule.forRoot(routes);

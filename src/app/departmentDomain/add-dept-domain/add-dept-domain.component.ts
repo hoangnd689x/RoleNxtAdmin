@@ -8,11 +8,11 @@ import { Position } from 'src/app/model/position';
 import { Organization } from 'src/app/model/organization';
 
 @Component({
-  selector: 'app-add-role',
-  templateUrl: './add-role.component.html',
-  styleUrls: ['./add-role.component.css']
+  selector: 'app-add-dept-domain',
+  templateUrl: './add-dept-domain.component.html',
+  styleUrls: ['./add-dept-domain.component.css']
 })
-export class AddRoleComponent implements OnInit {
+export class AddDeptDomainComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private router: Router,
     private apiService: ApiService, private _location: Location) { }
@@ -29,17 +29,13 @@ export class AddRoleComponent implements OnInit {
     this.getAllDomain();
 
     this.addForm = this.formBuilder.group({
+      name: [''],
       domain: ['-1', Validators.required],
       org: ['-1'],
       position: ['-1', Validators.required],
       positionObj: null,
-      domainRole: ['', Validators.required],
-      category: ['', Validators.required],
       competencies: [[], Validators.required],
-      kra: ['', Validators.required],
-      scope: ['', Validators.required],
       responsibilities: ['', Validators.required],
-      industrialRole: ['', Validators.required],
       entryCriteria: ['', Validators.required],
     });
   }
@@ -81,13 +77,12 @@ export class AddRoleComponent implements OnInit {
     })
   }
 
-
   onSubmit() {
     console.log(this.addForm.value);
-    this.apiService.createRole(this.addForm.value)
+    this.apiService.createDeptDomain(this.addForm.value)
       .subscribe(data => {
         console.log(data)
-        this.router.navigate(['list-role']);
+        this.router.navigate(['list-deptDomain']);
       });
   }
 

@@ -33,6 +33,9 @@ import { ColorPickerModule } from './color-picker/color-picker.module';
 import { AddConnectionComponent } from './connection/add-connection/add-connection.component';
 import { EditConnectionComponent } from './connection/edit-connection/edit-connection.component';
 import { ListConnectionComponent } from './connection/list-connection/list-connection.component';
+import { AddDeptDomainComponent } from './departmentDomain/add-dept-domain/add-dept-domain.component';
+import { EditDeptDomainComponent } from './departmentDomain/edit-dept-domain/edit-dept-domain.component';
+import { ListDeptDomainComponent } from './departmentDomain/list-dept-domain/list-dept-domain.component';
 
 
 @NgModule({
@@ -62,7 +65,10 @@ import { ListConnectionComponent } from './connection/list-connection/list-conne
     ListDomainComponent,
     AddConnectionComponent,
     EditConnectionComponent,
-    ListConnectionComponent
+    ListConnectionComponent,
+    AddDeptDomainComponent,
+    EditDeptDomainComponent,
+    ListDeptDomainComponent
   ],
   imports: [
     BrowserModule,

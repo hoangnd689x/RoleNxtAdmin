@@ -11,6 +11,7 @@ import { Structure } from '../model/structure';
 import { Role } from '../model/role';
 import { CareerPath } from '../model/careerpath';
 import { Connection } from '../model/connection';
+import { DepartmentDomain } from '../model/departmentDomain';
 
 @Injectable()
 export class ApiService {
@@ -208,5 +209,28 @@ export class ApiService {
   getConnectionById(id: string): Observable<Connection> {
     return this.http.get<Connection>(this.baseUrl+'connection/get-by-id/' + id);
   }
+
+  //DeptDomain
+
+  getAllDeptDomain() : Observable<DepartmentDomain[]> {
+    return this.http.get<DepartmentDomain[]>(this.baseUrl+'department-domain/get-all');
+  }
+
+  createDeptDomain(con: DepartmentDomain): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl+'department-domain/add', con);
+  }
+
+  deleteDeptDomain(con: DepartmentDomain): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl+'department-domain/delete', con);
+  }
+
+  updateDeptDomain(con: DepartmentDomain): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl+'department-domain/update', con);
+  }
+
+  getDeptDomainById(id: string): Observable<DepartmentDomain> {
+    return this.http.get<DepartmentDomain>(this.baseUrl+'department-domain/get-by-id/' + id);
+  }
+
 
 }

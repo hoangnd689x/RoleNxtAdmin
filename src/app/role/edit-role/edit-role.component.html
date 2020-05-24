@@ -1,19 +1,21 @@
 <div class="col-md-12"
-    style="width: 900px; margin: auto; border: 1px solid rgb(190, 197, 190);border-radius: 10px; padding: 25px; margin-top: 75px">
+    style="width: 1400px; margin: auto; border: 1px solid rgb(190, 197, 190);border-radius: 10px; padding: 25px; margin-top: 75px">
     <h2 class="text-center">Edit Role</h2>
     <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
 
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="domain">Domain:</label>
-                <select formControlName="domain" class="form-control" name="domain" (change)="loadCompetencyAndOrg($event.target.value)" disabled>
+                <select formControlName="domain" class="form-control" name="domain"
+                    (change)="loadCompetencyAndOrg($event.target.value)" disabled>
                     <option value="-1">Please select</option>
                     <option value={{domain.id}} *ngFor="let domain of domains">{{domain.name}}</option>
                 </select>
             </div>
             <div class="form-group col-md-6">
                 <label for="org">Organization</label>
-                <select formControlName="org" class="form-control" name="org" (change)="loadPosition($event.target.value)" disabled>
+                <select formControlName="org" class="form-control" name="org"
+                    (change)="loadPosition($event.target.value)" disabled>
                     <option value="-1">Please select</option>
                     <option value={{org.id}} *ngFor="let org of orgs">{{org.name}}</option>
                 </select>
@@ -26,55 +28,19 @@
                     <option value={{position.id}} *ngFor="let position of positions">{{position.name}}</option>
                 </select>
             </div>
-            <!-- <div class="form-group col-md-6">
-                <label for="careerPath">Career Path:</label>
-                <input formControlName="careerPath" placeholder="Career Path" name="careerPath" class="form-control"
-                    id="careerPath">
-            </div> -->
+        </div>
 
+        <div class="row">
             <div class="form-group col-md-6">
                 <label for="domainRoles">Domain Roles:</label>
-                <input formControlName="domainRole" placeholder="Domain Roles" name="domainRoles" class="form-control"
-                    id="domainRole">
+                <textarea rows="10" formControlName="domainRole" placeholder="Domain Roles" name="domainRole"
+                    class="form-control" id="domainRole"> </textarea>
             </div>
-
             <div class="form-group col-md-6">
-                <label for="competencySelect">Competencies required</label>
-                <select class="form-control" name="competencySelect" (change)="updateSelectedCompetency($event.target.value)">
-                    <option value="-1">Please select</option>
-                    <option value={{competency.id}} *ngFor="let competency of competencies">{{competency.name}}</option>
-                </select>
+                <label for="competencies">Competencies Required:</label>
+                <textarea rows="10" formControlName="competencies" placeholder="Competencies"
+                    name="competencies" class="form-control" id="responsibilities"></textarea>
             </div>
-            <div class="col-md-6 form-group">
-                <div class="btn btn-success" style="width: 150px; position: absolute; bottom: 0;"
-                    (click)="addCompetency()">Add new</div>
-            </div>
-            <div class="col-md-12 user-container">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Competency</th>
-                            <th>Category</th>
-                            <th> Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let competency of getArray()">
-                            <td>{{competency.name}}</td>
-                            <td>{{competency.category}}</td>
-                            <td>
-                                <button class="btn btn-danger" (click)="deleteCompetency(competency)" style="margin-left: 20px;">
-                                    Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-
-            <!-- <div class="form-group col-md-12">
-                <textarea [value]="competenciesTextarea" class="form-control" rows="5" id="competenciesRequired"></textarea>
-            </div> -->
 
             <div class="form-group col-md-6">
                 <label for="projectCategory">Project Category:</label>
@@ -88,23 +54,23 @@
 
             <div class="form-group col-md-6">
                 <label for="kra">KRA (key responsible area):</label>
-                <textarea rows ="10" formControlName="kra" placeholder="KRA (key responsible area)" name="kra" class="form-control"
-                    id="kra"> </textarea>
+                <textarea rows="10" formControlName="kra" placeholder="KRA (key responsible area)" name="kra"
+                    class="form-control" id="kra"> </textarea>
             </div>
             <div class="form-group col-md-6">
                 <label for="responsibilities">Responsibilities:</label>
-                <textarea rows ="10" formControlName="responsibilities" placeholder="Responsibilities" name="responsibilities"
-                    class="form-control" id="responsibilities"></textarea>
+                <textarea rows="10" formControlName="responsibilities" placeholder="Responsibilities"
+                    name="responsibilities" class="form-control" id="responsibilities"></textarea>
             </div>
 
             <div class="form-group col-md-6">
                 <label for="industrialRole">Industrial Role:</label>
-                <textarea rows ="10" formControlName="industrialRole" placeholder="Industrial Role" name="industrialRole"
+                <textarea rows="10" formControlName="industrialRole" placeholder="Industrial Role" name="industrialRole"
                     class="form-control" id="industrialRole"></textarea>
             </div>
             <div class="form-group col-md-6">
                 <label for="entryCriteria">Entry Criteria:</label>
-                <textarea rows ="10" formControlName="entryCriteria" placeholder="Entry Criteria" name="entryCriteria"
+                <textarea rows="10" formControlName="entryCriteria" placeholder="Entry Criteria" name="entryCriteria"
                     class="form-control" id="entryCriteria"></textarea>
             </div>
 

@@ -1,0 +1,26 @@
+<div class="col-md-6 user-container">
+    <h2 style="margin: auto"> List Department Domain</h2>
+    <button class="btn btn-success" style="width:200px; margin-bottom : 10px" (click)="add()"> Add Department Domain </button>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Organization</th>
+        <th>Position</th>
+        <th>Name</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let deptDomain of deptDomains">
+        <td>{{deptDomain.positionObj.organizationObj.name}}</td>
+        <td>{{deptDomain.positionObj.name}}</td>
+        <td>{{deptDomain.name}}</td>
+        <td>
+          <button class="btn btn-info" (click)="edit(deptDomain)"> Edit</button>
+          <button class="btn btn-danger" (click)="delete(deptDomain)" style="margin-left: 20px;"> Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  
